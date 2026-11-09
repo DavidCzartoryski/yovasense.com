@@ -1,171 +1,168 @@
 import Link from "next/link";
-import { mailto } from "@/data/yovasense";
-import { Arrow, Container, button } from "./bits";
+import { yovasense, mailto } from "@/data/yovasense";
+import { PILOT_SUBJECT } from "./Header";
+import ProductShowcase from "./ProductShowcase";
+import Workflow, { Spine } from "./Workflow";
 
-const stats = [
+const route = [
+  { kind: "on", k: "First capability · prototype", t: "Straggler detection" },
+  { kind: "planned", k: "Planned", t: "Cross-stack diagnosis" },
+  { kind: "planned", k: "Planned", t: "Scheduled regression testing" },
+  { kind: "dev", k: "In development", t: "Learned diagnosis model" },
+  { kind: "aim", k: "The aim", t: "Autonomous GPU fleet operations" },
+];
+
+const classes = [
+  { title: "GPU degradation", body: "Thermal throttling, power caps, clocks that stop boosting." },
+  { title: "Communication", body: "A degraded port, link or switch path." },
+  { title: "Host and input", body: "CPU contention, a data-loader or storage stall." },
+  { title: "Change regressions", body: "A driver, communication library or configuration change." },
+];
+
+const studies = [
   { figure: "16 of 27", label: "large training jobs (512–1,024 GPUs) hit a fail-slow slowdown in one month" },
   { figure: "~10%", label: "of allocated GPU-hours lost to stragglers, estimated from one production cluster's traces" },
   { figure: "30+ min", label: "on average, and up to days, for engineers to manually find one faulty machine" },
 ];
 
-const symptoms = [
-  "Throughput drops a few percent mid-run — and stays down",
-  "GPU utilization looks fine; the job is slow anyway",
-  "No error names the GPU, link, or host that changed",
-];
-
-const loop = [
-  {
-    title: "Detect",
-    body: "YovaSense times every rank at the collectives it already joins, and compares each rank against its peers and its own history. A persistent slowdown is flagged while the job is still running — not in a postmortem.",
-  },
-  {
-    title: "Confirm",
-    body: "Before anyone acts, YovaSense re-tests under matched conditions: same workload, hardware, and topology. A one-off fluctuation doesn't become an incident, and an unconfirmed regression never becomes the new baseline. The same matched testing runs after driver, library, or configuration changes.",
-  },
-  {
-    title: "Localize",
-    body: "Evidence across the host and input pipeline, the GPU, the communication runtime, and the interconnect narrows the problem to the rank, node, link, or software change responsible — with the measurements behind the conclusion, including when the evidence isn't enough to call it.",
-  },
-  {
-    title: "Act",
-    body: "Within the policies you set: rebalance work away from the slow rank, recommend a targeted fix, or apply a supported correction. Anything that needs a restart, a repair, or your approval is escalated — never hidden.",
-  },
-  {
-    title: "Verify",
-    body: "YovaSense re-measures useful training throughput after the action. If it didn't recover, you see that too — and reversible actions roll back.",
-  },
-];
-
-const catches = [
-  { title: "GPU degradation", body: "Thermal throttling, power caps, clocks that stop boosting." },
-  { title: "Communication", body: "A degraded port, link, or switch path; one island's collectives slowing down." },
-  { title: "Host and input", body: "CPU contention, or a data-loader or storage stall holding one rank back off the GPU." },
-  { title: "Change regressions", body: "Slowdowns that arrive with a driver, communication-library, or configuration change." },
-];
-
-const outcomes = [
-  { title: "Recover GPU-hours you're already paying for", body: "measured against comparable workloads, not inferred from utilization." },
-  { title: "Give engineers their time back", body: "investigations that take a team hours to days become one supervised workflow." },
-  { title: "Keep the proof", body: "every fix verified against throughput; every conclusion traceable to measurements." },
-];
-
-const h2 = "ar-display text-[clamp(1.9rem,3.2vw,2.75rem)] leading-[1.12]";
-const prose = "text-[17px] leading-[1.7] text-ar-muted";
-
-export default function Homepage() {
+function Ambition() {
   return (
-    <>
-      <section aria-label="Why it matters" className="border-t border-ar-line py-12 md:py-16">
-        <Container>
-          <dl className="grid gap-9 md:grid-cols-3 md:gap-10">
-            {stats.map((stat) => (
-              <div key={stat.figure} className="flex flex-col-reverse gap-3">
-                <dt className="max-w-[320px] text-[15px] leading-[1.6] text-ar-muted">{stat.label}</dt>
-                <dd className="ar-display text-[clamp(2rem,3.4vw,2.9rem)] leading-none text-ar-fg">{stat.figure}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-9 max-w-[760px] text-[12px] leading-relaxed text-ar-faint">
-            Figures from published production-cluster studies:{" "}
-            <a href="https://arxiv.org/abs/2410.12588" className="underline decoration-ar-line-2 underline-offset-2 hover:text-ar-fg">FALCON (arXiv:2410.12588)</a>,{" "}
-            <a href="https://arxiv.org/abs/2505.05713" className="underline decoration-ar-line-2 underline-offset-2 hover:text-ar-fg">Lin et al. (arXiv:2505.05713)</a>,{" "}
-            <a href="https://www.usenix.org/conference/nsdi25/presentation/deng" className="underline decoration-ar-line-2 underline-offset-2 hover:text-ar-fg">Minder, ByteDance (NSDI &apos;25)</a>.
-          </p>
-        </Container>
-      </section>
-
-      <section aria-labelledby="problem-title" className="border-t border-ar-line py-16 md:py-24">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-            <h2 id="problem-title" className={`${h2} max-w-[520px]`}>Nothing crashes. Every step just gets slower.</h2>
-            <div className="max-w-[560px] space-y-5">
-              <p className={prose}>Distributed training moves in lockstep: a step finishes when the slowest rank arrives. One degraded GPU, link, or host sets the pace for the entire job — while utilization still looks busy and nothing raises an error.</p>
-              <p className={prose}>So teams find out late, or not at all. The run finishes hours behind, and the investigation starts from logs, across the infrastructure, network, storage, and hardware teams.</p>
-              <ul className="space-y-3 border-t border-ar-line pt-6">
-                {symptoms.map((s) => (
-                  <li key={s} className="flex gap-3 text-[15px] leading-[1.6] text-ar-fg">
-                    <span aria-hidden="true" className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-ar-signal" />
-                    {s}
-                  </li>
-                ))}
-              </ul>
-            </div>
+    <section id="ambition" className="ys-sec" aria-labelledby="ambition-title">
+      <div className="ys-wrap ys-rail">
+        <Spine />
+        <div className="ys-sec-head ys-two ys-scrim">
+          <div>
+            <span className="ys-node" data-reader-mark aria-hidden="true" />
+            <p className="ys-eyebrow">Where it goes</p>
+            <h2 id="ambition-title" className="ys-display ys-h2">Fleet operations, starting with stragglers.</h2>
           </div>
-        </Container>
-      </section>
-
-      <section id="how" aria-labelledby="how-title" className="scroll-mt-24 border-t border-ar-line py-16 md:py-24">
-        <Container>
-          <h2 id="how-title" className={h2}>From slowdown to verified recovery, in one loop.</h2>
-          <ol className="mt-10 border-t border-ar-line">
-            {loop.map((step, i) => (
-              <li key={step.title} className="grid gap-3 border-b border-ar-line py-6 md:grid-cols-[40px_200px_1fr] md:gap-6">
-                <span className="ar-mono text-[12px] text-ar-faint">{i + 1}</span>
-                <h3 className="text-[18px] font-medium">{step.title}</h3>
-                <p className="max-w-[680px] text-[16px] leading-[1.65] text-ar-muted">{step.body}</p>
+          <div className="ys-sec-body">
+            <p>Distributed training moves in lockstep: a step finishes when the slowest rank arrives. One degraded GPU, link or host sets the pace for the entire job, while utilization still looks busy and nothing raises an error.</p>
+            <p>Straggler detection is the first capability. The aim is autonomous fleet operations: more useful training from the GPUs you already have, with less manual investigation. Vendor-independent by design: across NVIDIA and AMD, across GPU generations.</p>
+          </div>
+        </div>
+        <div className="ys-route-wrap ys-scrim">
+          <ol className="ys-route" aria-label="Capabilities, from the first to the aim">
+            {route.map((r) => (
+              <li key={r.t} className="ys-rt" data-kind={r.kind}>
+                <span className="ys-rt-node" aria-hidden="true" />
+                <span className="ys-rt-k ys-mono">{r.k}</span>
+                <span className="ys-rt-t">{r.t}</span>
               </li>
             ))}
           </ol>
-          <Link href="/product/" className="group mt-8 inline-flex min-h-11 items-center gap-3 text-[14px] text-ar-fg">Inside YovaSense: the architecture and research <Arrow /></Link>
-        </Container>
-      </section>
-
-      <section aria-labelledby="catches-title" className="border-t border-ar-line py-16 md:py-24">
-        <Container>
-          <h2 id="catches-title" className={h2}>The slowdowns that don&apos;t crash anything.</h2>
-          <div className="mt-10 grid gap-px border border-ar-line bg-ar-line sm:grid-cols-2 lg:grid-cols-4">
-            {catches.map((c) => (
-              <div key={c.title} className="bg-ar-bg p-6">
-                <h3 className="text-[17px] font-medium">{c.title}</h3>
-                <p className="mt-3 text-[15px] leading-[1.65] text-ar-muted">{c.body}</p>
+          <p className="ys-fine">A learned diagnosis model needs permitted incident data and held-out evaluation.</p>
+        </div>
+        <div className="ys-classes-wrap ys-scrim">
+          <h3 className="ys-sub-h">Slowdowns it is built for</h3>
+          <ul className="ys-classes">
+            {classes.map((c) => (
+              <li key={c.title}>
+                <h4>{c.title}</h4>
+                <p>{c.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <figure className="ys-studies ys-scrim">
+          <dl className="ys-studies-grid">
+            {studies.map((s) => (
+              <div key={s.figure}>
+                <dt>{s.label}</dt>
+                <dd className="ys-display">{s.figure}</dd>
               </div>
             ))}
-          </div>
-        </Container>
-      </section>
+          </dl>
+          <figcaption className="ys-fine">
+            Figures from published production-cluster studies, not YovaSense measurements:{" "}
+            <a href="https://arxiv.org/abs/2410.12588">FALCON (arXiv:2410.12588)</a>,{" "}
+            <a href="https://arxiv.org/abs/2505.05713">Lin et al. (arXiv:2505.05713)</a>,{" "}
+            <a href="https://www.usenix.org/conference/nsdi25/presentation/deng">Minder, ByteDance (NSDI &apos;25)</a>.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
 
-      <section aria-labelledby="loop-title" className="border-t border-ar-line py-16 md:py-24">
-        <Container>
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-16">
-            <h2 id="loop-title" className={`${h2} max-w-[500px]`}>Not another dashboard to watch.</h2>
-            <p className={`${prose} max-w-[560px] self-center`}>Monitoring tells you something is slow. YovaSense closes the loop: it confirms the slowdown is real, localizes it, acts within your policies, and proves the recovery. The output isn&apos;t a chart — it&apos;s an incident with a cause, the evidence for it, the action taken, and the measured result.</p>
+function Status() {
+  return (
+    <section id="status" className="ys-sec" aria-labelledby="status-title">
+      <div className="ys-wrap ys-rail">
+        <Spine />
+        <div className="ys-sec-head ys-scrim">
+          <span className="ys-node" data-reader-mark aria-hidden="true" />
+          <p className="ys-eyebrow">Status</p>
+          <h2 id="status-title" className="ys-display ys-h2">What exists, what&apos;s simulated, what&apos;s next.</h2>
+          <p className="ys-lede">The full autonomous workflow is our product direction, not a claim that every capability is production-ready.</p>
+        </div>
+        <div className="ys-status-grid ys-scrim">
+          <div className="ys-st-col">
+            <p><span className="ys-chip" data-kind="exists">Exists today</span></p>
+            <h3>GPUBridge, open source (MIT)</h3>
+            <p>NVIDIA and AMD GPUs in one PyTorch job. It has run on V100, T4, L40S, A100, H200 and MI50.</p>
+            <h3>Detector prototypes</h3>
+            <p>Tested on one node of four V100s: 8 of 8 injected slowdowns flagged on the right rank. Counts are cases, not accuracy rates.</p>
+            <a className="ys-link" href={yovasense.github}>GPUBridge on GitHub <span aria-hidden="true">↗</span></a>
           </div>
-          <div className="mt-12 grid gap-9 border-t border-ar-line pt-8 md:grid-cols-3 md:gap-10">
-            {outcomes.map((o, i) => (
-              <div key={o.title}>
-                <span aria-hidden="true" className="ar-mono text-[11px] text-ar-faint">0{i + 1}</span>
-                <h3 className="mt-4 text-[19px] font-medium tracking-tight">{o.title}</h3>
-                <p className="mt-3 max-w-[340px] text-[15px] leading-[1.7] text-ar-muted">{o.body.charAt(0).toUpperCase() + o.body.slice(1)}</p>
-              </div>
-            ))}
+          <div className="ys-st-col">
+            <p><span className="ys-chip" data-kind="simulated">Simulated</span></p>
+            <h3>The fleet demo</h3>
+            <p>Simulated from a frozen snapshot of the fleet service. Every GPU&apos;s benchmark history and service record is synthesized. No real hardware, cordon, restart or recovery.</p>
+            <a className="ys-link" href="/Demo/">Open the simulated demo <span aria-hidden="true">→</span></a>
           </div>
-        </Container>
-      </section>
+          <div className="ys-st-col">
+            <p><span className="ys-chip" data-kind="prototype">Prototype · in development</span></p>
+            <h3>Next to prove</h3>
+            <ul className="ys-ticks">
+              <li>Detection beyond one node, and on AMD with RCCL</li>
+              <li>RDMA across machines</li>
+              <li>Real production workloads</li>
+            </ul>
+            <a className="ys-link" href="/Architecture/">Read the architecture <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      <section aria-labelledby="who-title" className="border-t border-ar-line py-16 md:py-24">
-        <Container>
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-16">
-            <h2 id="who-title" className={`${h2} max-w-[520px]`}>Built for the team that owns training performance.</h2>
-            <p className={`${prose} max-w-[560px] self-center`}>AI infrastructure, research-computing, and GPU-operations teams running distributed training on owned or rented clusters. Vendor-independent by design: across NVIDIA and AMD, across GPU generations, not tied to one cloud&apos;s or one vendor&apos;s stack.</p>
+function Pilot() {
+  return (
+    <section id="pilot" className="ys-sec ys-sec-end" aria-labelledby="pilot-title">
+      <div className="ys-wrap ys-rail">
+        <Spine />
+        <span className="ys-terminal" data-reader-mark aria-hidden="true" />
+        <div className="ys-pilot ys-scrim">
+          <p className="ys-eyebrow">Pilot</p>
+          <h2 id="pilot-title" className="ys-display ys-h1">Running GPU clusters? Tell us what slows you down.</h2>
+          <p className="ys-lede">We&apos;re talking with infrastructure teams about the slowdowns that cost them the most. Those conversations set the roadmap.</p>
+          <div className="ys-cta-row">
+            <a className="ys-btn ys-btn-pilot ys-btn-lg" href={mailto(PILOT_SUBJECT)}>
+              Talk to the founders <span aria-hidden="true">↗</span>
+            </a>
+            <Link className="ys-link" href="/product/">
+              Inside YovaSense: the architecture and research <span aria-hidden="true">→</span>
+            </Link>
           </div>
-        </Container>
-      </section>
+          <p className="ys-fine ys-pilot-addr">
+            Or write to <a href={mailto(PILOT_SUBJECT)}>{yovasense.email}</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      <section id="contact" aria-labelledby="status-title" className="border-t border-ar-line bg-ar-panel/40 py-16 md:py-20">
-        <Container>
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-16">
-            <h2 id="status-title" className={`${h2} max-w-[520px]`}>In development — built with the teams who&apos;ll run it.</h2>
-            <p className={`${prose} max-w-[560px] self-center`}>
-              YovaSense is in active development. What exists today: <Link href="/product/#gpubridge" className="text-ar-fg underline decoration-ar-line-2 underline-offset-4 hover:decoration-ar-fg">GPUBridge</Link>, our open-source backend for mixed NVIDIA + AMD PyTorch jobs, and the detector prototypes described inside. We&apos;re talking with infrastructure teams about the slowdowns that cost them the most — those conversations set the roadmap.
-            </p>
-          </div>
-          <div className="mt-12 flex flex-col items-start justify-between gap-7 border-t border-ar-line pt-10 md:flex-row md:items-center">
-            <h2 className="ar-display text-[clamp(1.6rem,2.6vw,2.2rem)] leading-tight">Running distributed training? Tell us what slows you down.</h2>
-            <a href={mailto("YovaSense: let's talk")} className={`${button.solid} shrink-0`}>Talk to the founders <Arrow /></a>
-          </div>
-        </Container>
-      </section>
+/** Everything after the hero. */
+export default function Homepage() {
+  return (
+    <>
+      <Workflow />
+      <ProductShowcase />
+      <Ambition />
+      <Status />
+      <Pilot />
     </>
   );
 }

@@ -12,7 +12,7 @@ const WIRE = {
 
 function Endpoint({ children }: { children: React.ReactNode }) {
   return (
-    <span className="ar-mono w-[82px] shrink-0 rounded-[3px] border border-ar-line-2 bg-ar-bg px-1 py-2 text-center text-[10.5px] leading-tight text-ar-fg xl:w-auto xl:px-3 xl:text-[11.5px]">
+    <span className="ar-mono w-[82px] shrink-0 rounded-[3px] border border-ar-line-2 bg-ar-bg px-1 py-2 text-center text-[11px] leading-tight text-ar-fg xl:w-auto xl:px-3 xl:text-[11.5px]">
       {children}
     </span>
   );
@@ -34,7 +34,7 @@ function Wires({ channel }: { channel: Channel }) {
         {wires.map((w) => (
           <div key={w.label}>
             <div className={`ar-wire ${w.back ? "ar-wire-back" : ""}`} style={WIRE[channel.key]} />
-            <p className="ar-mono mt-1 truncate text-center text-[10px] text-ar-faint">
+            <p className="ar-mono mt-1 truncate text-center text-[11px] text-ar-faint">
               {w.back ? "← " : ""}
               {w.label}
               {w.back || channel.key === "data" ? "" : " →"}

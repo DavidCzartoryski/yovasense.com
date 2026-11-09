@@ -14,7 +14,8 @@ import { profile } from "@/data/site";
 export const yovasense = {
   name: "YovaSense",
   founder: "David and Thomas Czartoryski",
-  email: profile.email,
+  /** The YovaSense contact (pilot conversations, feedback, incident data). Not profile.email, which is David's personal address. */
+  email: "david@yovasense.com",
   linkedin: profile.linkedin,
   githubProfile: profile.github,
   github: "https://github.com/sidebandstudio/gpubridge",

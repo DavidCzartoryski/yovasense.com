@@ -354,18 +354,60 @@
         svg.appendChild(sv("rect", { class: "ak-band", x: bx, y: pad.t, width: bw, height: H - pad.t - pad.b }, sv("title", null, b.label || "")));
         if (b.label) svg.appendChild(sv("text", { class: "ak-band-label", x: bx + 4, y: pad.t + 12 }, b.label));
       }
-      for (const r of s.refs || []) {
-        svg.appendChild(sv("line", { class: "ak-ref", x1: pad.l, x2: W - pad.r, y1: y(r.y), y2: y(r.y) }));
-        if (r.label) svg.appendChild(sv("text", { class: "ak-tick", x: W - pad.r, y: y(r.y) - 4, "text-anchor": "end" }, r.label));
-      }
+      for (const r of s.refs || []) svg.appendChild(sv("line", { class: "ak-ref", x1: pad.l, x2: W - pad.r, y1: y(r.y), y2: y(r.y) }));
       for (const gap of s.gaps || []) {
         svg.appendChild(sv("rect", { class: "ak-gap", x: x(gap.from), y: pad.t, width: Math.max(2, x(gap.to) - x(gap.from)), height: H - pad.t - pad.b },
           sv("title", null, "no data " + hm(gap.from) + " to " + hm(gap.to))));
       }
-      for (const l of lines) {
+      const drawn = lines.map((l) => {
         const broken = [];
         l.points.forEach((p, j) => { if (j && p[0] - l.points[j - 1][0] > 2 * step) broken.push([p[0], null]); broken.push(p); });
         svg.appendChild(sv("path", { class: "ak-line " + l.tone, d: path(broken, x, y), "data-trace": l.key }));
+        return broken;
+      });
+      // A reference line's label sits on its line where no data line or other label runs through
+      // it: the right end above the line first, then below, then the left end, then along the line.
+      // Its extent is estimated from its length (11 px mono, about 7.8 px a character); drawn after
+      // the data lines, so if no spot is clear the least crossed one still shows on its halo.
+      const taken = [];
+      for (const b of s.bands || []) if (b.label) { const bx = x(Math.max(start, b.from)) + 4; taken.push([bx, pad.t + 2, bx + b.label.length * 7.8, pad.t + 14]); }
+      if (stale) taken.push([W - pad.r - 4 - String(s.reason || "stale").length * 7.8, pad.t + 2, W - pad.r - 4, pad.t + 14]);
+      const crossings = (bx) => {
+        let n = 0;
+        for (const t of taken) if (bx[0] < t[2] && bx[2] > t[0] && bx[1] < t[3] && bx[3] > t[1]) n += 100;
+        for (const pts of drawn) {
+          for (let j = 1; j < pts.length; j++) {
+            const a = pts[j - 1], c = pts[j];
+            if (a[1] === null || c[1] === null) continue;
+            const ax = x(a[0]), cx = x(c[0]);
+            if (Math.max(ax, cx) < bx[0] || Math.min(ax, cx) > bx[2]) continue;
+            // the segment's y over the box's x range, against the box's y range
+            const at = (px) => (cx === ax ? y(a[1]) : y(a[1]) + ((px - ax) / (cx - ax)) * (y(c[1]) - y(a[1])));
+            const y1 = at(Math.max(bx[0], Math.min(ax, cx))), y2 = at(Math.min(bx[2], Math.max(ax, cx)));
+            if (Math.max(y1, y2) >= bx[1] && Math.min(y1, y2) <= bx[3]) n++;
+          }
+        }
+        return n;
+      };
+      for (const r of s.refs || []) {
+        if (!r.label) continue;
+        const ry = y(r.y), w = String(r.label).length * 7.8, right = W - pad.r, left = pad.l + 4 + w;
+        const ends = [right, left];
+        for (let e = right - w / 2; e > left; e -= w / 2) ends.push(e);
+        let best = null;
+        for (const e of ends) {
+          for (const base of [ry - 4, ry + 13]) {
+            const bx = [e - w - 2, base - 11, e + 2, base + 4]; // the glyphs and a 2 px margin
+            if (bx[1] < pad.t || bx[3] > H - pad.b) continue;
+            const n = crossings(bx);
+            if (!best || n < best.n) best = { e, base, bx, n };
+            if (!n) break;
+          }
+          if (best && !best.n) break;
+        }
+        if (!best) best = { e: right, base: ry - 4, bx: [right - w, ry - 15, right, ry] };
+        taken.push(best.bx);
+        svg.appendChild(sv("text", { class: "ak-tick", x: best.e, y: best.base, "text-anchor": "end" }, r.label));
       }
       // An event's label never overlaps another or leaves the plot: its extent is estimated from
       // its length (11 px mono), it sits left of its line near the right edge, and a label that

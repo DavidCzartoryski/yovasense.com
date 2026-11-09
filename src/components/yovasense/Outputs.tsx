@@ -263,12 +263,12 @@ function PaceChart() {
           {[1, 1.1, 1.2].map((v) => (
             <g key={v}>
               <line x1={ml} x2={ml + plotW} y1={y(v)} y2={y(v)} className={v === THRESHOLD ? "stroke-ar-fg/35" : "stroke-ar-fg/10"} strokeDasharray={v === THRESHOLD ? "4 4" : undefined} />
-              <text x={ml - 8} y={y(v) + 3.5} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="10">
+              <text x={ml - 8} y={y(v) + 3.5} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="11">
                 {v.toFixed(2)}
               </text>
             </g>
           ))}
-          <text x={ml + 6} y={y(THRESHOLD) - 6} className="ar-mono fill-ar-faint" fontSize="10">
+          <text x={ml + 6} y={y(THRESHOLD) - 6} className="ar-mono fill-ar-faint" fontSize="11">
             suspect above 1.10
           </text>
           {[0, 1, 3, 4, 5, 6, 7].map((r) => (
@@ -276,20 +276,20 @@ function PaceChart() {
           ))}
           <path d={path(SLOW)} fill="none" className="stroke-ar-signal" strokeWidth="2" strokeLinejoin="round" />
           <circle cx={x(FLAGGED)} cy={y(1.19)} r="4.5" className="fill-ar-signal stroke-ar-panel" strokeWidth="2" />
-          <text x={x(FLAGGED)} y={y(1.19) - 11} textAnchor="middle" className="ar-mono fill-ar-fg" fontSize="10">
+          <text x={x(FLAGGED)} y={y(1.19) - 11} textAnchor="middle" className="ar-mono fill-ar-fg" fontSize="11">
             flagged
           </text>
-          <text x={ml + plotW + 8} y={y(end.pace[SLOW]) + 3.5} className="ar-mono fill-ar-fg" fontSize="10.5">
+          <text x={ml + plotW + 8} y={y(end.pace[SLOW]) + 3.5} className="ar-mono fill-ar-fg" fontSize="11">
             rank 2
           </text>
-          <text x={ml + plotW + 8} y={y(1) + 3.5} className="ar-mono fill-ar-faint" fontSize="10.5">
+          <text x={ml + plotW + 8} y={y(1) + 3.5} className="ar-mono fill-ar-faint" fontSize="11">
             peers
           </text>
           <line x1={ml} x2={ml + plotW} y1={top + h} y2={top + h} className="stroke-ar-fg/20" />
           {minutes.map((t) => {
             const px = ml + ((t - START) / (at(LAST) - START)) * plotW;
             return (
-              <text key={t} x={px} y={top + h + 16} textAnchor={px === ml ? "start" : "middle"} className="ar-mono fill-ar-faint" fontSize="10">
+              <text key={t} x={px} y={top + h + 16} textAnchor={px === ml ? "start" : "middle"} className="ar-mono fill-ar-faint" fontSize="11">
                 {clock(t)}
               </text>
             );
@@ -370,7 +370,7 @@ function MetricsSample() {
         ))}
       </div>
       <Panel title="Rank pace over its island">
-        <ul className="ar-mono mb-2 flex flex-wrap gap-x-4 gap-y-1 text-[10px] uppercase tracking-[0.08em] text-ar-muted">
+        <ul className="ar-mono mb-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] uppercase tracking-[0.08em] text-ar-muted">
           <li className="flex items-center gap-2">
             <span aria-hidden="true" className="h-0.5 w-4 rounded-full bg-ar-signal" />
             Rank 2

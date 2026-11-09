@@ -53,7 +53,7 @@ export default function PlanSteps() {
                       <path d="M13 8a5 5 0 1 1-1.6-3.7M13 2.5v2.8h-2.8" fill="none" stroke="currentColor" strokeWidth="1.5" />
                     </svg>
                   ) : (
-                    <span className={`ar-mono text-[10.5px] ${isOpen ? "text-ar-ctl-ink" : "text-ar-faint"}`}>{num(i)}</span>
+                    <span className={`ar-mono text-[11px] ${isOpen ? "text-ar-ctl-ink" : "text-ar-faint"}`}>{num(i)}</span>
                   )}
                   <svg
                     width="12"

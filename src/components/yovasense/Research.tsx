@@ -21,7 +21,7 @@ function Flow() {
                   }`}
                 >
                   <span className="text-[14.5px] font-medium leading-snug text-ar-fg">{step}</span>
-                  {future && <span className="ar-label mt-1 text-[9.5px] text-ar-faint">In development</span>}
+                  {future && <span className="ar-label mt-1 text-[11px] text-ar-faint">In development</span>}
                 </div>
                 {i < research.flow.length - 1 && (
                   <span aria-hidden="true" className="ar-mono hidden w-6 shrink-0 text-center text-ar-faint md:block">

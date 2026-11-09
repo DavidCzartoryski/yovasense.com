@@ -36,21 +36,21 @@ function Channel() {
       <div className="hidden w-full flex-col gap-3 lg:flex" aria-hidden="true">
         <div>
           <div className="ar-wire" style={CTL} />
-          <p className="ar-mono mt-1 text-center text-[10px] text-ar-faint">{pipeline.channel.up} →</p>
+          <p className="ar-mono mt-1 text-center text-[11px] text-ar-faint">{pipeline.channel.up} →</p>
         </div>
         <div>
           <div className="ar-wire ar-wire-back" style={CTL} />
-          <p className="ar-mono mt-1 text-center text-[10px] text-ar-faint">← {pipeline.channel.down}</p>
+          <p className="ar-mono mt-1 text-center text-[11px] text-ar-faint">← {pipeline.channel.down}</p>
         </div>
       </div>
       <div className="flex h-16 items-stretch gap-6 lg:hidden" aria-hidden="true">
         <div className="flex items-stretch gap-2">
           <div className="ar-wire ar-wire-v" style={CTL} />
-          <p className="ar-mono self-center text-[10px] text-ar-faint">{pipeline.channel.up} ↓</p>
+          <p className="ar-mono self-center text-[11px] text-ar-faint">{pipeline.channel.up} ↓</p>
         </div>
         <div className="flex items-stretch gap-2">
           <div className="ar-wire ar-wire-v ar-wire-back" style={CTL} />
-          <p className="ar-mono self-center text-[10px] text-ar-faint">↑ {pipeline.channel.down}</p>
+          <p className="ar-mono self-center text-[11px] text-ar-faint">↑ {pipeline.channel.down}</p>
         </div>
       </div>
       <p className="sr-only">
