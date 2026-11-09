@@ -360,13 +360,52 @@ main:focus { outline: none; }
 /* ---------- the field (ScrollField.tsx) ---------- */
 .ys-field { position: fixed; inset: 0 0 auto 0; height: 100vh; height: 100lvh; z-index: 0; pointer-events: none; }
 .ys-field canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-/* the still, without JS: one folded ribbon at the right, its crease lit, a deep wedge beside it */
-.ys-field-fallback {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(118deg, transparent 0 64%, rgb(1 4 6 / 0.75) 64% 71%, rgb(143 211 247 / 0.3) 71%, rgb(2 151 222 / 0.22) 73%, rgb(3 115 176 / 0.12) 80%, rgb(4 61 99 / 0.05) 88%, transparent 92%),
-    linear-gradient(64deg, transparent 0 4%, rgb(2 151 222 / 0.1) 4%, rgb(4 61 99 / 0.05) 11%, transparent 16%);
+/* the canvas's first frame without the canvas (FieldStill.tsx): the top-of-page pose, or the
+   reduced-motion still, for the field's width; lengths are in this container's cqw/cqh */
+.ys-field-fallback { position: absolute; inset: 0; overflow: hidden; container: ys-field / size; }
+.ys-fs { position: absolute; inset: 0; display: none; }
+/* a ribbon (--ox/--oy a point on its centre line, --rot its direction, --h half its width,
+   --pl a panel's length, --sin/--as/--cos of the crease skew, --turn the crease's direction);
+   each child sits --s0 viewport heights along it, in the ribbon's own frame */
+.ys-fr { position: absolute; inset: 0; }
+.ys-fr > i { position: absolute; display: block; left: var(--ox); top: var(--oy); transform-origin: 0 0; }
+/* a face: a box around its parallelogram, cut to it; the light runs along the ribbon
+   (the canvas's LIT_STOPS and SHADOW_STOPS, scaled by --k) */
+.ys-fr > [data-f="lit"], .ys-fr > [data-f="shade"] {
+  --o: calc(var(--h) * var(--as));
+  width: calc(var(--pl) + 2 * var(--o)); height: calc(2 * var(--h) * var(--cos));
+  transform: rotate(var(--rot)) translate(calc(var(--s0) * 100cqh - var(--o)), calc(-1 * var(--h) * var(--cos)));
+  clip-path: polygon(
+    calc(var(--o) + var(--h) * var(--sin)) 0, calc(var(--o) - var(--h) * var(--sin)) 100%,
+    calc(var(--pl) + var(--o) - var(--h) * var(--sin)) 100%, calc(var(--pl) + var(--o) + var(--h) * var(--sin)) 0);
 }
+.ys-fr > [data-f="lit"] {
+  background: linear-gradient(90deg,
+    rgb(143 211 247 / calc(0.85 * var(--k))) var(--o),
+    rgb(77 184 238 / calc(0.62 * var(--k))) calc(var(--o) + 0.08 * var(--pl)),
+    rgb(2 151 222 / calc(0.34 * var(--k))) calc(var(--o) + 0.35 * var(--pl)),
+    rgb(3 115 176 / calc(0.16 * var(--k))) calc(var(--o) + 0.7 * var(--pl)),
+    rgb(4 61 99 / calc(0.06 * var(--k))) calc(var(--o) + var(--pl)));
+}
+.ys-fr > [data-f="shade"] {
+  background: linear-gradient(90deg, rgb(2 22 36 / calc(0.45 * var(--k))) var(--o), rgb(1 4 6 / calc(0.8 * var(--k))) calc(var(--o) + var(--pl)));
+}
+/* a bar along a lit face's crease, from --from to --to of its length, --t thick */
+.ys-fr > [data-f="crease"], .ys-fr > [data-f="edge"], .ys-fr > [data-f="glow"] {
+  --from: 0; --to: 1;
+  width: calc(2 * var(--h) * (var(--to) - var(--from))); height: var(--t);
+  transform: rotate(var(--rot))
+    translate(calc(var(--s0) * 100cqh + var(--h) * var(--sin) * (1 - 2 * var(--from))), calc(-1 * var(--h) * var(--cos) * (1 - 2 * var(--from))))
+    rotate(var(--turn)) translateY(calc(-0.5 * var(--t)));
+}
+.ys-fr > [data-f="crease"] { --t: 1px; background: rgb(207 235 250 / var(--k)); }
+/* the warm edge (the canvas's EDGE_STOPS and EDGE_GLOW, --k the warmth) */
+.ys-fr > [data-f="edge"] { --t: 1.6px; background: linear-gradient(90deg, rgb(252 115 77 / 0), rgb(252 115 77 / calc(0.85 * var(--k))) 45%, rgb(255 154 122 / calc(0.95 * var(--k)))); }
+.ys-fr > [data-f="glow"] { --t: 10px; background: rgb(252 115 77 / calc(0.16 * var(--k))); }
+@container ys-field (width < 760px) { .ys-fs[data-mode="phone"] { display: block; } }
+@container ys-field (width >= 760px) { .ys-fs[data-mode="desk"] { display: block; } }
+@media (prefers-reduced-motion: reduce) { .ys-fs[data-pose="top"] { display: none !important; } }
+@media (prefers-reduced-motion: no-preference) { .ys-fs[data-pose="still"] { display: none !important; } }
 .ys-field[data-live] .ys-field-fallback { display: none; }
 
 /* ---------- scrims, sized to stay clear of the spine ---------- */
@@ -377,19 +416,104 @@ main:focus { outline: none; }
 }
 
 /* ---------- hero ---------- */
-.ys-hero { position: relative; isolation: isolate; overflow: hidden; min-height: max(640px, calc(100svh - var(--ys-header-h))); }
-.ys-hero-path, .ys-hero-still { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+/* The illustration's geometry (Hero.tsx draws from it, HeroPath.tsx reads it back
+   from the [data-hx] markers): the spine's x (sx), the convergence B (bx, by), the
+   base run's y (base), how far right of B the single line turns (turn) and its
+   corner radius (rad). Desktop mirrors the hero grid: B sits 240px left of the
+   copy, between sx + 220px and 37% of the hero. Percentages resolve against the
+   hero box: x values only in horizontal properties, y values in vertical ones. */
+.ys-hero {
+  position: relative; isolation: isolate; overflow: hidden; min-height: max(640px, calc(100svh - var(--ys-header-h)));
+  --hx-cols: 5; /* grid columns left of the copy */
+  --hx-sx: calc(max(0px, (100% - var(--ys-container)) / 2) + var(--ys-gutter) + 1px);
+  --hx-copy: calc(max(0px, (100% - var(--ys-container)) / 2) + var(--ys-gutter) + var(--hx-cols) * ((min(100%, var(--ys-container)) - 2 * var(--ys-gutter) - 264px) / 12 + 24px));
+  --hx-bx: max(calc(var(--hx-sx) + 220px), min(calc(var(--hx-copy) - 240px), 37%));
+  --hx-by: 50%;
+  --hx-base: calc(100% - max(70px, 8.5%));
+  --hx-lanes-h: 100%;
+  --hx-turn: 104px;
+  --hx-rad: 34px;
+  --hx-gate: 150px;
+  --hx-sprite: 150px;
+  --hx-haze: max(55vw, calc(55svh - 40px), 352px);
+}
+.ys-hero-art, .ys-hero-path, .ys-hero-still, .ys-hero-tags { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.ys-hero-art, .ys-hero-still { isolation: isolate; overflow: hidden; }
+.ys-hero-art > *, .ys-hero-still > * { position: absolute; display: block; }
 .ys-hero-path canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .ys-hero-path[data-live] ~ .ys-hero-still { display: none; }
-.ys-hero-path:not([data-live]) .ys-hero-tag { display: none; }
+.ys-hero [data-mode="phone"] { display: none !important; }
+/* the light that reveals the form: a cobalt haze around B, a softer one where the line lands */
+.ys-art-haze {
+  inset: 0;
+  background:
+    radial-gradient(circle 50vw at var(--hx-sx) var(--hx-base), rgb(3 115 176 / 0.16), rgb(3 115 176 / 0)),
+    radial-gradient(circle var(--hx-haze) at var(--hx-bx) var(--hx-by), rgb(4 61 99 / 0.55), rgb(2 22 36 / 0.45) 35%, rgb(2 7 10 / 0));
+}
+/* axis ticks under the base run, brightest midway between the spine and B */
+.ys-art-ticks {
+  left: 0; width: 100%; top: calc(var(--hx-base) + 14px); height: 9px;
+  --tick: rgb(143 211 247);
+  background:
+    repeating-linear-gradient(90deg, var(--tick) var(--hx-sx) calc(var(--hx-sx) + 1px), transparent calc(var(--hx-sx) + 1px) calc(var(--hx-sx) + 24px)) 0 0 / 100% 5px no-repeat,
+    repeating-linear-gradient(90deg, var(--tick) var(--hx-sx) calc(var(--hx-sx) + 1px), transparent calc(var(--hx-sx) + 1px) calc(var(--hx-sx) + 120px)) 0 5px / 100% 4px no-repeat;
+  mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.05) calc(1.25 * var(--hx-sx) - 0.25 * var(--hx-bx)), rgb(0 0 0 / 0.18) calc((var(--hx-sx) + var(--hx-bx)) / 2), rgb(0 0 0 / 0.05) calc(1.25 * var(--hx-bx) - 0.25 * var(--hx-sx)));
+  clip-path: inset(0 calc(100% - var(--hx-bx) - 90px) 0 calc(var(--hx-sx) + 47.5px));
+}
+/* the barrier gate */
+.ys-art-gate {
+  left: calc(var(--hx-bx) - 0.5px); width: 1px; top: calc(var(--hx-by) - var(--hx-gate)); height: calc(2 * var(--hx-gate));
+  background: linear-gradient(rgb(234 242 245 / 0), rgb(234 242 245 / 0.32), rgb(234 242 245 / 0));
+}
+/* lane boxes: from the hero's left edge to B; the lanes start off its left side */
+.ys-lanebox { left: 0; top: 0; width: var(--hx-bx); height: var(--hx-lanes-h); overflow: visible; mix-blend-mode: plus-lighter; }
+.ys-lanebox :is(path, polyline) { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; mix-blend-mode: plus-lighter; }
+/* the single line the eight become, in five layers of light (wide and faint to thin and white):
+   along the top from B, down at the turn, back along the base, and down the spine */
+.ys-art-line { inset: 0; --w: 34px; --c: rgb(2 151 222 / 0.04); }
+.ys-art-line[data-l="1"] { --w: 18px; --c: rgb(2 151 222 / 0.08); }
+.ys-art-line[data-l="2"] { --w: 8px; --c: rgb(2 151 222 / 0.2); }
+.ys-art-line[data-l="3"] { --w: 3.4px; --c: rgb(77 184 238 / 0.65); }
+.ys-art-line[data-l="4"] { --w: 1.4px; --c: rgb(235 248 255 / 0.95); }
+.ys-art-line > b { position: absolute; box-sizing: border-box; border: 0 solid var(--c); mix-blend-mode: plus-lighter; }
+.ys-art-line > [data-p="top"] {
+  left: var(--hx-bx); width: calc(var(--hx-turn) + var(--w) / 2);
+  top: calc(var(--hx-by) - var(--w) / 2); height: calc(var(--hx-rad) + var(--w) / 2);
+  border-top-width: var(--w); border-right-width: var(--w); border-top-right-radius: calc(var(--hx-rad) + var(--w) / 2);
+}
+.ys-art-line > [data-p="drop"] {
+  left: calc(var(--hx-bx) + var(--hx-turn) - var(--w) / 2); width: var(--w);
+  top: calc(var(--hx-by) + var(--hx-rad)); height: calc(var(--hx-base) - var(--hx-by) - 2 * var(--hx-rad));
+  background: var(--c);
+}
+.ys-art-line > [data-p="base"] {
+  left: calc(var(--hx-sx) + var(--hx-rad)); width: calc(var(--hx-bx) + var(--hx-turn) + var(--w) / 2 - var(--hx-sx) - var(--hx-rad));
+  top: calc(var(--hx-base) - var(--hx-rad)); height: calc(var(--hx-rad) + var(--w) / 2);
+  border-right-width: var(--w); border-bottom-width: var(--w); border-bottom-right-radius: calc(var(--hx-rad) + var(--w) / 2);
+}
+.ys-art-line > [data-p="spine"] {
+  left: calc(var(--hx-sx) - var(--w) / 2); width: calc(var(--hx-rad) + var(--w) / 2);
+  top: calc(var(--hx-base) - var(--w) / 2); bottom: -8px;
+  border-top-width: var(--w); border-left-width: var(--w); border-top-left-radius: calc(var(--hx-rad) + var(--w) / 2);
+}
+.ys-art-sprite, .ys-still-dot { translate: -50% -50%; mix-blend-mode: plus-lighter; }
+.ys-art-sprite { left: var(--hx-bx); top: var(--hx-by); width: var(--hx-sprite); height: var(--hx-sprite); }
+.ys-art-mark { width: 0; height: 0; }
+.ys-art-mark[data-hx="b"] { left: var(--hx-bx); top: var(--hx-by); }
+.ys-art-mark[data-hx="turn"] { left: calc(var(--hx-bx) + var(--hx-turn)); top: var(--hx-base); }
+/* labels on navy chips, fully opaque at every phase of the loop; placed from the same geometry
+   (the late label rides lane 2 at a fifth of its way, heroGeometry.ts) */
 .ys-hero-tag {
-  position: absolute; left: 0; top: 0; z-index: 1;
-  transform: translate(var(--tx, -999px), var(--ty, -999px));
+  position: absolute; z-index: 1;
+  left: var(--tag-x); top: var(--tag-y);
+  left: round(var(--tag-x), 1px); top: round(var(--tag-y), 1px);
   padding: 2px 7px; background: rgb(2 7 10 / 0.9);
   font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono);
   font-size: var(--ys-fs-label); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; line-height: 1.5;
   color: var(--ys-text-muted);
 }
+.ys-hero-tag[data-tag="gate"] { --tag-x: calc(var(--hx-bx) - 34px); --tag-y: calc(var(--hx-by) - var(--hx-gate) - 26px); }
+.ys-hero-tag[data-tag="late"] { --tag-x: max(calc(var(--hx-sx) + 6px), calc(var(--hx-bx) * 0.1913)); --tag-y: calc(39.06% - 30px); }
 .ys-hero-tag-late { color: var(--ys-text-warm); }
 .ys-hero-grid {
   position: relative; z-index: 2;
@@ -418,14 +542,38 @@ main:focus { outline: none; }
 .ys-key-mark { flex: none; width: 18px; height: 2px; background: var(--ys-blue-200); box-shadow: 0 0 6px rgb(2 151 222 / 0.7); }
 .ys-key-mark[data-mark="late"] { background: var(--ys-orange); box-shadow: 0 0 6px rgb(252 115 77 / 0.7); }
 .ys-key-mark[data-mark="gate"] { width: 18px; height: 12px; background: linear-gradient(90deg, transparent 8px, rgb(234 242 245 / 0.6) 8px 9px, transparent 9px); box-shadow: none; }
-@media (max-width: 1099px) and (min-width: 760px) {
-  .ys-hero-copy { grid-column: 5 / 13; }
+@media (max-width: 1099px) {
+  /* Phones and tablets: the lanes converge in a band above the copy (--hx-band); the single
+     line turns back along the band's foot and runs down the copy's left edge, so the spine
+     starts in the first viewport. The lane box is the band, B sits at 60% of the width.
+     (Side by side, the copy column left the picture too little room below 1100px.) */
+  .ys-hero {
+    min-height: 0;
+    --hx-band: 172px;
+    --hx-bx: 60%;
+    --hx-base: calc(var(--hx-band) - 18px);
+    --hx-by: calc(var(--hx-base) * 0.46);
+    --hx-lanes-h: var(--hx-base);
+    --hx-turn: 76px;
+    --hx-rad: 20px;
+    --hx-gate: 40px;
+    --hx-sprite: 90px;
+    --hx-haze: max(55vw, 560px);
+  }
+  .ys-hero [data-mode="phone"] { display: block !important; }
+  .ys-hero [data-mode="desk"], .ys-art-ticks { display: none !important; }
+  .ys-art-line { --w: 22px; --c: rgb(2 151 222 / 0.05); }
+  .ys-art-line[data-l="1"] { --w: 11px; --c: rgb(2 151 222 / 0.1); }
+  .ys-art-line[data-l="2"] { --w: 5px; --c: rgb(77 184 238 / 0.28); }
+  .ys-art-line[data-l="3"] { --w: 2.2px; --c: rgb(143 211 247 / 0.8); }
+  .ys-art-line[data-l="4"] { --w: 1px; --c: rgb(235 248 255 / 0.95); }
+  .ys-hero-tag[data-tag="gate"] { --tag-x: calc(var(--hx-bx) + 14px); --tag-y: calc(var(--hx-by) - 30px); }
+  .ys-hero-tag[data-tag="late"] { --tag-x: max(12px, calc(var(--hx-bx) * 0.0243)); --tag-y: calc(var(--hx-base) * 0.3152 - 24px); }
+  .ys-hero-grid { display: block; min-height: 0; }
+  .ys-hero-copy { padding: var(--hx-band) 0 28px var(--ys-rail-pad); }
+  .ys-hero-key { position: static; max-width: none; margin: 0 var(--ys-gutter) 36px calc(var(--ys-gutter) + var(--ys-rail-pad)); padding: 0; background: none; }
 }
 @media (max-width: 759px) {
-  .ys-hero { min-height: 0; }
-  .ys-hero-grid { display: block; min-height: 0; }
-  /* the lanes converge in a band above the copy; the single line then runs down its left edge */
-  .ys-hero-copy { padding: 172px 0 28px var(--ys-rail-pad); }
   .ys-hero-title { margin-top: 14px; }
   .ys-hero-lede { margin-top: 18px; font-size: 16px; }
   .ys-hero-copy-inner { display: flex; flex-direction: column; }
@@ -433,7 +581,6 @@ main:focus { outline: none; }
   .ys-hero-meta { order: 6; }
   .ys-cta-row { margin-top: 22px; gap: 10px; }
   .ys-hero-copy .ys-cta-row .ys-btn { flex: 1 1 100%; }
-  .ys-hero-key { position: static; max-width: none; margin: 0 var(--ys-gutter) 36px calc(var(--ys-gutter) + var(--ys-rail-pad)); padding: 0; background: none; }
 }
 
 /* ---------- spine and sections ---------- */
