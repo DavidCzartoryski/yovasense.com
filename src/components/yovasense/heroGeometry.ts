@@ -17,8 +17,12 @@ export type Path = { pts: Pt[]; len: number[]; total: number };
 export type Mode = "phone" | "desk";
 export const MODES: Mode[] = ["phone", "desk"];
 
-/** The CSS breakpoint below which the hero uses its phone composition. */
-export const PHONE_QUERY = "(max-width: 759px)";
+/**
+ * The CSS breakpoint below which the hero uses its "phone" composition: the
+ * lanes converge in a band above the copy. Tablets use it too; side by side,
+ * the copy column left too little room for the picture below 1100px.
+ */
+export const PHONE_QUERY = "(max-width: 1099px)";
 
 export const LANES = 8;
 export const LATE = 2;
