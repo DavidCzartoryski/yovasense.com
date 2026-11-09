@@ -1,1 +1,1 @@
-YovaSense: one slow GPU slows your whole training job. YovaSense finds it and fixes it. Detect, confirm, localize, act, verify, while the job runs. In development, for NVIDIA and AMD, on owned or rented clusters.
+YovaSense: one slow GPU holds the whole job back. Find it, fix it, verify it: the loop YovaSense is building for GPU fleets. Eight rank trails meet at an all-reduce and become one line. In development; the demo is simulated.
