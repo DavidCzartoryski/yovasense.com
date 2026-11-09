@@ -1,78 +1,148 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Passport, not dashboard. Ink-navy night sky, cream passport
-   paper, stamp inks, and one gold foil accent. Editorial serif for
-   headings (fashion-magazine register), a humanist sans for body,
-   and a mono for anything that would be printed on a ticket.
+   YovaSense. Light falling on flat geometry at night: Dry
+   Shillingston navy everywhere, Unhinged Custodius Blue for the
+   light and the lit side of every form, Slitherine Slime Orange for
+   a thin warm edge where two planes meet. Archivo set wide for
+   display and body, Martian Mono for labels and readouts.
+   Token roles and measured contrast: the redesign's TOKENS.md.
    ────────────────────────────────────────────────────────────── */
 :root {
-  --ink: #0b1020;
-  --ink-2: #111a33;
-  --ink-3: #182347;
-  --paper: #f3ead8;
-  --paper-2: #e6dcc4;
-  --paper-3: #d6c8a8;
-  --gold: #d4a853;
-  --gold-2: #f0cf85;
-  /* Gold that still reads as text on paper (5.2:1 on --paper). */
-  --gold-deep: #7a5c1a;
-  --paper-hi: #faf6ec;
-  --ember: #c8502c;
-  --stamp-red: #d63a2f;
-  --stamp-blue: #3b5bb5;
-  --stamp-green: #2f7a4f;
-  --stamp-violet: #6b4fb0;
+  color-scheme: dark;
 
-  --fg: var(--paper);
-  --fg-muted: rgba(243, 234, 216, 0.66);
-  --fg-dim: rgba(243, 234, 216, 0.48);
-  --fg-faint: rgba(243, 234, 216, 0.3);
-  --line: rgba(243, 234, 216, 0.1);
-  --line-2: rgba(243, 234, 216, 0.18);
+  /* the three given colors, plus off-white */
+  --ys-navy: #02070A;   /* the page */
+  --ys-blue: #0297DE;   /* illuminated forms, active, primary */
+  --ys-orange: #FC734D; /* warm edge light, emphasis, selected */
+  --ys-paper: #EAF2F5;  /* readable text */
 
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* navy ramp: shadows and surfaces */
+  --ys-well: #010406;
+  --ys-surface-1: #06121A;
+  --ys-surface-2: #0A1B25;
+  --ys-surface-3: #102838;
+
+  /* blue ramp: the light */
+  --ys-blue-950: #021624;
+  --ys-blue-800: #043D63;
+  --ys-blue-600: #0373B0;
+  --ys-blue-300: #4DB8EE;
+  --ys-blue-200: #8FD3F7;
+  --ys-blue-100: #CFEBFA;
+
+  /* orange ramp: the edge */
+  --ys-orange-800: #6E2412;
+  --ys-orange-600: #C4482A;
+  --ys-orange-300: #FF9A7A;
+
+  /* the demo's "what YovaSense did" green, shared by /product's diagrams */
+  --ys-ctl: #199E70;
+  --ys-ctl-ink: #2FC28C;
+
+  /* text roles (AA on every surface above; TOKENS.md 3.1-3.2) */
+  --ys-text: var(--ys-paper);           /* 17.85 on navy */
+  --ys-text-muted: #A7B8C2;             /*  9.91 */
+  --ys-text-faint: #8597A2;             /*  6.70; 11px mono caps is the floor */
+  --ys-text-blue: var(--ys-blue-300);   /*  9.07 */
+  --ys-text-warm: var(--ys-orange-300); /*  9.79 */
+  --ys-ink: var(--ys-navy);             /* on lit fields: 6.25 on blue, 9.07 on blue-300 */
+  --ys-ink-muted: #022739;              /* 4.80 on blue, 6.96 on blue-300 */
+
+  /* lines. --ys-line-control is the one boundary that has to be seen on its own:
+     3.70:1 on navy, 3.45 on surface-1, 3.20 on surface-2. */
+  --ys-line: rgb(234 242 245 / 0.10);
+  --ys-line-2: rgb(234 242 245 / 0.18);
+  --ys-line-control: #5A6C79;
+  --ys-line-blue: rgb(2 151 222 / 0.45);
+  --ys-line-ink: rgb(2 7 10 / 0.22);
+
+  /* type */
+  --ys-font-sans: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --ys-font-mono: var(--font-martian), ui-monospace, "SF Mono", Menlo, monospace;
+  --ys-fs-hero: clamp(2.5rem, 0.9rem + 3.85vw, 4.75rem);
+  --ys-fs-h1: clamp(2.25rem, 1.3rem + 3.9vw, 4.5rem);
+  --ys-fs-h2: clamp(1.875rem, 1.25rem + 2.5vw, 3.25rem);
+  --ys-fs-h3: clamp(1.1875rem, 1.05rem + 0.55vw, 1.5rem);
+  --ys-fs-lede: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
+  --ys-fs-body: 1rem;
+  --ys-fs-small: 0.875rem;
+  --ys-fs-mono: 0.8125rem;
+  --ys-fs-label: 0.6875rem; /* 11px: nothing that carries meaning is smaller */
+  --ys-lh-heading: 1.06;
+  --ys-lh-body: 1.6;
+  --ys-stretch-display: 112%;
+  --ys-stretch-wide: 125%;
+  --ys-stretch-mono: 87.5%;
+  --ys-track-display: -0.035em;
+  --ys-track-label: 0.14em;
+  --ys-track-wordmark: 0.16em;
+
+  /* space and layout */
+  --ys-section: clamp(72px, 4rem + 6vw, 168px);
+  --ys-gutter: clamp(20px, 4.5vw, 64px);
+  --ys-container: 1320px;
+  --ys-measure: 62ch;
+  --ys-header-h: 72px;
+  --ys-rail-pad: 92px; /* content indent from the spine */
+
+  /* radii */
+  --ys-radius-1: 2px;
+
+  /* light recipes (TOKENS.md 8) */
+  --ys-glow-blue: 0 0 0 1px rgb(2 151 222 / 0.55), 0 0 24px rgb(2 151 222 / 0.35), 0 0 96px rgb(2 151 222 / 0.18);
+  --ys-edge-orange-left: inset 2px 0 0 var(--ys-orange), -10px 0 28px -12px rgb(252 115 77 / 0.7);
+  --ys-edge-orange-top: inset 0 2px 0 var(--ys-orange), 0 -10px 28px -12px rgb(252 115 77 / 0.7);
+  --ys-shadow-deep: 0 30px 80px -20px rgb(0 0 0 / 0.85), 0 0 0 1px var(--ys-line);
+  --ys-spine-glow: 0 0 4px rgb(77 184 238 / 0.9), 0 0 16px rgb(2 151 222 / 0.55), 0 0 40px rgb(2 151 222 / 0.2);
+
+  /* motion */
+  --ys-dur-1: 120ms;
+  --ys-dur-2: 240ms;
+  --ys-dur-3: 480ms;
+  --ys-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ys-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* focus */
+  --ys-focus: var(--ys-paper);
+
+  --ys-z-header: 20;
+  --ys-z-skip: 30;
+
+  /* /product's components read these older names; they now point at the tokens. */
+  --ar-bg: var(--ys-navy);
+  --ar-panel: var(--ys-surface-1);
+  --ar-fg: var(--ys-paper);
+  --ar-muted: var(--ys-text-muted);
+  --ar-faint: var(--ys-text-faint);
+  --ar-line: var(--ys-line);
+  --ar-line-2: var(--ys-line-2);
+  --ar-signal: var(--ys-orange);
+  --ar-signal-ink: var(--ys-orange-300);
+  --ar-data: var(--ys-blue);
+  --ar-data-ink: var(--ys-blue-300);
+  --ar-ctl: var(--ys-ctl);
+  --ar-ctl-ink: var(--ys-ctl-ink);
+}
+@media (max-width: 759px) {
+  :root { --ys-header-h: 60px; --ys-rail-pad: 30px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --ys-dur-1: 0ms; --ys-dur-2: 0ms; --ys-dur-3: 0ms; }
 }
 
 @theme inline {
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
-  --color-ink-3: var(--ink-3);
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
-  --color-paper-3: var(--paper-3);
-  --color-gold: var(--gold);
-  --color-gold-2: var(--gold-2);
-  --color-gold-deep: var(--gold-deep);
-  --color-paper-hi: var(--paper-hi);
-  --color-ember: var(--ember);
-  --color-stamp-red: var(--stamp-red);
-  --color-stamp-blue: var(--stamp-blue);
-  --color-stamp-green: var(--stamp-green);
-  --color-stamp-violet: var(--stamp-violet);
-  --color-fg: var(--fg);
-  --color-fg-muted: var(--fg-muted);
-  --color-fg-dim: var(--fg-dim);
-  --color-fg-faint: var(--fg-faint);
-  --color-line: var(--line);
-  --color-line-2: var(--line-2);
+  --color-ys-navy: var(--ys-navy);
+  --color-ys-blue: var(--ys-blue);
+  --color-ys-orange: var(--ys-orange);
+  --color-ys-paper: var(--ys-paper);
+  --color-ys-muted: var(--ys-text-muted);
+  --color-ys-faint: var(--ys-text-faint);
+  --color-ys-surface-1: var(--ys-surface-1);
+  --color-ys-surface-2: var(--ys-surface-2);
+  --font-ys-sans: var(--ys-font-sans);
+  --font-ys-mono: var(--ys-font-mono);
 
-  /* Recruiter view palette; values live with the .recruiter rules below. */
-  --color-cv-bg: var(--cv-bg);
-  --color-cv-card: var(--cv-card);
-  --color-cv-fg: var(--cv-fg);
-  --color-cv-muted: var(--cv-muted);
-  --color-cv-faint: var(--cv-faint);
-  --color-cv-line: var(--cv-line);
-  --color-cv-line-2: var(--cv-line-2);
-  --color-cv-accent: var(--cv-accent);
-  --color-cv-accent-soft: var(--cv-accent-soft);
-  --color-cv-accent-ink: var(--cv-accent-ink);
-  --font-cv: var(--font-geist), "Helvetica Neue", Arial, sans-serif;
-  --font-cv-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
-
-  /* YovaSense palette; values live with the .yovasense rules at the bottom. */
   --color-ar-bg: var(--ar-bg);
   --color-ar-panel: var(--ar-panel);
   --color-ar-fg: var(--ar-fg);
@@ -83,474 +153,610 @@
   --color-ar-signal: var(--ar-signal);
   --color-ar-signal-ink: var(--ar-signal-ink);
   --color-ar-data: var(--ar-data);
+  --color-ar-data-ink: var(--ar-data-ink);
   --color-ar-ctl: var(--ar-ctl);
   --color-ar-ctl-ink: var(--ar-ctl-ink);
-
-  --font-display: var(--font-bodoni), "Didot", "Bodoni MT", Georgia, serif;
-  --font-sans: var(--font-instrument), "Helvetica Neue", Arial, sans-serif;
-  --font-mono: var(--font-plex-mono), "SF Mono", Menlo, monospace;
 }
 
+/* ---------- base ---------- */
 html {
-  scroll-behavior: smooth;
-  background: var(--ink);
+  background: var(--ys-navy);
+  scroll-padding-top: calc(var(--ys-header-h) + 16px);
+  -webkit-text-size-adjust: 100%;
 }
-
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+/* No background on body: the homepage's fixed light field paints between the
+   root background and the page. */
 body {
-  background: var(--ink);
-  color: var(--fg);
-  font-family: var(--font-sans);
+  margin: 0;
+  color: var(--ys-text);
+  font-family: var(--ys-font-sans);
+  font-size: var(--ys-fs-body);
+  line-height: var(--ys-lh-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: clip;
+  overflow-wrap: break-word;
 }
-
-::selection {
-  background: var(--gold);
-  color: var(--ink);
-}
-
-/* Fluid type steps */
-:root {
-  --step-display: clamp(3rem, 9.5vw, 8.5rem);
-  --step-h2: clamp(2.2rem, 5vw, 4.25rem);
-  --step-h3: clamp(1.35rem, 2vw, 1.8rem);
-}
-
-/* Film grain over everything, very low opacity. */
-.grain::after {
-  content: "";
-  position: fixed;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  pointer-events: none;
-  z-index: 60;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation: grain 1.4s steps(4) infinite;
-}
-@keyframes grain {
-  0% { transform: translate(0, 0); }
-  25% { transform: translate(-3%, 2%); }
-  50% { transform: translate(2%, -3%); }
-  75% { transform: translate(-1%, -1%); }
-  100% { transform: translate(0, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .grain::after { animation: none; }
-}
-
-/* Passport paper surface */
-.paper {
-  background-color: var(--paper);
-  background-image: url("/art/paper.webp");
-  background-size: 520px 520px;
-  color: var(--ink);
-}
-
-/* Perforated tear line for boarding-pass stubs */
-.perf-v {
-  position: relative;
-}
-.perf-v::before {
-  content: "";
-  position: absolute;
-  top: 8px;
-  bottom: 8px;
-  left: -1px;
-  border-left: 2px dashed rgba(11, 16, 32, 0.35);
-}
-.perf-v::after,
-.perf-v > .notch {
-  content: "";
-  position: absolute;
-  left: -12px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--ink);
-}
-.perf-v::after { top: -12px; }
-.perf-v > .notch { bottom: -12px; }
-
-/* Barcode made of stripes */
-.barcode {
-  background: repeating-linear-gradient(
-    90deg,
-    var(--ink) 0 2px,
-    transparent 2px 4px,
-    var(--ink) 4px 5px,
-    transparent 5px 9px,
-    var(--ink) 9px 12px,
-    transparent 12px 14px,
-    var(--ink) 14px 15px,
-    transparent 15px 19px
-  );
-}
-
-/* Dashed route line */
-.route-dash {
-  stroke-dasharray: 6 8;
-  animation: route 1.6s linear infinite;
-}
-@keyframes route {
-  to { stroke-dashoffset: -28; }
-}
-
-/* Radar-style ping for map markers */
-@keyframes ping-soft {
-  0% { transform: scale(0.6); opacity: 0.9; }
-  100% { transform: scale(2.6); opacity: 0; }
-}
-.ping-soft {
-  transform-origin: center;
-  transform-box: fill-box;
-  animation: ping-soft 2.4s var(--ease-out) infinite;
-}
-
-/* Alarm clock ring (used by the intro) */
-@keyframes bell-rock {
-  0% { transform: rotate(-14deg); }
-  100% { transform: rotate(14deg); }
-}
-@keyframes hammer {
-  0% { transform: translateX(-9px); }
-  100% { transform: translateX(9px); }
-}
-@keyframes shake {
-  0% { transform: translate(0, 0) rotate(0); }
-  20% { transform: translate(-6px, 3px) rotate(-1.5deg); }
-  40% { transform: translate(5px, -4px) rotate(1.2deg); }
-  60% { transform: translate(-4px, -2px) rotate(-1deg); }
-  80% { transform: translate(6px, 3px) rotate(1.4deg); }
-  100% { transform: translate(0, 0) rotate(0); }
-}
-.ringing .bell-l { animation: bell-rock 90ms linear infinite alternate; transform-origin: 118px 96px; }
-.ringing .bell-r { animation: bell-rock 90ms linear infinite alternate-reverse; transform-origin: 282px 96px; }
-.ringing .hammer { animation: hammer 90ms linear infinite alternate; }
-.ringing .clock-body { animation: shake 160ms linear infinite; }
-@keyframes ring-out {
-  0% { transform: scale(0.7); opacity: 0.8; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-.ring-out {
-  transform-origin: center;
-  transform-box: fill-box;
-  animation: ring-out 700ms var(--ease-out) infinite;
-}
-
-/* Audio button VU bars and the intro's airport-code strip */
-@keyframes vu {
-  from { height: 25%; }
-  to { height: 100%; }
-}
-@keyframes strip {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* Hairline, offset dividers */
-.hairline {
-  border-color: var(--line);
-}
-
-/* Focus rings that respect the palette */
+::selection { background: var(--ys-blue); color: var(--ys-navy); }
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--ys-focus);
   outline-offset: 3px;
+  border-radius: var(--ys-radius-1);
 }
+main:focus { outline: none; }
 
-/* Hide scrollbars on horizontal strips */
-.no-scrollbar { scrollbar-width: none; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
+/* The page: header, main and footer over the field. Clips sideways overflow
+   here rather than on body, so nothing ever widens the viewport. */
+.ys-page { position: relative; z-index: 1; overflow-x: clip; min-height: 100vh; }
+.ys-wrap { position: relative; max-width: var(--ys-container); margin-inline: auto; padding-inline: var(--ys-gutter); }
 
-/* Split-flap character cell */
-.flap {
-  position: relative;
-  display: inline-block;
-  min-width: 0.72em;
-  padding: 0.08em 0.06em;
-  border-radius: 0.14em;
-  background: linear-gradient(#1b2547, #0e1631);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 0 rgba(0, 0, 0, 0.6);
-  text-align: center;
+.ys-skip {
+  position: absolute; left: 12px; top: -80px; z-index: var(--ys-z-skip);
+  background: var(--ys-paper); color: var(--ys-navy); padding: 10px 16px;
+  font-size: 14px; font-weight: 600; text-decoration: none; border-radius: var(--ys-radius-1);
 }
-.flap::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: rgba(0, 0, 0, 0.55);
-}
+.ys-skip:focus-visible { top: 12px; outline-color: var(--ys-blue-300); }
 
-/* ──────────────────────────────────────────────────────────────
-   Night flight: the WebGL layer (src/components/three). None of
-   this applies unless the canvas is up and has added .nf-on, so
-   without WebGL the page is exactly as designed.
-   ────────────────────────────────────────────────────────────── */
-/* The hero photo keeps its horizon and wing; its dark sky gives way to the live one. */
-[data-nf="hero-art"] {
-  transition: opacity 1.6s var(--ease-out);
-}
-html.nf-on [data-nf="hero-art"] {
-  opacity: 0.62;
-  mix-blend-mode: screen;
-}
-/* Horizontal drags on the passport spin the globe; vertical ones still scroll. */
-html.nf-on #passport {
-  touch-action: pan-y pinch-zoom;
-}
-html.nf-holding,
-html.nf-holding * {
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-html.nf-dragging,
-html.nf-dragging * {
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: grabbing;
-}
-/* A soft ink halo behind text wherever the scene can show through. */
-html.nf-on :is(#passport, #flight-log, #cargo, #the-mat, #layover, #arrivals) :is(p, h2, h3, li, dd, dt, figcaption) {
-  text-shadow: 0 0 18px rgba(11, 16, 32, 0.9), 0 0 4px rgba(11, 16, 32, 0.75);
-}
-/* The venture cards let the cargo hold glow through, just barely. */
-html.nf-on [data-venture] {
-  background-color: rgb(11 16 32 / 0.8);
-}
-
-/* ──────────────────────────────────────────────────────────────
-   Recruiter view (/recruiter): its own palette, not the passport's.
-   Near-black, warm off-white and one amber accent over a starfield
-   (Starfield.tsx). Every colour in the view comes from these variables
-   (bg-cv-*, text-cv-* …), so a palette change is an edit here and
-   nowhere else; print swaps them for ink on paper. No sound, no WebGL.
-   ────────────────────────────────────────────────────────────── */
-:root:has(.recruiter),
-.recruiter {
-  --cv-bg: #0a0a0b;
-  --cv-card: rgb(255 255 255 / 0.025);
-  --cv-fg: #ededea;
-  --cv-muted: rgb(237 237 234 / 0.68);
-  --cv-faint: rgb(237 237 234 / 0.56);
-  --cv-line: rgb(237 237 234 / 0.08);
-  --cv-line-2: rgb(237 237 234 / 0.16);
-  --cv-accent: #f2a93b;
-  --cv-accent-soft: rgb(242 169 59 / 0.1);
-  --cv-accent-ink: #2a1a02;
-  --cv-mark: rgb(242 169 59 / 0.22);
-  color-scheme: dark;
-}
-html:has(.recruiter),
-html:has(.recruiter) body,
-.recruiter {
-  background: var(--cv-bg);
-  color: var(--cv-fg);
-}
-.recruiter {
-  font-family: var(--font-cv);
-}
-/* The header is one row from lg up and two (bar, then section index) below. */
-html:has(.recruiter) {
-  scroll-padding-top: 7rem;
-}
-@media (min-width: 64rem) {
-  html:has(.recruiter) {
-    scroll-padding-top: 5rem;
-  }
-}
-.recruiter ::selection {
-  background: var(--cv-accent);
-  color: var(--cv-accent-ink);
-}
-.recruiter :focus-visible {
-  outline: 2px solid var(--cv-accent);
-  outline-offset: 2px;
-}
-.recruiter summary::-webkit-details-marker {
-  display: none;
-}
-.recruiter .no-scrollbar {
-  scrollbar-width: none;
-}
-.recruiter .no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-/* A highlighter stroke under the numbers worth seeing first. */
-.mark {
-  background-image: linear-gradient(transparent 60%, var(--cv-mark) 60%, var(--cv-mark) 94%, transparent 94%);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-@media print {
-  :root:has(.recruiter),
-  .recruiter {
-    --cv-bg: #fff;
-    --cv-card: #fff;
-    --cv-fg: #111113;
-    --cv-muted: #3f3f46;
-    --cv-faint: #52525b;
-    --cv-line: #e4e4e7;
-    --cv-line-2: #d4d4d8;
-    --cv-accent: #a15c00;
-    --cv-accent-soft: #fdf3e2;
-    --cv-mark: rgb(242 169 59 / 0.28);
-    color-scheme: light;
-  }
-  .recruiter .no-print,
-  .recruiter details > summary {
-    display: none !important;
-  }
-  .recruiter :is(li, article) {
-    break-inside: avoid;
-  }
-}
-
-/* ──────────────────────────────────────────────────────────────
-   YovaSense (). An instrument panel at night: graphite,
-   hairlines and three signal colors that each mean one thing.
-   Red-orange is the regression and nothing else; blue is training
-   data on GPUBridge's bridge; aqua is the detector's own telemetry
-   and control. The three pass the data-viz palette checks on
-   --ar-bg; text wears the -ink steps, never the mark colors.
-   Archivo set wide for display and body, Martian Mono for anything
-   a telemetry readout would print.
-   ────────────────────────────────────────────────────────────── */
-.yovasense {
-  --ar-bg: #0d0e11;
-  --ar-panel: #14161a;
-  --ar-fg: #edece7;
-  --ar-muted: #a9a8a2;
-  /* 5.3:1 on --ar-panel, the lightest surface it sits on. */
-  --ar-faint: #8c8b85;
-  --ar-line: rgb(237 236 231 / 0.09);
-  --ar-line-2: rgb(237 236 231 / 0.17);
-  --ar-signal: #ee5c36;
-  --ar-signal-ink: #ff7a57;
-  --ar-data: #3987e5;
-  --ar-ctl: #199e70;
-  --ar-ctl-ink: #2fc28c;
-  font-family: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
-  background-color: var(--ar-bg);
-  background-image: radial-gradient(1100px 520px at 72% -120px, rgb(238 92 54 / 0.06), transparent 70%);
-  background-repeat: no-repeat;
-  color: var(--ar-fg);
-  -webkit-font-smoothing: antialiased;
-}
-html:has(.yovasense),
-html:has(.yovasense) body {
-  background: #0d0e11;
-  color-scheme: dark;
-}
-html:has(.yovasense) {
-  scroll-padding-top: 7.5rem;
-}
-/* From lg the section index moves into the header's single row. */
-@media (min-width: 1024px) {
-  html:has(.yovasense) {
-    scroll-padding-top: 5rem;
-  }
-}
-.yovasense ::selection {
-  background: var(--ar-fg);
-  color: var(--ar-bg);
-}
-.yovasense :focus-visible {
-  outline: 2px solid var(--ar-fg);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-.ar-display {
-  font-stretch: 112%;
+/* ---------- type ---------- */
+.ys-display, .ar-display {
+  font-stretch: var(--ys-stretch-display);
   font-weight: 600;
-  letter-spacing: -0.032em;
+  letter-spacing: var(--ys-track-display);
+  line-height: var(--ys-lh-heading);
+  text-wrap: balance;
 }
-.ar-wide {
-  font-stretch: 125%;
+.ys-h1 { font-size: var(--ys-fs-h1); }
+.ys-h2 { font-size: var(--ys-fs-h2); }
+.ys-mono, .ar-mono { font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono); }
+.ys-eyebrow, .ar-label {
+  font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono);
+  font-size: var(--ys-fs-label); letter-spacing: var(--ys-track-label); text-transform: uppercase; line-height: 1.5;
 }
-.ar-mono {
-  font-family: var(--font-martian), ui-monospace, "SF Mono", Menlo, monospace;
-  font-stretch: 87.5%;
+.ys-eyebrow { color: var(--ys-text-faint); }
+.ar-wide { font-stretch: var(--ys-stretch-wide); }
+.ys-lede { font-size: var(--ys-fs-lede); line-height: 1.5; color: var(--ys-text-muted); max-width: 56ch; }
+.ys-fine { font-size: 13px; line-height: 1.55; color: var(--ys-text-faint); }
+
+/* ---------- buttons ---------- */
+.ys-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border-radius: var(--ys-radius-1);
+  font-size: 15px; font-weight: 600; line-height: 1.2; text-decoration: none; white-space: nowrap;
+  transition: background-color var(--ys-dur-1) var(--ys-ease-out), border-color var(--ys-dur-1) var(--ys-ease-out), color var(--ys-dur-1) var(--ys-ease-out);
 }
-.ar-label {
-  font-family: var(--font-martian), ui-monospace, "SF Mono", Menlo, monospace;
-  font-stretch: 87.5%;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.ys-btn-sm { min-height: 40px; padding: 0 16px; font-size: 14px; }
+.ys-btn-lg { min-height: 56px; padding: 0 28px; font-size: 16px; }
+.ys-btn-primary { background: var(--ys-blue); color: var(--ys-ink); }
+.ys-btn-primary:hover { background: var(--ys-blue-300); }
+/* the pilot path: a dark plate with a warm left edge and a boundary that reads on its own */
+.ys-btn-pilot {
+  background: var(--ys-surface-1); color: var(--ys-text);
+  border: 1px solid var(--ys-line-control);
+  box-shadow: var(--ys-edge-orange-left);
 }
-.ar-hatch {
-  background: repeating-linear-gradient(45deg, rgb(237 236 231 / 0.32) 0 1.2px, transparent 1.2px 3.5px);
+.ys-btn-pilot:hover { border-color: var(--ys-orange-300); background: var(--ys-surface-2); }
+.ys-btn-ink { background: var(--ys-navy); color: var(--ys-paper); }
+.ys-btn-ink:hover { background: var(--ys-surface-3); }
+.ys-link {
+  display: inline-flex; gap: 8px; align-items: center; min-height: 40px;
+  color: var(--ys-text-blue); font-size: 15px; font-weight: 500; text-decoration: underline;
+  text-decoration-color: var(--ys-line-blue); text-underline-offset: 5px;
+  transition: color var(--ys-dur-1) var(--ys-ease-out);
 }
-.ar-fade-x {
-  mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+.ys-link:hover { color: var(--ys-text); text-decoration-color: currentColor; }
+
+/* ---------- header ---------- */
+.ys-header {
+  position: sticky; top: 0; z-index: var(--ys-z-header);
+  background: rgb(2 7 10 / 0.88);
+  border-bottom: 1px solid var(--ys-line);
 }
-.ar-scroll-x {
-  scrollbar-width: none;
+.ys-header-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--ys-header-h); }
+.ys-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ys-paper); text-decoration: none; min-height: 44px; flex-shrink: 0; }
+.ys-wordmark { font-stretch: var(--ys-stretch-wide); font-weight: 600; font-size: 14px; letter-spacing: var(--ys-track-wordmark); }
+.ys-nav { display: flex; align-items: center; gap: 28px; }
+.ys-nav-link {
+  display: inline-flex; align-items: center; min-height: 40px;
+  color: var(--ys-text-muted); font-size: 14px; text-decoration: none;
+  transition: color var(--ys-dur-1) var(--ys-ease-out);
 }
-.ar-scroll-x::-webkit-scrollbar {
-  display: none;
+.ys-nav-link:hover, .ys-nav-link[aria-current="page"] { color: var(--ys-text); }
+.ys-nav-link[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--ys-blue-300); text-underline-offset: 8px; text-decoration-thickness: 2px; }
+.ys-lbl-narrow { display: none; }
+@media (max-width: 759px) {
+  .ys-nav { gap: 18px; }
+  .ys-nav-wide { display: none; }
+  .ys-lbl-wide { display: none; }
+  .ys-lbl-narrow { display: inline; }
+  .ys-wordmark { font-size: 13px; }
+  .ys-brand { gap: 10px; }
 }
-@keyframes ar-pulse {
-  50% { opacity: 0.25; }
+@media (min-width: 480px) and (max-width: 759px) {
+  .ys-nav-wide.ys-nav-product { display: inline-flex; }
 }
-.ar-pulse {
-  animation: ar-pulse 1.6s ease-in-out infinite;
+
+/* ---------- footer ---------- */
+.ys-footer { position: relative; background: var(--ys-well); border-top: 1px solid var(--ys-line); }
+.ys-foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px 48px; padding-block: 40px 48px; }
+.ys-foot-line { color: var(--ys-text-muted); font-size: 14px; }
+.ys-foot-fine { margin-top: 6px; color: var(--ys-text-faint); font-size: 13px; }
+.ys-foot-nav { display: flex; flex-wrap: wrap; gap: 4px 26px; font-size: 14px; }
+.ys-foot-nav a {
+  display: inline-flex; align-items: center; min-height: 40px;
+  color: var(--ys-text-muted); text-decoration: none;
 }
-@keyframes ar-rise {
-  from { opacity: 0; transform: translateY(14px); }
+.ys-foot-nav a:hover { color: var(--ys-text); }
+
+/* ---------- status words (site only; the Demo has its own grammar) ----------
+   The word carries the state. The frame's line style repeats it so it survives
+   grayscale: solid = exists today, dashed = simulated, dotted = prototype,
+   in development or product direction. */
+.ys-chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px;
+  font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono);
+  font-size: var(--ys-fs-label); letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.6;
+  white-space: nowrap; border: 1px solid currentColor;
 }
-.ar-rise {
-  animation: ar-rise 0.9s var(--ease-out) both;
-  animation-delay: var(--ar-d, 0ms);
+.ys-chip[data-kind="exists"] { color: var(--ys-text-blue); border-style: solid; }
+.ys-chip[data-kind="simulated"] { color: var(--ys-text-warm); border-style: dashed; }
+.ys-chip[data-kind="prototype"], .ys-chip[data-kind="direction"], .ys-chip[data-kind="planned"] { color: var(--ys-text-muted); border-style: dotted; }
+
+/* ---------- scrims: text never sits on moving light ----------
+   The homepage's field moves behind everything. Every block of text sits on one
+   of these: navy at 0.88 with a feathered edge, so even the field's brightest
+   pixel leaves faint text above 5:1 (and the light still glows faintly through). */
+.ys-scrim { position: relative; isolation: isolate; }
+.ys-scrim::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: -28px -28px -28px -28px;
+  background: rgb(2 7 10 / 0.88);
+  box-shadow: 0 0 36px 22px rgb(2 7 10 / 0.88);
+  border-radius: 28px;
 }
-@keyframes ar-type {
-  from { opacity: 0; }
-}
+
+/* ---------- small utilities /product's diagrams use ---------- */
+.ar-hatch { background: repeating-linear-gradient(45deg, rgb(234 242 245 / 0.32) 0 1.2px, transparent 1.2px 3.5px); }
+.ar-fade-x { mask-image: linear-gradient(to right, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%); }
+.ar-scroll-x { scrollbar-width: none; }
+.ar-scroll-x::-webkit-scrollbar { display: none; }
+@keyframes ar-pulse { 50% { opacity: 0.25; } }
+.ar-pulse { animation: ar-pulse 1.6s ease-in-out infinite; }
+@keyframes ar-type { from { opacity: 0; } }
 .ar-type {
   animation: ar-type 0.35s steps(2) both;
   animation-delay: calc(var(--ar-type-base, 1100ms) + var(--ar-i, 0) * 150ms);
 }
-@keyframes ar-flow {
-  to { stroke-dashoffset: -40; }
-}
-.ar-flow {
-  animation: ar-flow 1.4s linear infinite;
-}
-/* A wire between two endpoints: dashes in the channel's color, moving toward
-   the receiving end. --ar-wire sets the color; .ar-wire-back runs it home. */
+@keyframes ar-flow { to { stroke-dashoffset: -40; } }
+.ar-flow { animation: ar-flow 1.4s linear infinite; }
+/* A wire between two endpoints: dashes in the channel's color, moving toward the receiving end. */
 .ar-wire {
   height: 2px;
   background: repeating-linear-gradient(90deg, var(--ar-wire) 0 8px, transparent 8px 14px);
   background-size: 14px 2px;
   animation: ar-wire 0.9s linear infinite;
 }
-.ar-wire-back {
-  animation-direction: reverse;
-}
-@keyframes ar-wire {
-  to { background-position: 14px 0; }
-}
+.ar-wire-back { animation-direction: reverse; }
+@keyframes ar-wire { to { background-position: 14px 0; } }
 .ar-wire-v {
-  width: 2px;
-  height: auto;
+  width: 2px; height: auto;
   background: repeating-linear-gradient(180deg, var(--ar-wire) 0 8px, transparent 8px 14px);
   background-size: 2px 14px;
   animation-name: ar-wire-v;
 }
-@keyframes ar-wire-v {
-  to { background-position: 0 14px; }
-}
+@keyframes ar-wire-v { to { background-position: 0 14px; } }
 @media (prefers-reduced-motion: reduce) {
-  .yovasense :is(.ar-pulse, .ar-rise, .ar-type, .ar-flow, .ar-wire) {
-    animation: none;
-  }
-  html:has(.yovasense) {
-    scroll-behavior: auto;
-  }
+  :is(.ar-pulse, .ar-type, .ar-flow, .ar-wire) { animation: none; }
+  .ys-btn, .ys-link, .ys-nav-link { transition: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   The homepage ("Path"): eight rank trails meet at the all-reduce
+   and become one luminous line, the page's spine. Every section
+   hangs off it; a light field moves behind it with the reader.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ---------- the field (ScrollField.tsx) ---------- */
+.ys-field { position: fixed; inset: 0 0 auto 0; height: 100vh; height: 100lvh; z-index: 0; pointer-events: none; }
+.ys-field canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* the still, without JS: one folded ribbon at the right, its crease lit, a deep wedge beside it */
+.ys-field-fallback {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(118deg, transparent 0 64%, rgb(1 4 6 / 0.75) 64% 71%, rgb(143 211 247 / 0.3) 71%, rgb(2 151 222 / 0.22) 73%, rgb(3 115 176 / 0.12) 80%, rgb(4 61 99 / 0.05) 88%, transparent 92%),
+    linear-gradient(64deg, transparent 0 4%, rgb(2 151 222 / 0.1) 4%, rgb(4 61 99 / 0.05) 11%, transparent 16%);
+}
+.ys-field[data-live] .ys-field-fallback { display: none; }
+
+/* ---------- scrims, sized to stay clear of the spine ---------- */
+.ys-scrim { z-index: 2; }
+.ys-scrim::before { inset: -24px; box-shadow: 0 0 28px 14px rgb(2 7 10 / 0.88); border-radius: 24px; }
+@media (max-width: 759px) {
+  .ys-scrim::before { inset: -14px -12px; box-shadow: 0 0 14px 6px rgb(2 7 10 / 0.88); border-radius: 16px; }
+}
+
+/* ---------- hero ---------- */
+.ys-hero { position: relative; isolation: isolate; overflow: hidden; min-height: max(640px, calc(100svh - var(--ys-header-h))); }
+.ys-hero-path, .ys-hero-still { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.ys-hero-path canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ys-hero-path[data-live] ~ .ys-hero-still { display: none; }
+.ys-hero-path:not([data-live]) .ys-hero-tag { display: none; }
+.ys-hero-tag {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  transform: translate(var(--tx, -999px), var(--ty, -999px));
+  padding: 2px 7px; background: rgb(2 7 10 / 0.9);
+  font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono);
+  font-size: var(--ys-fs-label); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; line-height: 1.5;
+  color: var(--ys-text-muted);
+}
+.ys-hero-tag-late { color: var(--ys-text-warm); }
+.ys-hero-grid {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px;
+  min-height: inherit;
+}
+.ys-spine-anchor { position: absolute; left: var(--ys-gutter); top: 0; width: 2px; height: 1px; }
+.ys-hero-copy { grid-column: 6 / 13; padding-block: clamp(28px, 6vh, 88px) 112px; }
+.ys-hero-eyebrow { color: var(--ys-text-blue); }
+.ys-hero-title { margin-top: 20px; font-size: var(--ys-fs-hero); line-height: 0.98; letter-spacing: -0.04em; }
+.ys-hero-title-2 { display: block; margin-top: 0.12em; color: var(--ys-blue-300); }
+.ys-hero-lede { margin-top: 26px; max-width: 48ch; font-size: 17px; line-height: 1.6; color: var(--ys-text-muted); }
+.ys-maturity { margin: 20px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 13px; line-height: 1.4; color: var(--ys-text-muted); }
+.ys-maturity li { display: inline-flex; align-items: center; gap: 8px; }
+.ys-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; }
+.ys-hero-meta { margin-top: 18px; font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono); font-size: var(--ys-fs-label); letter-spacing: 0.06em; color: var(--ys-text-faint); }
+/* the illustration key, beside the picture (Study 2's legend) */
+.ys-hero-key {
+  position: absolute; z-index: 2; top: 28px;
+  left: calc(max(0px, (100% - var(--ys-container)) / 2) + var(--ys-gutter) + 28px);
+  max-width: 34ch; padding: 10px 14px 12px; background: rgb(2 7 10 / 0.82);
+}
+.ys-hero-key ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: 13px; line-height: 1.45; color: var(--ys-text-muted); }
+.ys-hero-key li { display: flex; align-items: center; gap: 10px; }
+.ys-key-mark { flex: none; width: 18px; height: 2px; background: var(--ys-blue-200); box-shadow: 0 0 6px rgb(2 151 222 / 0.7); }
+.ys-key-mark[data-mark="late"] { background: var(--ys-orange); box-shadow: 0 0 6px rgb(252 115 77 / 0.7); }
+.ys-key-mark[data-mark="gate"] { width: 18px; height: 12px; background: linear-gradient(90deg, transparent 8px, rgb(234 242 245 / 0.6) 8px 9px, transparent 9px); box-shadow: none; }
+@media (max-width: 1099px) and (min-width: 760px) {
+  .ys-hero-copy { grid-column: 5 / 13; }
+}
+@media (max-width: 759px) {
+  .ys-hero { min-height: 0; }
+  .ys-hero-grid { display: block; min-height: 0; }
+  /* the lanes converge in a band above the copy; the single line then runs down its left edge */
+  .ys-hero-copy { padding: 172px 0 28px var(--ys-rail-pad); }
+  .ys-hero-title { margin-top: 14px; }
+  .ys-hero-lede { margin-top: 18px; font-size: 16px; }
+  .ys-hero-copy-inner { display: flex; flex-direction: column; }
+  .ys-maturity { order: 5; margin-top: 18px; gap: 8px; flex-direction: column; }
+  .ys-hero-meta { order: 6; }
+  .ys-cta-row { margin-top: 22px; gap: 10px; }
+  .ys-hero-copy .ys-cta-row .ys-btn { flex: 1 1 100%; }
+  .ys-hero-key { position: static; max-width: none; margin: 0 var(--ys-gutter) 36px calc(var(--ys-gutter) + var(--ys-rail-pad)); padding: 0; background: none; }
+}
+
+/* ---------- spine and sections ---------- */
+.ys-sec { position: relative; }
+.ys-rail { padding-block: var(--ys-section); padding-left: calc(var(--ys-gutter) + var(--ys-rail-pad)); }
+.ys-spine {
+  position: absolute; top: 0; bottom: 0; left: var(--ys-gutter); width: 2px; z-index: 1;
+  background: rgb(77 184 238 / 0.2);
+  clip-path: inset(0 -48px);
+}
+.ys-spine-fill { position: absolute; inset: 0; background: var(--ys-blue-200); box-shadow: var(--ys-spine-glow); }
+.ys-reading .ys-spine-fill { will-change: transform; }
+.ys-spine-ink { background: rgb(2 7 10 / 0.18); }
+.ys-spine-ink .ys-spine-fill { background: var(--ys-navy); box-shadow: none; }
+.ys-node {
+  position: absolute; z-index: 3; width: 12px; height: 12px; top: 4px;
+  left: calc(-1 * var(--ys-rail-pad) - 5px);
+  background: var(--ys-navy); border: 2px solid var(--ys-blue-200);
+  box-shadow: 0 0 0 4px var(--ys-navy), 0 0 18px rgb(2 151 222 / 0.7);
+  transition: border-color var(--ys-dur-3) var(--ys-ease-out), box-shadow var(--ys-dur-3) var(--ys-ease-out);
+}
+.ys-reading .ys-node:not([data-lit]) { border-color: rgb(143 211 247 / 0.35); box-shadow: 0 0 0 4px var(--ys-navy); }
+.ys-node-ink { background: var(--ys-blue-200); border-color: var(--ys-navy); box-shadow: 0 0 0 4px var(--ys-blue-100); }
+.ys-reading .ys-node-ink:not([data-lit]) { border-color: rgb(2 7 10 / 0.35); box-shadow: 0 0 0 4px var(--ys-blue-100); }
+.ys-sec-head { max-width: 900px; }
+.ys-sec-head .ys-h2 { margin-top: 18px; }
+.ys-sec-head .ys-lede { margin-top: 22px; }
+.ys-two { max-width: none; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 64px; align-items: end; }
+.ys-sec-body p { color: var(--ys-text-muted); max-width: 56ch; }
+.ys-sec-body p + p { margin-top: 14px; }
+.ys-frames-note { margin-top: 18px; }
+@media (max-width: 959px) { .ys-two { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ---------- workflow: stations on the line ---------- */
+.ys-stations { margin: clamp(44px, 6vw, 88px) 0 0; padding: 0; list-style: none; }
+.ys-station { position: relative; padding: 30px 0 32px; border-top: 1px solid var(--ys-line); }
+.ys-station:not(.ys-escalate)::before {
+  content: ""; position: absolute; top: 40px; height: 1px;
+  left: calc(-1 * var(--ys-rail-pad) + 9px); width: calc(var(--ys-rail-pad) - 20px);
+  background: linear-gradient(90deg, rgb(77 184 238 / 0.7), rgb(77 184 238 / 0.12));
+}
+.ys-station .ys-node { top: 35px; }
+.ys-station-body {
+  display: grid; grid-template-columns: 44px minmax(0, 250px) minmax(0, 1fr) 240px;
+  column-gap: 28px; row-gap: 12px; align-items: start;
+}
+.ys-st-num { font-size: 12px; letter-spacing: 0.08em; color: var(--ys-text-blue); padding-top: 5px; }
+.ys-st-head h3 { font-size: var(--ys-fs-h3); font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+.ys-st-status { margin-top: 10px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; font-size: 13px; line-height: 1.45; color: var(--ys-text-muted); }
+.ys-st-text { color: var(--ys-text-muted); max-width: 60ch; }
+.ys-st-frame { margin: 0; }
+.ys-st-frame figcaption { margin-top: 8px; font-size: 13px; line-height: 1.45; color: var(--ys-text-faint); }
+.ys-frame { display: block; width: 100%; max-width: 240px; height: auto; }
+.ys-frame-plate { fill: var(--ys-surface-1); stroke: var(--ys-line-2); }
+.ys-frame-gate { stroke: rgb(234 242 245 / 0.4); stroke-dasharray: 3 3; }
+.ys-frame-gate.is-on { stroke: var(--ys-blue-300); stroke-dasharray: none; }
+.ys-frame-wait { stroke: rgb(143 211 247 / 0.32); stroke-dasharray: 1 3; }
+.ys-frame-bar { stroke: var(--ys-blue-300); stroke-width: 3; stroke-linecap: round; }
+.ys-frame-bar.is-late { stroke: var(--ys-orange); }
+.ys-frame-ring, .ys-frame-branch { fill: none; stroke: var(--ys-orange-300); stroke-width: 1.5; }
+.ys-frame-branch { stroke: var(--ys-orange); stroke-width: 2; }
+.ys-frame-bracket { fill: none; stroke: var(--ys-paper); stroke-width: 1.2; }
+.ys-frame-tags text { color: var(--ys-text-muted); fill: currentColor; font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono); letter-spacing: 0.04em; }
+.ys-frame-tags text.is-picked { color: var(--ys-text-warm); }
+.ys-frame-move path { fill: none; stroke: var(--ys-blue-200); stroke-width: 1.3; }
+.ys-frame-spark { fill: none; stroke: var(--ys-blue-300); stroke-width: 1.5; }
+.ys-frame-check { fill: none; stroke: var(--ys-ctl-ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ys-frame-person { fill: none; stroke: var(--ys-paper); stroke-width: 1.5; }
+/* escalation: an orange branch off the line, to a card that ends with a person */
+.ys-escalate { border-top: 0; padding: 0 0 8px; }
+.ys-branch {
+  position: absolute; top: 0; z-index: 2;
+  left: calc(-1 * var(--ys-rail-pad));
+  width: calc(var(--ys-rail-pad) + 96px + 2px); height: 64px;
+  border-left: 2px solid var(--ys-orange); border-bottom: 2px solid var(--ys-orange);
+  border-bottom-left-radius: 64px;
+  filter: drop-shadow(0 0 6px rgb(252 115 77 / 0.55));
+  transition: opacity var(--ys-dur-3) var(--ys-ease-out), filter var(--ys-dur-3) var(--ys-ease-out);
+}
+.ys-reading .ys-branch:not([data-lit]) { opacity: 0.4; filter: none; }
+.ys-esc-card {
+  margin-left: 96px; margin-top: 30px; padding: 24px 26px 26px;
+  background: var(--ys-surface-2); border: 1px solid var(--ys-line);
+  box-shadow: var(--ys-edge-orange-left);
+  display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr) 240px; column-gap: 28px; row-gap: 10px;
+}
+.ys-esc-num { grid-column: 1 / -1; color: var(--ys-text-warm); text-transform: uppercase; padding: 0; }
+.ys-esc-text p { color: var(--ys-text-muted); }
+.ys-esc-terminal { margin-top: 12px; font-size: 12px; line-height: 1.6; color: var(--ys-text-warm) !important; }
+@media (max-width: 1099px) {
+  .ys-station-body { grid-template-columns: 44px minmax(0, 1fr); }
+  .ys-station-body > :not(.ys-st-num) { grid-column: 2; }
+  .ys-esc-card { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 759px) {
+  .ys-station-body { grid-template-columns: 1fr; row-gap: 10px; }
+  .ys-station-body > :not(.ys-st-num) { grid-column: 1; }
+  .ys-st-num { padding: 0; }
+  .ys-station .ys-node { top: 33px; }
+  .ys-station:not(.ys-escalate)::before { top: 38px; }
+  .ys-esc-card { margin-left: 34px; padding: 20px 18px 22px; }
+  .ys-branch { width: calc(var(--ys-rail-pad) + 34px + 2px); height: 58px; border-bottom-left-radius: 34px; }
+}
+
+/* ---------- product: the one lit field, folded ---------- */
+.ys-product { --cut: clamp(56px, 8vw, 128px); --cut2: clamp(36px, 5vw, 84px); --ys-focus: var(--ys-navy); color: var(--ys-ink); }
+.ys-fold { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* the plane folding back above the cut: a deep navy wedge, darkest away from the crease */
+.ys-fold-back {
+  position: absolute; left: 0; right: 0; top: 0; height: var(--cut);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background: linear-gradient(165deg, rgb(2 7 10 / 0) 10%, var(--ys-blue-950) 55%, var(--ys-blue-800) 100%);
+}
+.ys-fold-field {
+  position: absolute; inset: 0; overflow: hidden;
+  clip-path: polygon(0 var(--cut), 100% 0, 100% calc(100% - var(--cut2)), 0 100%);
+  background:
+    radial-gradient(70% 55% at 8% 6%, rgb(207 235 250 / 0.9), transparent 70%),
+    linear-gradient(162deg, var(--ys-blue-100) 0%, var(--ys-blue-200) 38%, var(--ys-blue-300) 100%);
+}
+/* the light, sliding across the field as the section passes (ScrollReader) */
+.ys-fold-sweep {
+  position: absolute; left: -30%; top: -20%; width: 160%; height: 140%;
+  background: radial-gradient(30% 26% at 50% 50%, rgb(235 248 255 / 0.6), rgb(235 248 255 / 0) 70%);
+}
+/* a second plane, turned away from the light, in the top-right corner: no text sits on it */
+.ys-fold-face {
+  position: absolute; inset: 0;
+  clip-path: polygon(64% 0, 100% 0, 100% 46%);
+  background: linear-gradient(205deg, var(--ys-blue-600) 0%, var(--ys-blue) 55%, var(--ys-blue-300) 100%);
+}
+.ys-fold-face::after {
+  content: ""; position: absolute; inset: 0;
+  clip-path: polygon(64% 0, 64.25% 0, 100% 46.2%, 100% 46%);
+  background: rgb(235 248 255 / 0.8);
+}
+/* the warm edge along the cut */
+.ys-fold-edge { position: absolute; left: 0; right: 0; top: 0; height: calc(var(--cut) + 4px); filter: drop-shadow(0 0 5px rgb(252 115 77 / 0.75)); }
+.ys-fold-edge::before {
+  content: ""; position: absolute; inset: 0;
+  clip-path: polygon(0 var(--cut), 100% 0, 100% 3px, 0 calc(var(--cut) + 3px));
+  background: linear-gradient(90deg, rgb(252 115 77 / 0) 22%, rgb(252 115 77 / 0.55) 62%, var(--ys-orange) 88%, var(--ys-orange-300) 100%);
+}
+/* deep shadow under the bottom cut, so the field lifts off the navy */
+.ys-fold-under {
+  position: absolute; left: 0; right: 0; bottom: -44px; height: calc(var(--cut2) + 44px);
+  clip-path: polygon(0 calc(100% - 44px), 100% 0, 100% 44px, 0 100%);
+  background: linear-gradient(180deg, rgb(1 4 6 / 0.9), rgb(1 4 6 / 0.2));
+}
+@media (max-width: 759px) {
+  .ys-fold-face { clip-path: polygon(calc(100% - 46vw) 0, 100% 0, 100% 38vw); }
+  .ys-fold-face::after { display: none; }
+}
+.ys-product .ys-rail { position: relative; z-index: 1; padding-top: calc(var(--ys-section) + var(--cut)); padding-bottom: calc(var(--ys-section) + var(--cut2)); }
+.ys-product-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: 56px; align-items: start; }
+.ys-product-copy { position: relative; }
+.ys-product .ys-eyebrow { color: var(--ys-ink-muted); }
+.ys-product .ys-h2 { margin-top: 18px; color: var(--ys-ink); }
+.ys-product-lede { margin-top: 22px; max-width: 46ch; color: var(--ys-ink-muted); font-weight: 500; }
+.ys-beats { margin: 28px 0 30px; padding: 0; list-style: none; border-top: 1px solid var(--ys-line-ink); }
+.ys-beats li {
+  display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid var(--ys-line-ink); font-size: 15px; font-weight: 500; color: var(--ys-ink);
+}
+.ys-beat-n, .ys-beat-k { font-size: var(--ys-fs-label); letter-spacing: 0.06em; color: var(--ys-ink-muted); }
+.ys-beat-k { text-transform: uppercase; }
+.ys-product-fine { margin-top: 16px; font-size: 13px; color: var(--ys-ink-muted); }
+/* the console, framed like a lit object on the field */
+.ys-console {
+  position: relative; margin: 0; background: var(--ys-navy); color: var(--ys-text);
+  box-shadow: 0 40px 90px -30px rgb(2 7 10 / 0.75), 0 8px 24px -8px rgb(2 7 10 / 0.5), 6px 0 0 -2px var(--ys-orange), 12px 0 30px -14px rgb(252 115 77 / 0.8);
+}
+.ys-console::before {
+  content: ""; position: absolute; z-index: -1; inset: -22px 22px 22px -22px;
+  background: var(--ys-surface-2); opacity: 0.55; box-shadow: 0 30px 60px -30px rgb(2 7 10 / 0.6);
+}
+.ys-console img, .ys-crop-img img { display: block; width: 100%; height: auto; }
+.ys-console-bar, .ys-crop-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 14px;
+  font-size: var(--ys-fs-label); letter-spacing: 0.04em; color: var(--ys-text-muted);
+  border-bottom: 1px solid var(--ys-line);
+}
+.ys-console-note, .ys-crop-note { padding: 12px 14px 14px; font-size: 13px; line-height: 1.5; color: var(--ys-text-muted); border-top: 1px solid var(--ys-line); }
+.ys-crops { margin: clamp(48px, 6vw, 80px) 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 28px; align-items: start; }
+.ys-crop figure { margin: 0; max-width: 420px; background: var(--ys-navy); color: var(--ys-text); box-shadow: 0 30px 60px -28px rgb(2 7 10 / 0.75), 0 0 0 1px rgb(2 7 10 / 0.4); }
+.ys-crop-finding figure { box-shadow: 0 30px 60px -28px rgb(2 7 10 / 0.75), inset 0 2px 0 var(--ys-orange); }
+@media (max-width: 959px) {
+  .ys-product-grid { grid-template-columns: 1fr; row-gap: 48px; }
+}
+@media (max-width: 759px) {
+  /* phones get the readable crops, not a shrunken console */
+  .ys-console, .ys-crop-evidence { display: none; }
+  .ys-crops { margin-top: 44px; grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ---------- ambition ---------- */
+.ys-route-wrap { margin-top: clamp(48px, 6vw, 80px); }
+.ys-route { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); position: relative; }
+.ys-route::before { content: ""; position: absolute; top: 6px; left: 0; right: 10%; border-top: 1px dashed rgb(234 242 245 / 0.3); }
+.ys-rt { position: relative; padding-right: 20px; display: flex; flex-direction: column; gap: 6px; }
+.ys-rt-node { width: 13px; height: 13px; margin-bottom: 14px; position: relative; background: var(--ys-navy); border: 1.5px dotted var(--ys-text-muted); }
+.ys-rt[data-kind="on"] .ys-rt-node { background: var(--ys-blue-200); border: 1.5px solid var(--ys-blue-200); box-shadow: 0 0 16px rgb(2 151 222 / 0.8); }
+.ys-rt[data-kind="on"]::after { content: ""; position: absolute; top: 5.5px; left: 13px; right: 0; height: 2px; background: linear-gradient(90deg, var(--ys-blue-200), rgb(2 151 222 / 0)); }
+.ys-rt[data-kind="dev"] .ys-rt-node { border-style: dashed; }
+.ys-rt[data-kind="aim"] .ys-rt-node { border: 1.5px solid var(--ys-text); }
+.ys-rt-k { font-size: var(--ys-fs-label); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ys-text-faint); }
+.ys-rt[data-kind="on"] .ys-rt-k { color: var(--ys-text-blue); }
+.ys-rt-t { font-size: 17px; font-weight: 600; line-height: 1.3; max-width: 16ch; }
+.ys-route-wrap .ys-fine { margin-top: 26px; }
+.ys-classes-wrap { margin-top: clamp(56px, 7vw, 96px); }
+.ys-sub-h { font-size: var(--ys-fs-h3); font-weight: 600; }
+.ys-classes { margin: 22px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ys-line-2); }
+.ys-classes li { padding: 22px 24px 4px 0; }
+.ys-classes li + li { padding-left: 24px; border-left: 1px solid var(--ys-line); }
+.ys-classes h4 { font-size: 16px; font-weight: 600; }
+.ys-classes p { margin-top: 8px; font-size: 15px; color: var(--ys-text-muted); }
+.ys-studies { margin: clamp(56px, 7vw, 96px) 0 0; }
+.ys-studies-grid { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+.ys-studies-grid > div { display: flex; flex-direction: column-reverse; gap: 12px; }
+.ys-studies-grid dt { max-width: 34ch; font-size: 15px; line-height: 1.55; color: var(--ys-text-muted); }
+.ys-studies-grid dd { margin: 0; font-size: clamp(2rem, 1.4rem + 2vw, 2.9rem); line-height: 1; color: var(--ys-text); }
+.ys-studies figcaption { margin-top: 26px; max-width: 80ch; }
+.ys-studies figcaption a { color: var(--ys-text-muted); text-underline-offset: 3px; }
+.ys-studies figcaption a:hover { color: var(--ys-text); }
+@media (max-width: 899px) {
+  .ys-route { grid-template-columns: 1fr; }
+  .ys-route::before { top: 6px; bottom: 30px; left: 6px; right: auto; border-top: 0; border-left: 1px dashed rgb(234 242 245 / 0.3); }
+  .ys-rt { display: grid; grid-template-columns: 13px 1fr; column-gap: 18px; padding: 0 0 22px; }
+  .ys-rt-node { grid-row: 1 / 3; margin: 2px 0 0; }
+  .ys-rt[data-kind="on"]::after { display: none; }
+  .ys-rt-t { max-width: none; }
+  .ys-classes { grid-template-columns: 1fr 1fr; }
+  .ys-classes li:nth-child(3) { padding-left: 0; border-left: 0; }
+  .ys-studies-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 479px) {
+  .ys-classes { grid-template-columns: 1fr; }
+  .ys-classes li, .ys-classes li + li { padding: 18px 0 4px; border-left: 0; }
+  .ys-classes li + li { border-top: 1px solid var(--ys-line); }
+}
+
+/* ---------- status ---------- */
+.ys-status-grid { margin-top: clamp(40px, 5vw, 72px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--ys-line-2); }
+.ys-st-col { padding: 28px 32px 8px 0; }
+.ys-st-col + .ys-st-col { padding-left: 32px; border-left: 1px solid var(--ys-line); }
+.ys-st-col h3 { margin-top: 22px; font-size: 18px; font-weight: 600; line-height: 1.3; }
+.ys-st-col h3 + p, .ys-st-col p + p { margin-top: 8px; }
+.ys-st-col > p { color: var(--ys-text-muted); font-size: 15px; }
+.ys-st-col .ys-link { margin-top: 16px; }
+.ys-ticks { margin: 10px 0 0; padding: 0; list-style: none; }
+.ys-ticks li { position: relative; padding: 7px 0 7px 20px; font-size: 15px; color: var(--ys-text-muted); border-bottom: 1px solid var(--ys-line); }
+.ys-ticks li::before { content: ""; position: absolute; left: 0; top: 15px; width: 8px; height: 8px; border: 1px dotted var(--ys-text-muted); }
+@media (max-width: 959px) {
+  .ys-status-grid { grid-template-columns: 1fr; }
+  .ys-st-col, .ys-st-col + .ys-st-col { padding: 26px 0 18px; border-left: 0; }
+  .ys-st-col + .ys-st-col { border-top: 1px solid var(--ys-line); }
+}
+
+/* ---------- pilot: the line ends here ---------- */
+.ys-sec-end .ys-rail { padding-bottom: calc(var(--ys-section) * 1.1); }
+.ys-sec-end .ys-spine { bottom: auto; height: calc(var(--ys-section) + 8px); }
+.ys-terminal {
+  position: absolute; z-index: 2; left: calc(var(--ys-gutter) - 11px); top: calc(var(--ys-section) + 6px);
+  width: 24px; height: 2px; background: var(--ys-blue-200); box-shadow: 0 0 12px rgb(2 151 222 / 0.9);
+  transition: opacity var(--ys-dur-3) var(--ys-ease-out);
+}
+.ys-reading .ys-terminal:not([data-lit]) { opacity: 0.35; }
+.ys-pilot .ys-h1 { margin-top: 18px; max-width: 18ch; }
+.ys-pilot .ys-lede { margin-top: 22px; }
+.ys-pilot .ys-cta-row { margin-top: 40px; gap: 18px 28px; }
+.ys-pilot-addr { margin-top: 22px; }
+.ys-pilot-addr a { color: var(--ys-text-muted); text-underline-offset: 3px; }
+.ys-pilot-addr a:hover { color: var(--ys-text); }
+
+/* ══════════════════════════════════════════════════════════════
+   /product/: the same shell, type and color; a static fold at the
+   top and the product vision drawn on a short line.
+   ══════════════════════════════════════════════════════════════ */
+.ys-intro { position: relative; overflow: hidden; }
+.ys-intro-fold {
+  position: absolute; top: 0; right: 0; bottom: 0; pointer-events: none;
+  width: clamp(0px, calc(100vw - 960px), 520px);
+}
+.ys-intro-fold::before {
+  content: ""; position: absolute; inset: 0;
+  clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%);
+  background:
+    radial-gradient(80% 60% at 100% 0%, rgb(207 235 250 / 0.85), transparent 70%),
+    linear-gradient(200deg, var(--ys-blue-200) 0%, var(--ys-blue) 45%, var(--ys-blue-800) 100%);
+}
+.ys-intro-fold-face {
+  position: absolute; inset: 0;
+  clip-path: polygon(38% 0, 70% 0, 22% 100%, 0 100%);
+  background: linear-gradient(180deg, var(--ys-blue-950), var(--ys-navy) 90%);
+}
+.ys-intro-fold-edge {
+  position: absolute; inset: 0; filter: drop-shadow(0 0 5px rgb(252 115 77 / 0.75));
+}
+.ys-intro-fold-edge::before {
+  content: ""; position: absolute; inset: 0;
+  clip-path: polygon(70% 0, 70.6% 0, 22.6% 100%, 22% 100%);
+  background: linear-gradient(180deg, var(--ys-orange-300), var(--ys-orange) 40%, rgb(252 115 77 / 0) 92%);
+}
+.ys-intro-note { padding: 18px 22px; background: var(--ys-surface-1); box-shadow: var(--ys-edge-orange-left); }
+.ys-pv { position: relative; margin: 0; padding: 0 0 0 36px; list-style: none; border-top: 1px solid var(--ys-line); }
+.ys-pv::before { content: ""; position: absolute; left: 5px; top: 0; bottom: 0; width: 2px; background: var(--ys-blue-200); box-shadow: var(--ys-spine-glow); }
+.ys-pv-step { position: relative; border-bottom: 1px solid var(--ys-line); }
+.ys-pv-step::before {
+  content: ""; position: absolute; left: -36px; top: 31px; width: 12px; height: 12px;
+  background: var(--ys-navy); border: 2px solid var(--ys-blue-200);
+  box-shadow: 0 0 0 4px var(--ys-navy), 0 0 18px rgb(2 151 222 / 0.7);
+}
+
+/* ---------- 404: the line stops short ---------- */
+.ys-404 { min-height: calc(100vh - var(--ys-header-h) - 140px); }
+.ys-404-line {
+  position: absolute; left: var(--ys-gutter); top: 0; width: 2px; height: calc(var(--ys-section) + 10px);
+  background: linear-gradient(180deg, var(--ys-blue-200), var(--ys-blue-200) 70%, rgb(143 211 247 / 0));
+  box-shadow: var(--ys-spine-glow);
+}
+.ys-404-end {
+  position: absolute; left: calc(var(--ys-gutter) - 5px); top: calc(var(--ys-section) + 26px); width: 12px; height: 12px;
+  border: 2px solid var(--ys-orange); box-shadow: 0 0 14px rgb(252 115 77 / 0.7);
+}
+.ys-404-title { margin-top: 18px; max-width: 16ch; }
+.ys-404 .ys-lede { margin-top: 22px; }
+.ys-404-links { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 2px; }

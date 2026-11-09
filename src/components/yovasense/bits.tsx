@@ -1,13 +1,13 @@
 /** Section scaffolding shared by every block on the page. */
 
 export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto max-w-[1240px] px-5 md:px-10 ${className}`}>{children}</div>;
+  return <div className={`ys-wrap ${className}`}>{children}</div>;
 }
 
 export function Eyebrow({ children, n, className = "" }: { children: React.ReactNode; n?: string; className?: string }) {
   return (
     <p className={`ar-label flex items-center gap-3 text-ar-faint ${className}`}>
-      {n && <span className="text-ar-fg">{n}</span>}
+      {n && <span className="text-ar-data-ink">{n}</span>}
       {n && <span aria-hidden="true" className="h-px w-6 bg-ar-line-2" />}
       <span>{children}</span>
     </p>
@@ -82,8 +82,8 @@ export function Tag({
   const dot = { signal: "bg-ar-signal", data: "bg-ar-data", ctl: "bg-ar-ctl", dashed: "" }[tone ?? "dashed"];
   return (
     <span
-      className={`ar-label inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-2.5 py-1 text-[9.5px] text-ar-muted ${
-        tone === "dashed" ? "border-dashed border-ar-line-2" : "border-ar-line-2"
+      className={`ar-label inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-2.5 py-1 text-[11px] text-ar-muted ${
+        tone === "dashed" ? "border-dashed border-[var(--ys-line-control)]" : "border-[var(--ys-line-control)]"
       } ${className}`}
     >
       {tone && tone !== "dashed" && <span aria-hidden="true" className={`h-1.5 w-1.5 rounded-full ${dot}`} />}
@@ -94,7 +94,6 @@ export function Tag({
 
 /** The two button styles the page uses, as class strings for <a> and <button>. */
 export const button = {
-  solid:
-    "group inline-flex h-12 items-center gap-2.5 rounded-full bg-ar-fg px-6 text-[15px] font-medium text-ar-bg transition-opacity hover:opacity-85",
-  line: "inline-flex h-12 items-center gap-2.5 rounded-full border border-ar-line-2 px-6 text-[15px] font-medium text-ar-fg transition-colors hover:border-ar-fg/60",
+  solid: "group ys-btn ys-btn-primary",
+  line: "ys-btn border border-[var(--ys-line-control)] text-ar-fg hover:border-ar-fg/70",
 };
