@@ -39,6 +39,7 @@
 
   /* Color channels, for the semantic alpha tokens below. */
   --ys-navy-rgb: 2 7 10;
+  --ys-surface-1-rgb: 6 18 26;
   --ys-paper-rgb: 234 242 245;
   --ys-blue-rgb: 2 151 222;
   --ys-orange-rgb: 252 115 77;

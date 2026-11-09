@@ -53,14 +53,22 @@ p { margin: 0; text-wrap: pretty; }
 /* ---- Header and clock ---- */
 .top {
   position: sticky; top: 0; z-index: var(--z-header);
-  background: rgb(var(--ys-navy-rgb) / 0.94);
+  background: rgb(var(--ys-surface-1-rgb) / 0.94);
   border-bottom: 1px solid var(--line);
+}
+/* The header's lit edge: blue light along its lower edge, brightest under the mark and the
+   views, gone before the simulated label. Decorative, behind nothing. */
+.top::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, rgb(var(--ys-blue-rgb) / 0) 0%, rgb(var(--ys-blue-rgb) / 0.85) 14%, var(--ys-blue-300) 26%, rgb(var(--ys-blue-rgb) / 0.5) 46%, rgb(var(--ys-blue-rgb) / 0) 70%);
+  box-shadow: 0 0 10px 0 rgb(var(--ys-blue-rgb) / 0.35);
 }
 .bar, .clockbar, .layout, .foot { max-width: 1480px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
 .bar { display: flex; align-items: center; gap: 20px; min-height: 60px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
 .brand svg { flex: none; }
-.brand-word { font-stretch: 125%; font-size: 13.5px; font-weight: 600; letter-spacing: 0.16em; }
+.brand svg circle { fill: var(--ys-orange); } /* the mark's dot, as on the site */
+.brand-word { font-stretch: var(--ys-stretch-wide); font-size: 13.5px; font-weight: 600; letter-spacing: var(--ys-track-wordmark); }
 .brand-sub { color: var(--muted); font-size: 13.5px; }
 .nav { display: flex; gap: 4px; margin-left: 12px; }
 .nav a {
@@ -70,12 +78,15 @@ p { margin: 0; text-wrap: pretty; }
 .nav a:hover { color: var(--fg); }
 .nav a[aria-current="page"] { color: var(--fg); background: var(--active-fill-soft); }
 .nav .count { margin-left: 6px; font-family: var(--mono); font-size: 11px; color: var(--signal-ink); }
+/* The simulated label sits where the site's header keeps its call to action, with the same
+   warm left edge: the one place the header spends orange. */
 .sim {
   margin-left: auto; display: inline-flex; align-items: center; gap: 8px;
-  border: 1px dashed var(--line-2); border-radius: 0; padding: 5px 12px;
-  font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; letter-spacing: 0.06em; color: var(--muted);
+  border: 1px dashed var(--signal-edge); border-left: 0; border-radius: 0; padding: 5px 12px 5px 14px;
+  font-family: var(--mono); font-stretch: 87.5%; font-size: 11px; letter-spacing: 0.06em; color: var(--signal-ink);
+  box-shadow: var(--ys-edge-orange-left);
 }
-.sim::before { content: ""; width: 6px; height: 6px; border-radius: 0; border: 1px solid var(--muted); }
+.sim::before { content: ""; width: 6px; height: 6px; border-radius: 0; border: 1px solid var(--signal); }
 
 .clockbar { display: flex; align-items: center; gap: 14px; min-height: 54px; border-top: 1px solid var(--line); }
 .btn {
@@ -446,9 +457,10 @@ pre {
   .brand-word, .brand-sub { display: none; }
   .nav { margin-left: auto; overflow-x: auto; gap: 0; }
   .nav a { padding: 0 9px; font-size: 13.5px; min-height: 44px; }
-  .sim { order: 3; flex-basis: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; gap: 7px;
-    font-family: var(--sans); font-stretch: normal; font-size: 11.5px; letter-spacing: 0; line-height: 1.35; }
-  .top { background: var(--bg); }
+  .sim { order: 3; flex-basis: 100%; margin: 0; padding: 0 0 0 10px; border: 0; border-radius: 0; gap: 7px;
+    font-family: var(--sans); font-stretch: normal; font-size: 11.5px; letter-spacing: 0; line-height: 1.35;
+    box-shadow: inset 2px 0 0 var(--ys-orange); }
+  .top { background: var(--panel); }
   .clockbar { flex-wrap: wrap; gap: 0 10px; min-height: 0; padding-top: 6px; padding-bottom: 0; }
   .clock { min-width: 0; }
   .clock .now { font-size: 16px; }
