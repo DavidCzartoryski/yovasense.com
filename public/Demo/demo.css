@@ -128,7 +128,9 @@ p { margin: 0; text-wrap: pretty; }
 main:focus, h1:focus { outline: none; }
 .rail { position: static; margin-bottom: 22px; }
 
-.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 0; }
+/* A raised panel catches the light on its top edge: a 1px blue line inside the border, lit from
+   the left like the header's edge. A background layer, so nothing about layout changes. */
+.panel { background: var(--lit-top) top left / 100% 1px no-repeat, var(--panel); border: 1px solid var(--line); border-radius: 0; }
 .section { margin-top: 36px; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
 .section-head h2 { font-size: 19px; font-weight: 600; font-stretch: 105%; letter-spacing: -0.01em; }
@@ -173,7 +175,7 @@ main:focus, h1:focus { outline: none; }
 .dot.muted { background: var(--faint); }
 
 /* ---- KPI tiles ---- */
-.kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 20px; border: 1px solid var(--line); border-radius: 0; background: var(--panel); }
+.kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 20px; border: 1px solid var(--line); border-radius: 0; background: var(--lit-top) top left / 100% 1px no-repeat, var(--panel); }
 .kpi { padding: 12px 16px 13px; border-left: 1px solid var(--line); min-width: 0; }
 .kpi:first-child { border-left: 0; }
 .kpi .v { font-family: var(--mono); font-stretch: 87.5%; font-variant-numeric: tabular-nums; font-size: 23px; line-height: 1.1; margin-top: 6px; }
@@ -411,6 +413,8 @@ pre {
 .progress { display: flex; gap: 3px; margin: 8px -12px 0 -18px; }
 .progress span { flex: 1; height: 2px; background: var(--line); }
 .progress span.done { background: var(--active); }
+/* The step the story is on: the lit end of the line. */
+.progress span.done:not(:has(+ span.done)) { background: var(--ys-blue-300); box-shadow: 0 0 8px 1px rgb(var(--ys-blue-rgb) / 0.6); }
 .guide-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 10px 32px; padding: 14px 0 16px; }
 .guide-body[hidden] { display: none; }
 .guide .when { font-family: var(--mono); font-stretch: 87.5%; font-size: 11px; color: var(--faint); }
@@ -532,7 +536,7 @@ pre {
 .attn { grid-template-columns: auto minmax(0, 1fr) auto; }
 .attn .t, .attn .d { overflow-wrap: anywhere; }
 .side-block .section-head h2 { font-size: 17px; }
-.record-box { min-width: 0; border: 1px solid var(--line-2); background: var(--panel); padding: 14px; }
+.record-box { min-width: 0; border: 1px solid var(--line-2); background: var(--lit-top) top left / 100% 1px no-repeat, var(--panel); padding: 14px; }
 .record-box .ak-record-title:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
 .record-box .ak-chart-svg .ak-tick { font-size: 9.5px; }
 .record-src { margin-top: 10px; font-size: 12px; color: var(--faint); }

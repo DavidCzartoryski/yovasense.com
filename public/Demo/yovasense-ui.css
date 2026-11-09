@@ -126,7 +126,7 @@
   --wash-stale: rgb(var(--ys-paper-rgb) / 0.18);     /* stale GPU cell */
   --stroke-thin: rgb(var(--ys-paper-rgb) / 0.3);     /* legend swatch of a thin line */
   --stroke-ref: rgb(var(--ys-paper-rgb) / 0.5);      /* legend swatch of a reference line */
-  --edge-lit: rgb(var(--ys-blue-rgb) / 0.22);        /* the lit top edge of a raised panel */
+  --lit-top: linear-gradient(90deg, rgb(var(--ys-blue-rgb) / 0.75), rgb(var(--ys-blue-rgb) / 0.28) 40%, rgb(var(--ys-blue-rgb) / 0) 75%); /* a raised panel's lit top edge */
 }
 
 .ak-mono { font-family: var(--mono); font-stretch: 87.5%; font-variant-numeric: tabular-nums; }
