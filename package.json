@@ -6,7 +6,8 @@
     "dev": "next dev -H 127.0.0.1",
     "build": "next build --webpack",
     "start": "next start",
-    "og": "node scripts/build-yovasense-og.mjs"
+    "og": "node scripts/build-yovasense-og.mjs",
+    "shots": "${PW_PYTHON:-python3} scripts/capture-demo-shots.py"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
