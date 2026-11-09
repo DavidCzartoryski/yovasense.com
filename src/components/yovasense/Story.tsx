@@ -18,7 +18,7 @@ export default function Story() {
                 <div className="flex items-center justify-between gap-4">
                   <span className="ar-mono text-[11px] text-ar-faint">{String(i + 1).padStart(2, "0")}</span>
                   <span
-                    className={`ar-label rounded-full border px-2.5 py-1 text-[9.5px] ${
+                    className={`ar-label rounded-full border px-2.5 py-1 text-[11px] ${
                       last ? "border-dashed border-ar-line-2 text-ar-faint" : "border-ar-line-2 text-ar-muted"
                     }`}
                   >

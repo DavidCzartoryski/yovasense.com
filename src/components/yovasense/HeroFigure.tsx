@@ -38,7 +38,7 @@ function Readout({ balanced, touched }: { balanced: boolean; touched: boolean })
   return (
     <div className="ar-mono relative border border-ar-line-2 bg-ar-panel p-4 text-[11.5px] leading-relaxed lg:w-[290px]">
       <p
-        className={`flex items-center gap-2 border-b border-ar-line pb-3 text-[10.5px] uppercase tracking-[0.12em] ${
+        className={`flex items-center gap-2 border-b border-ar-line pb-3 text-[11px] uppercase tracking-[0.12em] ${
           balanced ? "text-ar-ctl-ink" : "text-ar-signal-ink"
         }`}
       >
@@ -90,8 +90,8 @@ export default function HeroFigure({ caption = hero.caption }: { caption?: strin
             aria-controls="hero-lanes"
             className={
               balanced
-                ? "ar-label inline-flex h-8 items-center gap-2 rounded-full border border-ar-line-2 px-3.5 text-[10.5px] text-ar-fg transition-colors hover:border-ar-fg/60"
-                : "inline-flex h-8 items-center gap-2 rounded-full bg-ar-signal px-4 text-[13px] font-semibold text-ar-bg shadow-[0_0_0_4px_rgb(238_92_54/0.15)] transition-[filter,box-shadow] hover:shadow-[0_0_0_6px_rgb(238_92_54/0.2)] hover:brightness-110"
+                ? "ar-label inline-flex h-8 items-center gap-2 rounded-full border border-ar-line-2 px-3.5 text-[11px] text-ar-fg transition-colors hover:border-ar-fg/60"
+                : "inline-flex h-8 items-center gap-2 rounded-full bg-ar-signal px-4 text-[13px] font-semibold text-ar-bg shadow-[0_0_0_4px_rgb(252_115_77/0.15)] transition-[filter,box-shadow] hover:shadow-[0_0_0_6px_rgb(252_115_77/0.2)] hover:brightness-110"
             }
           >
             {balanced ? (

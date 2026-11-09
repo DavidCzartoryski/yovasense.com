@@ -113,7 +113,7 @@ export default function RegressionChart() {
 
   return (
     <div>
-      <ul className="ar-mono flex flex-wrap gap-x-5 gap-y-2 text-[10.5px] uppercase tracking-[0.08em] text-ar-muted">
+      <ul className="ar-mono flex flex-wrap gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.08em] text-ar-muted">
         <li className="flex items-center gap-2">
           <span aria-hidden="true" className="h-0.5 w-5 rounded-full bg-ar-signal" />
           Rank 2, regressed
@@ -151,44 +151,44 @@ export default function RegressionChart() {
           aria-hidden="true"
         >
           {/* Panel A: job step time. */}
-          <text x={ml} y={aTop - 14} className="ar-mono fill-ar-muted" fontSize="10.5" letterSpacing="0.06em">
+          <text x={ml} y={aTop - 14} className="ar-mono fill-ar-muted" fontSize="11" letterSpacing="0.06em">
             STEP TIME · MS
           </text>
           {[100, 110].map((v) => (
             <g key={v}>
               <line x1={ml} x2={ml + plotW} y1={yA(v)} y2={yA(v)} className="stroke-ar-fg/10" />
-              <text x={ml - 8} y={yA(v) + 3.5} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="10">
+              <text x={ml - 8} y={yA(v) + 3.5} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="11">
                 {v}
               </text>
             </g>
           ))}
           <path d={path(DATA.map((d) => yA(d.step)))} fill="none" className="stroke-ar-fg/80" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
           <circle cx={x(WINDOWS - 1)} cy={yA(last.step)} r="4" className="fill-ar-fg stroke-ar-panel" strokeWidth="2" />
-          <text x={x(WINDOWS - 1) + 10} y={yA(last.step) + 3.5} className="ar-mono fill-ar-fg" fontSize="10.5">
+          <text x={x(WINDOWS - 1) + 10} y={yA(last.step) + 3.5} className="ar-mono fill-ar-fg" fontSize="11">
             +{Math.round(last.step - 100)}%
           </text>
 
           {/* The onset, through both panels. */}
           <line x1={onsetX} x2={onsetX} y1={aTop - 8} y2={aTop + aH + 6} className="stroke-ar-signal/60" />
           <line x1={onsetX} x2={onsetX} y1={bTop - 6} y2={bTop + bH} className="stroke-ar-signal/60" />
-          <text x={onsetX + 6} y={aTop - 14} className="ar-mono fill-ar-signal-ink" fontSize="10.5" letterSpacing="0.06em">
+          <text x={onsetX + 6} y={aTop - 14} className="ar-mono fill-ar-signal-ink" fontSize="11" letterSpacing="0.06em">
             REGRESSION STARTS
           </text>
 
           {/* Panel B: compute against the island's median. */}
-          <text x={ml} y={bTop - 14} className="ar-mono fill-ar-muted" fontSize="10.5" letterSpacing="0.06em">
+          <text x={ml} y={bTop - 14} className="ar-mono fill-ar-muted" fontSize="11" letterSpacing="0.06em">
             {narrow ? "COMPUTE ÷ PEERS" : "COMPUTE ÷ ISLAND MEDIAN"}
           </text>
           {[1, 1.1, 1.2].map((v) => (
             <g key={v}>
               {v !== THRESHOLD && <line x1={ml} x2={ml + plotW} y1={yB(v)} y2={yB(v)} className="stroke-ar-fg/10" />}
-              <text x={ml - 8} y={yB(v) + 3.5} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="10">
+              <text x={ml - 8} y={yB(v) + 3.5} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="11">
                 {v.toFixed(1)}×
               </text>
             </g>
           ))}
           <line x1={ml} x2={ml + plotW} y1={yB(THRESHOLD)} y2={yB(THRESHOLD)} className="stroke-ar-fg/40" strokeDasharray="3 4" />
-          <text x={ml + 6} y={yB(THRESHOLD) + 14} className="ar-mono fill-ar-faint" fontSize="10">
+          <text x={ml + 6} y={yB(THRESHOLD) + 14} className="ar-mono fill-ar-faint" fontSize="11">
             {narrow ? "suspect above" : "suspect above, about 10% over peers"}
           </text>
           {Array.from({ length: RANKS }, (_, r) => r)
@@ -222,24 +222,24 @@ export default function RegressionChart() {
             <circle key={w} cx={x(w)} cy={yB(DATA[w].pace[SLOW])} r="4" className="fill-ar-panel stroke-ar-signal" strokeWidth="2" />
           ))}
           <circle cx={x(FLAGGED)} cy={yB(DATA[FLAGGED].pace[SLOW])} r="5.5" className="fill-ar-signal stroke-ar-panel" strokeWidth="2" />
-          <text x={x(FLAGGED) + (narrow ? 8 : 0)} y={yB(DATA[FLAGGED].pace[SLOW]) - 15} textAnchor="middle" className="ar-mono fill-ar-fg" fontSize="10.5">
+          <text x={x(FLAGGED) + (narrow ? 8 : 0)} y={yB(DATA[FLAGGED].pace[SLOW]) - 15} textAnchor="middle" className="ar-mono fill-ar-fg" fontSize="11">
             flagged
           </text>
-          <text x={x(WINDOWS - 1) + 10} y={yB(last.pace[SLOW]) + 3.5} className="ar-mono fill-ar-fg" fontSize="10.5">
+          <text x={x(WINDOWS - 1) + 10} y={yB(last.pace[SLOW]) + 3.5} className="ar-mono fill-ar-fg" fontSize="11">
             rank 2
           </text>
-          <text x={x(WINDOWS - 1) + 10} y={yB(1) + 3.5} className="ar-mono fill-ar-faint" fontSize="10.5">
+          <text x={x(WINDOWS - 1) + 10} y={yB(1) + 3.5} className="ar-mono fill-ar-faint" fontSize="11">
             peers
           </text>
 
           {/* Window axis. */}
           <line x1={ml} x2={ml + plotW} y1={bTop + bH} y2={bTop + bH} className="stroke-ar-fg/20" />
           {[0, 8, 16, 24, 31].map((w) => (
-            <text key={w} x={x(w)} y={bTop + bH + 16} textAnchor="middle" className="ar-mono fill-ar-faint" fontSize="10">
+            <text key={w} x={x(w)} y={bTop + bH + 16} textAnchor="middle" className="ar-mono fill-ar-faint" fontSize="11">
               {w}
             </text>
           ))}
-          <text x={ml + plotW} y={bTop + bH + 30} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="10">
+          <text x={ml + plotW} y={bTop + bH + 30} textAnchor="end" className="ar-mono fill-ar-faint" fontSize="11">
             window · 50 steps each
           </text>
 

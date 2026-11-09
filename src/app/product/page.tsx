@@ -35,35 +35,39 @@ const workflow = [
 
 export default function ProductPage() {
   return (
-    <>
-      <Header product />
+    <div className="ys-page">
+      <Header current="product" />
       <main id="main" tabIndex={-1} className="outline-none">
-        <section aria-labelledby="product-title" className="py-14 md:py-24">
-          <Container>
-            <Link href="/" className="inline-flex min-h-10 items-center gap-2 text-[13px] text-ar-faint hover:text-ar-fg"><span aria-hidden="true">←</span> YovaSense home</Link>
-            <p className="ar-label mt-8 text-ar-faint">What we are. What we&apos;re building.</p>
-            <h1 id="product-title" className="ar-display mt-5 max-w-[900px] text-[clamp(2.4rem,5vw,4.25rem)] leading-[1.06]">Performance engineering,<br /><span className="text-ar-signal-ink">from signal to recovery.</span></h1>
+        <section aria-labelledby="product-title" className="ys-intro">
+          <div className="ys-intro-fold" aria-hidden="true">
+            <span className="ys-intro-fold-face" />
+            <span className="ys-intro-fold-edge" />
+          </div>
+          <Container className="py-14 md:py-24">
+            <Link href="/" className="inline-flex min-h-10 items-center gap-2 text-[13px] text-ar-muted hover:text-ar-fg"><span aria-hidden="true">←</span> YovaSense home</Link>
+            <p className="ys-eyebrow mt-8">What we are. What we&apos;re building.</p>
+            <h1 id="product-title" className="ys-display mt-5 max-w-[900px] text-[clamp(2.4rem,5vw,4.25rem)] leading-[1.04]">Performance engineering,<br /><span className="text-ar-data-ink">from signal to recovery.</span></h1>
             <p className="mt-7 max-w-[760px] text-[18px] leading-[1.7] text-ar-muted">YovaSense is an autonomous performance engineer for distributed AI training. We&apos;re building a system that connects continuous detection, evidence-backed diagnosis, performance-regression testing, and permitted correction in one closed loop.</p>
             <p className="mt-4 max-w-[760px] text-[16px] leading-[1.7] text-ar-muted">The goal: more useful training from the GPUs you already have, with less manual investigation. Built for teams running owned or rented clusters, across supported GPU vendors and generations.</p>
-            <div className="mt-9 border-l-2 border-ar-signal pl-5">
+            <div className="ys-intro-note mt-9 max-w-[840px]">
               <h2 className="text-[16px] font-medium">An early product, with a clear destination.</h2>
-              <p className="mt-2 max-w-[800px] text-[14px] leading-[1.7] text-ar-muted">The full autonomous workflow below is our product direction, not a claim that every capability is production-ready. Existing work includes GPUBridge and detector prototypes. Hardware results later on this page are historical, scoped experiments—not customer deployments or guarantees for the current build.</p>
+              <p className="mt-2 text-[14px] leading-[1.7] text-ar-muted">The full autonomous workflow below is our product direction, not a claim that every capability is production-ready. Existing work includes GPUBridge and detector prototypes. Hardware results later on this page are historical, scoped experiments—not customer deployments or guarantees for the current build.</p>
             </div>
-            <nav aria-label="Product contents" className="mt-10 flex flex-wrap gap-x-6 gap-y-2 border-y border-ar-line py-4 text-[13px] text-ar-muted">
-              <a href="#workflow" className="py-1 hover:text-ar-fg">Product vision</a>
-              {yovasenseNav.map((item) => <a key={item.id} href={`#${item.id}`} className="py-1 hover:text-ar-fg">{item.label}</a>)}
-              <a href="#about" className="py-1 hover:text-ar-fg">Cofounders</a>
+            <nav aria-label="Product contents" className="mt-10 flex flex-wrap gap-x-6 gap-y-1 border-y border-ar-line py-3 text-[13px] text-ar-muted">
+              <a href="#workflow" className="inline-flex min-h-10 items-center hover:text-ar-fg">Product vision</a>
+              {yovasenseNav.map((item) => <a key={item.id} href={`#${item.id}`} className="inline-flex min-h-10 items-center hover:text-ar-fg">{item.label}</a>)}
+              <a href="#about" className="inline-flex min-h-10 items-center hover:text-ar-fg">Cofounders</a>
             </nav>
           </Container>
         </section>
         <section id="workflow" aria-labelledby="workflow-title" className="border-t border-ar-line py-16 md:py-24">
           <Container>
-            <p className="ar-label text-ar-faint">The product vision</p>
-            <h2 id="workflow-title" className="ar-display mt-5 text-[clamp(1.9rem,3.5vw,3rem)] leading-tight">An engineer in the loop.<br />Not an engineer on every alert.</h2>
-            <ol className="mt-10 border-t border-ar-line">
+            <p className="ys-eyebrow">The product vision</p>
+            <h2 id="workflow-title" className="ys-display mt-5 text-[clamp(1.9rem,3.5vw,3rem)] leading-tight">An engineer in the loop.<br />Not an engineer on every alert.</h2>
+            <ol className="ys-pv mt-10">
               {workflow.map(([heading, body], i) => (
-                <li key={heading} className="grid gap-3 border-b border-ar-line py-6 md:grid-cols-[40px_240px_1fr] md:gap-6">
-                  <span className="ar-mono text-[12px] text-ar-faint">0{i + 1}</span>
+                <li key={heading} className="ys-pv-step grid gap-2 py-6 md:grid-cols-[40px_240px_1fr] md:gap-6">
+                  <span className="ar-mono text-[12px] text-ar-data-ink">0{i + 1}</span>
                   <h3 className="text-[18px] font-medium">{heading}</h3>
                   <p className="max-w-[640px] text-[16px] leading-[1.65] text-ar-muted">{body}</p>
                 </li>
@@ -85,6 +89,6 @@ export default function ProductPage() {
         <Feedback />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

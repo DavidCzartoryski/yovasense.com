@@ -21,7 +21,7 @@ export default function Evidence() {
               <li key={e.value} className="flex flex-col bg-ar-bg p-6 md:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <Tag tone={scope.tone}>{scope.label}</Tag>
-                  <span className="ar-label text-[9.5px] text-ar-faint">Real GPUs</span>
+                  <span className="ar-label text-[11px] text-ar-faint">Real GPUs</span>
                 </div>
                 <p className="ar-display mt-8 text-[clamp(2.2rem,3.6vw,3rem)] leading-none text-ar-fg">{e.value}</p>
                 <p className="mt-4 text-[15.5px] font-medium leading-snug text-ar-fg">{e.result}</p>

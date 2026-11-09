@@ -116,7 +116,7 @@ function StepGroup({ s, x, hatch }: { s: Step; x: number; hatch: string }) {
   return (
     <g transform={`translate(${x.toFixed(2)} 0)`}>
       <line x1={s.barrier} x2={s.barrier} y1={AXIS - 8} y2={HEIGHT} className="stroke-ar-fg/25" strokeDasharray="2 3" />
-      <text x={s.barrier + 3} y={AXIS - 12} className="ar-mono fill-ar-faint" fontSize="8.5" letterSpacing="0.06em">
+      <text x={s.barrier + 3} y={AXIS - 12} className="ar-mono fill-ar-faint" fontSize="11" letterSpacing="0.06em">
         ALL-REDUCE
       </text>
       {RANKS.map(({ rank }, i) => {
@@ -317,7 +317,7 @@ export default function Lanes({ balanced }: { balanced: boolean }) {
 
 export function LanesLegend() {
   return (
-    <ul className="ar-mono flex flex-wrap items-center gap-x-5 gap-y-2 text-[10.5px] uppercase tracking-[0.08em] text-ar-muted">
+    <ul className="ar-mono flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] uppercase tracking-[0.08em] text-ar-muted">
       <li className="flex items-center gap-2">
         <span aria-hidden="true" className="h-2.5 w-5 rounded-[2px] bg-ar-fg/70" />
         Compute
