@@ -1,46 +1,132 @@
 /* The YovaSense UI kit (straggler.uikit): one visual system for the private live UI and the public
-   simulated demo. Tokens first: the demo's own (demo.css :root, verbatim), then the shared state
-   colors. Every component class is prefixed ak-; there is no @font-face (the host page supplies
-   fonts.css) and no rule on body or a bare element.
+   simulated demo. Tokens first: the site's --ys- vocabulary (shared with the Next site's
+   globals.css), then the demo's own names (demo.css and the kit read these; their values now point
+   at --ys- tokens), then the shared state colors. Every component class is prefixed ak-; there is
+   no @font-face (the host page supplies fonts.css) and no rule on body or a bare element.
    Meanings: signal (orange) is wrong or waits for a person; data (blue) is a measured or
    simulated line; ctl (green) is what YovaSense did; ok (green) is healthy; job (amber) frames one
    job's devices and is never a fault. Color never carries a state alone: each health state also
-   has a pattern, a word and an accessible label. */
+   has a pattern, a word and an accessible label. Selected and active controls are blue, never
+   orange, so orange keeps its one meaning. */
 
+/* ---- the site's tokens (studies/_assets/tokens.css; page-layout tokens stay site-only) ---- */
 :root {
-  --bg: #0d0e11;
-  --panel: #14161a;
-  --panel-2: #191b20;
-  --fg: #edece7;
-  --muted: #a9a8a2;
-  --faint: #8c8b85;
-  --line: rgb(237 236 231 / 0.09);
-  --line-2: rgb(237 236 231 / 0.17);
-  --signal: #ee5c36;
-  --signal-ink: #ff7a57;
-  --data: #3987e5;
-  --ctl: #199e70;
-  --ctl-ink: #2fc28c;
-  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  --mono: "Martian Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --z-header: 20;
-  --z-skip: 30;
+  --ys-navy: #02070A;      /* Dry Shillingston navy: the page */
+  --ys-blue: #0297DE;      /* Unhinged Custodius Blue: active states, primary actions, data */
+  --ys-orange: #FC734D;    /* Slitherine Slime Orange: warm edge light; in the demo, signal */
+  --ys-paper: #EAF2F5;     /* cool off-white: readable text */
+
+  --ys-well: #010406;
+  --ys-surface-1: #06121A;
+  --ys-surface-2: #0A1B25;
+  --ys-surface-3: #102838;
+
+  --ys-blue-600: #0373B0;
+  --ys-blue-300: #4DB8EE;
+  --ys-blue-200: #8FD3F7;
+  --ys-orange-300: #FF9A7A;
+
+  --ys-text: var(--ys-paper);        /* 17.85 on navy, 16.70 on surface-1 */
+  --ys-text-muted: #A7B8C2;          /*  9.91 on navy,  9.27 on surface-1 */
+  --ys-text-faint: #8597A2;          /*  6.70 on navy,  6.26 on surface-1, 5.02 on surface-3 */
+  --ys-ink: var(--ys-navy);          /* text on blue: 6.25 on --ys-blue */
+
+  --ys-line: rgb(234 242 245 / 0.10);
+  --ys-line-2: rgb(234 242 245 / 0.18);
+  /* A control's own boundary (button, toggle group, chip): 4.23 on navy, 3.96 on surface-1,
+     3.67 on surface-2, 3.18 on surface-3, so the control is findable without its label. */
+  --ys-line-control: #64757F;
+
+  /* Color channels, for the semantic alpha tokens below. */
+  --ys-navy-rgb: 2 7 10;
+  --ys-surface-1-rgb: 6 18 26;
+  --ys-paper-rgb: 234 242 245;
+  --ys-blue-rgb: 2 151 222;
+  --ys-orange-rgb: 252 115 77;
+
+  --ys-font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --ys-font-mono: "Martian Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ys-fs-label: 11px;     /* the floor for any label that carries meaning */
+  --ys-stretch-display: 112%;
+  --ys-stretch-wide: 125%;
+  --ys-stretch-mono: 87.5%;
+  --ys-track-label: 0.14em;
+  --ys-track-wordmark: 0.16em;
+  --ys-radius-0: 0;
+
+  /* Light. The demo spends it on edges only: no lit fields, no glow behind text. */
+  --ys-edge-orange-left: inset 2px 0 0 var(--ys-orange), -10px 0 28px -12px rgb(var(--ys-orange-rgb) / 0.7);
+
+  --ys-dur-1: 120ms;
+  --ys-dur-2: 240ms;
+  --ys-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --ys-focus: var(--ys-paper);
+  --ys-focus-width: 2px;
+  --ys-focus-offset: 3px;
+  --ys-z-header: 20;
+  --ys-z-skip: 30;
+}
+
+/* ---- the demo's own names (read by demo.css, this kit and nothing in JS) ---- */
+:root {
+  --bg: var(--ys-navy);
+  --panel: var(--ys-surface-1);
+  --panel-2: var(--ys-surface-2);
+  --fg: var(--ys-paper);
+  --muted: var(--ys-text-muted);
+  --faint: var(--ys-text-faint);
+  --line: var(--ys-line);
+  --line-2: var(--ys-line-2);
+  --signal: var(--ys-orange);        /* 7.42 on navy, 6.94 on surface-1 */
+  --signal-ink: var(--ys-orange-300); /* 9.79 on navy, 9.16 on surface-1 */
+  --data: var(--ys-blue);            /* 6.25 on navy, 5.85 on surface-1 */
+  --ctl: #199e70;                    /* 5.94 on navy */
+  --ctl-ink: #2fc28c;                /* 8.88 on navy */
+  --sans: var(--ys-font-sans);
+  --mono: var(--ys-font-mono);
+  --z-header: var(--ys-z-header);
+  --z-skip: var(--ys-z-skip);
   color-scheme: dark;
 }
 
 :root {
   --ok: #1f9d6b;
   --ok-ink: #3fd396;
-  --job: #f29b38;
-  --job-ink: #ffb25c;
-  --stale: #6b6a66;
+  /* Job amber moved toward yellow (hue 39, was 32) so a job's frame stays clearly apart from
+     the new signal orange (hue 13): CIEDE2000 27.6 from --signal, where the old amber would be
+     19.0 (and was 21.7 from the old signal). 10.81 on navy. */
+  --job: #F2B23C;
+  --job-ink: #FFC766;
+  --stale: #5E6F7A;
   --bad: #e5484d;
   --bad-ink: #ff6b70;
-  --data-2: #6aa8f0;
-  --data-3: #2f6fbf;
-  --data-4: #9cc4f5;
+  --data-2: var(--ys-blue-300);
+  --data-3: var(--ys-blue-600);
+  --data-4: var(--ys-blue-200);
   --cell: 18px;
-  --radius: 0;
+  --radius: var(--ys-radius-0);
+
+  /* Semantic alpha tokens: every translucent state color the demo draws, named by meaning. */
+  --ctl-rgb: 25 158 112;
+  --signal-hatch: rgb(var(--ys-orange-rgb) / 0.6);   /* degraded GPU cell */
+  --signal-edge: rgb(var(--ys-orange-rgb) / 0.5);    /* outline of a signal word or alert */
+  --signal-band: rgb(var(--ys-orange-rgb) / 0.08);   /* chart band over a problem window */
+  --ctl-hatch: rgb(var(--ctl-rgb) / 0.65);           /* GPU cell YovaSense is checking */
+  --ctl-edge: rgb(var(--ctl-rgb) / 0.5);             /* outline of a ctl word */
+  --active: var(--ys-blue);                          /* selected, pressed, current */
+  --active-ink: var(--ys-blue-300);
+  --active-fill: rgb(var(--ys-blue-rgb) / 0.18);     /* behind a pressed segment or picked row */
+  --active-fill-soft: rgb(var(--ys-blue-rgb) / 0.10); /* behind the current view in the nav */
+  --control-line: var(--ys-line-control);
+  --control-line-hover: rgb(var(--ys-paper-rgb) / 0.7);
+  --wash-1: rgb(var(--ys-paper-rgb) / 0.03);         /* row hover */
+  --wash-2: rgb(var(--ys-paper-rgb) / 0.05);         /* a gap in a chart */
+  --wash-3: rgb(var(--ys-paper-rgb) / 0.08);         /* unavailable GPU cell */
+  --wash-stale: rgb(var(--ys-paper-rgb) / 0.18);     /* stale GPU cell */
+  --stroke-thin: rgb(var(--ys-paper-rgb) / 0.3);     /* legend swatch of a thin line */
+  --stroke-ref: rgb(var(--ys-paper-rgb) / 0.5);      /* legend swatch of a reference line */
+  --lit-top: linear-gradient(90deg, rgb(var(--ys-blue-rgb) / 0.75), rgb(var(--ys-blue-rgb) / 0.28) 40%, rgb(var(--ys-blue-rgb) / 0) 75%); /* a raised panel's lit top edge */
 }
 
 .ak-mono { font-family: var(--mono); font-stretch: 87.5%; font-variant-numeric: tabular-nums; }
@@ -55,9 +141,9 @@
 .ak-kpi-label { font-family: var(--sans); font-size: 13.5px; color: var(--muted); }
 .ak-kpi-sub { margin-left: auto; font-size: 12px; color: var(--faint); }
 .ak-kpi[data-tone="signal"] .ak-kpi-v { color: var(--signal-ink); }
-.ak-seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; }
+.ak-seg { display: inline-flex; border: 1px solid var(--control-line); border-radius: var(--radius); overflow: hidden; }
 .ak-seg > button { border: 0; background: transparent; color: var(--muted); padding: 8px 14px; cursor: pointer; font: inherit; font-size: 13.5px; }
-.ak-seg > button[aria-pressed="true"] { background: rgb(237 236 231 / 0.08); color: var(--fg); }
+.ak-seg > button[aria-pressed="true"] { background: var(--active-fill); color: var(--fg); box-shadow: inset 0 -2px 0 var(--active); }
 
 /* ---- the device grid: racks of node rows of cells. Fill is HEALTH; the dashed amber frame is
    ALLOCATION (one job's devices on a row; rows of one job in a rack join). ---- */
@@ -69,7 +155,7 @@
 .ak-rack-label { font-family: var(--mono); font-stretch: 87.5%; font-size: 13px; color: var(--fg); }
 .ak-rack-sub { font-size: 11.5px; color: var(--faint); }
 .ak-node { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px; margin-top: 10px; }
-.ak-node-label { flex: 0 0 auto; min-width: 44px; font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; color: var(--muted); text-decoration: none; padding-top: 4px; }
+.ak-node-label { flex: 0 0 auto; min-width: 44px; font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); color: var(--muted); text-decoration: none; padding-top: 4px; }
 a.ak-node-label:hover { text-decoration: underline; }
 .ak-node-note { font-size: 11px; color: var(--faint); padding-top: 4px; }
 .ak-node[data-tone="signal"] .ak-node-label { color: var(--signal-ink); }
@@ -77,7 +163,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-group { border: 1px dashed var(--job); padding: 4px 6px 6px; }
 .ak-group[data-join~="up"] { border-top-color: transparent; margin-top: -10px; padding-top: 10px; }
 .ak-group[data-join~="down"] { border-bottom-color: transparent; }
-.ak-group-label { display: block; color: var(--job-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; text-decoration: none; margin-bottom: 5px; }
+.ak-group-label { display: block; color: var(--job-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); text-decoration: none; margin-bottom: 5px; }
 .ak-group-label:hover { text-decoration: underline; }
 .ak-group-sub { color: var(--muted); }
 .ak-group[data-allocation="unknown"] { border-style: dotted; border-color: var(--muted); }
@@ -90,15 +176,15 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-cell.ak-mini { width: 13px; height: 13px; cursor: default; }
 .ak-cell:focus-visible { outline: 2px solid var(--fg); outline-offset: 1px; }
 .ak-cell[data-health="healthy"] { background: var(--ok); color: var(--bg); }
-.ak-cell[data-health="degraded"] { border-color: var(--signal); background-image: repeating-linear-gradient(45deg, rgb(238 92 54 / 0.6) 0 1.2px, transparent 1.2px 3.5px); }
+.ak-cell[data-health="degraded"] { border-color: var(--signal); background-image: repeating-linear-gradient(45deg, var(--signal-hatch) 0 1.2px, transparent 1.2px 3.5px); }
 .ak-cell[data-health="cause"] { background: var(--signal); color: var(--bg); }
-.ak-cell[data-health="checking"] { border-color: var(--ctl); background-image: repeating-linear-gradient(45deg, rgb(25 158 112 / 0.65) 0 1.2px, transparent 1.2px 3.5px); }
+.ak-cell[data-health="checking"] { border-color: var(--ctl); background-image: repeating-linear-gradient(45deg, var(--ctl-hatch) 0 1.2px, transparent 1.2px 3.5px); }
 .ak-cell[data-health="drained"] { border: 1px dashed var(--ctl); }
 .ak-cell[data-health="unresponsive"] { background: var(--bg); border-color: var(--signal); }
 .ak-cell[data-health="unresponsive"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - 1px), var(--signal) calc(50% - 1px), var(--signal) calc(50% + 1px), transparent calc(50% + 1px)); }
-.ak-cell[data-health="stale"] { background: rgb(237 236 231 / 0.18); border: 1px dotted var(--muted); }
-.ak-cell[data-health="not_collected"], .ak-cell[data-health="unknown"] { border: 1px dotted var(--line-2); color: var(--faint); }
-.ak-cell[data-health="unavailable"] { background: rgb(237 236 231 / 0.08); border: 1px dashed var(--faint); color: var(--faint); }
+.ak-cell[data-health="stale"] { background: var(--wash-stale); border: 1px dotted var(--muted); }
+.ak-cell[data-health="not_collected"], .ak-cell[data-health="unknown"] { border: 1px dotted var(--control-line); color: var(--faint); }
+.ak-cell[data-health="unavailable"] { background: var(--wash-3); border: 1px dashed var(--faint); color: var(--faint); }
 .ak-cell[data-health="unavailable"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--faint) calc(50% - 0.5px), var(--faint) calc(50% + 0.5px), transparent calc(50% + 0.5px)); }
 
 /* ---- tooltip: one per grid, shown on hover and on focus ---- */
@@ -120,7 +206,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-chart { min-width: 0; }
 .ak-chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .ak-chart-title { font-size: 14.5px; font-weight: 600; margin: 0; }
-.ak-chart-unit { font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; color: var(--faint); text-align: right; }
+.ak-chart-unit { font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); color: var(--faint); text-align: right; }
 .ak-plot { position: relative; }
 .ak-overlay { position: absolute; inset: 0; pointer-events: none; }
 .ak-chart-svg { display: block; }
@@ -133,9 +219,9 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-chart-svg .ak-line.hot { stroke: var(--signal); stroke-width: 2; }
 .ak-chart-svg .ak-line.ak-stale { stroke-dasharray: 4 3; opacity: 0.75; }
 .ak-chart-svg .ak-chart-note { fill: var(--signal-ink); font-family: var(--mono); font-size: 11px; }
-.ak-chart-svg .ak-gap { fill: rgb(237 236 231 / 0.05); stroke: var(--line-2); stroke-dasharray: 3 3; }
-.ak-chart-svg .ak-band { fill: rgb(238 92 54 / 0.08); stroke: none; }
-.ak-chart-svg .ak-band-label { fill: var(--signal-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; }
+.ak-chart-svg .ak-gap { fill: var(--wash-2); stroke: var(--line-2); stroke-dasharray: 3 3; }
+.ak-chart-svg .ak-band { fill: var(--signal-band); stroke: none; }
+.ak-chart-svg .ak-band-label { fill: var(--signal-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); }
 .ak-chart-svg .ak-ref { stroke: var(--fg); stroke-dasharray: 4 3; opacity: 0.6; }
 .ak-chart-svg .ak-event { stroke: var(--fg); stroke-dasharray: 3 3; opacity: 0.7; }
 .ak-chart-svg .ak-event.restart, .ak-chart-svg .ak-event.data { stroke: var(--data-2); }
@@ -144,6 +230,10 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-chart-svg .ak-event-label { fill: var(--fg); font-family: var(--mono); font-size: 11px; }
 .ak-chart-svg .ak-empty-frame { fill: none; stroke: var(--line-2); stroke-dasharray: 3 3; }
 .ak-chart-svg .ak-empty { fill: var(--faint); font-size: 14px; }
+/* Chart words sit on a halo of the surface behind the chart, so a line that runs through a
+   label (a reference line's name over the data, an event name over a trace) cannot hide it. */
+.ak-chart-svg text { paint-order: stroke fill; stroke: var(--chart-halo, var(--panel)); stroke-width: 4px; stroke-linejoin: round; }
+.ak-sec, .ak-rack, .ak-bench { --chart-halo: var(--bg); }
 .ak-chart-svg .ak-cursor { stroke: var(--fg); stroke-width: 1; opacity: 0.45; pointer-events: none; }
 .ak-trace::before { content: ""; display: inline-block; width: 16px; height: 3px; margin-right: 8px; vertical-align: 3px; border-radius: 2px; background: var(--data); }
 .ak-trace.s1::before { background: var(--data-2); }
@@ -156,7 +246,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-record-head { flex: 1 1 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .ak-record-title { font-size: 19px; font-weight: 600; margin: 0; }
 .ak-record-uuid { font-family: var(--mono); font-stretch: 87.5%; font-size: 13px; color: var(--muted); margin: 4px 0 0; word-break: break-all; }
-.ak-close { border: 1px solid var(--line-2); background: transparent; color: var(--fg); border-radius: 0; padding: 4px 10px; cursor: pointer; font: inherit; font-size: 13px; }
+.ak-close { border: 1px solid var(--control-line); background: transparent; color: var(--fg); border-radius: 0; padding: 4px 10px; cursor: pointer; font: inherit; font-size: 13px; }
 .ak-sec { flex: 1 1 300px; border: 1px solid var(--line); background: var(--bg); padding: 14px 16px; min-width: 0; }
 .ak-sec[data-part="benchmarks"], .ak-sec[data-part="service"] { flex-basis: 100%; }
 .ak-sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
