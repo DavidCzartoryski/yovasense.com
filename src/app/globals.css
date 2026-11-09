@@ -559,7 +559,7 @@ main:focus { outline: none; }
   .ys-hero-tag[data-tag="gate"] { --tag-x: calc(var(--hx-bx) + 14px); --tag-y: calc(var(--hx-by) - 30px); }
   .ys-hero-tag[data-tag="late"] { --tag-x: max(12px, calc(var(--hx-bx) * 0.0243)); --tag-y: calc(var(--hx-base) * 0.3152 - 24px); }
   .ys-hero-grid { display: block; min-height: 0; }
-  .ys-hero-copy { padding: var(--hx-band) 0 28px var(--ys-rail-pad); }
+  .ys-hero-copy { padding: var(--hx-band) 0 36px var(--ys-rail-pad); }
 }
 @media (max-width: 759px) {
   .ys-hero-title { margin-top: 14px; }
