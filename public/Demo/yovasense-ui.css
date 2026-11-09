@@ -230,6 +230,10 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-chart-svg .ak-event-label { fill: var(--fg); font-family: var(--mono); font-size: 11px; }
 .ak-chart-svg .ak-empty-frame { fill: none; stroke: var(--line-2); stroke-dasharray: 3 3; }
 .ak-chart-svg .ak-empty { fill: var(--faint); font-size: 14px; }
+/* Chart words sit on a halo of the surface behind the chart, so a line that runs through a
+   label (a reference line's name over the data, an event name over a trace) cannot hide it. */
+.ak-chart-svg text { paint-order: stroke fill; stroke: var(--chart-halo, var(--panel)); stroke-width: 4px; stroke-linejoin: round; }
+.ak-sec, .ak-rack, .ak-bench { --chart-halo: var(--bg); }
 .ak-chart-svg .ak-cursor { stroke: var(--fg); stroke-width: 1; opacity: 0.45; pointer-events: none; }
 .ak-trace::before { content: ""; display: inline-block; width: 16px; height: 3px; margin-right: 8px; vertical-align: 3px; border-radius: 2px; background: var(--data); }
 .ak-trace.s1::before { background: var(--data-2); }
