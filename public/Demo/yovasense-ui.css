@@ -140,9 +140,9 @@
 .ak-kpi-label { font-family: var(--sans); font-size: 13.5px; color: var(--muted); }
 .ak-kpi-sub { margin-left: auto; font-size: 12px; color: var(--faint); }
 .ak-kpi[data-tone="signal"] .ak-kpi-v { color: var(--signal-ink); }
-.ak-seg { display: inline-flex; border: 1px solid var(--line-2); border-radius: var(--radius); overflow: hidden; }
+.ak-seg { display: inline-flex; border: 1px solid var(--control-line); border-radius: var(--radius); overflow: hidden; }
 .ak-seg > button { border: 0; background: transparent; color: var(--muted); padding: 8px 14px; cursor: pointer; font: inherit; font-size: 13.5px; }
-.ak-seg > button[aria-pressed="true"] { background: var(--wash-3); color: var(--fg); }
+.ak-seg > button[aria-pressed="true"] { background: var(--active-fill); color: var(--fg); box-shadow: inset 0 -2px 0 var(--active); }
 
 /* ---- the device grid: racks of node rows of cells. Fill is HEALTH; the dashed amber frame is
    ALLOCATION (one job's devices on a row; rows of one job in a rack join). ---- */
@@ -182,7 +182,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-cell[data-health="unresponsive"] { background: var(--bg); border-color: var(--signal); }
 .ak-cell[data-health="unresponsive"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top right, transparent calc(50% - 1px), var(--signal) calc(50% - 1px), var(--signal) calc(50% + 1px), transparent calc(50% + 1px)); }
 .ak-cell[data-health="stale"] { background: var(--wash-stale); border: 1px dotted var(--muted); }
-.ak-cell[data-health="not_collected"], .ak-cell[data-health="unknown"] { border: 1px dotted var(--line-2); color: var(--faint); }
+.ak-cell[data-health="not_collected"], .ak-cell[data-health="unknown"] { border: 1px dotted var(--control-line); color: var(--faint); }
 .ak-cell[data-health="unavailable"] { background: var(--wash-3); border: 1px dashed var(--faint); color: var(--faint); }
 .ak-cell[data-health="unavailable"]::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--faint) calc(50% - 0.5px), var(--faint) calc(50% + 0.5px), transparent calc(50% + 0.5px)); }
 
@@ -241,7 +241,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-record-head { flex: 1 1 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .ak-record-title { font-size: 19px; font-weight: 600; margin: 0; }
 .ak-record-uuid { font-family: var(--mono); font-stretch: 87.5%; font-size: 13px; color: var(--muted); margin: 4px 0 0; word-break: break-all; }
-.ak-close { border: 1px solid var(--line-2); background: transparent; color: var(--fg); border-radius: 0; padding: 4px 10px; cursor: pointer; font: inherit; font-size: 13px; }
+.ak-close { border: 1px solid var(--control-line); background: transparent; color: var(--fg); border-radius: 0; padding: 4px 10px; cursor: pointer; font: inherit; font-size: 13px; }
 .ak-sec { flex: 1 1 300px; border: 1px solid var(--line); background: var(--bg); padding: 14px 16px; min-width: 0; }
 .ak-sec[data-part="benchmarks"], .ak-sec[data-part="service"] { flex-basis: 100%; }
 .ak-sec-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
