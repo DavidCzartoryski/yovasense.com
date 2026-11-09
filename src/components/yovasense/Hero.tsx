@@ -69,7 +69,7 @@ function HeroStill() {
         const late = laneD(m, LATE);
         return (
           <Fragment key={m}>
-            <svg className="ys-lanebox" data-mode={m} style={{ top: SIZE[m].rimDy }} viewBox="0 0 1000 1000" preserveAspectRatio="none">
+            <svg className="ys-lanebox" data-mode={m} style={{ transform: `translateY(${SIZE[m].rimDy}px)` }} viewBox="0 0 1000 1000" preserveAspectRatio="none">
               <path d={late} stroke="#FC734D" strokeOpacity={+(0.09 * s.rim).toFixed(4)} strokeWidth="7" />
               <path d={late} stroke="#FC734D" strokeOpacity={+(0.55 * s.rim).toFixed(4)} strokeWidth="1.2" />
             </svg>
@@ -95,8 +95,8 @@ function HeroStill() {
                 className="ys-still-dot"
                 data-mode={m}
                 style={{
-                  left: `calc(var(--hx-bx) + ${d.x.toFixed(2)}px)`,
-                  top: `calc(var(--hx-by) + ${d.y.toFixed(2)}px)`,
+                  left: `calc(var(--hx-bx) * ${+d.x.toFixed(5)})`,
+                  top: `calc(var(--hx-lanes-h) * ${+d.y.toFixed(5)})`,
                   width: +d.s.toFixed(2),
                   height: +d.s.toFixed(2),
                   opacity: +d.a.toFixed(4),

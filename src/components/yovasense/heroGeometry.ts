@@ -45,8 +45,12 @@ export const SIZE: Record<Mode, { tail: number; dot: number; wait: number; flash
   desk: { tail: 150, dot: 26, wait: 96, flash: 190, runTail: 220, rimDy: 2.2 },
 };
 
-/** Reference lane boxes (390 x 844 phone, 1440 x 900 desktop) for the server-rendered pose. */
-const REF: Record<Mode, { bx: number; hb: number }> = {
+/**
+ * Reference lane boxes (390 x 844 phone, 1440 x 900 desktop). The moving layer
+ * is worked out in this box and then stretched to the real one (as the
+ * server-rendered SVG is), so the two agree at every width.
+ */
+export const REF: Record<Mode, { bx: number; hb: number }> = {
   phone: { bx: 234, hb: 154 },
   desk: { bx: 390.66, hb: 878.6 },
 };
@@ -109,8 +113,10 @@ export type Scene = { rim: number; trails: Trail[]; dots: Dot[] };
 /**
  * The pose at time t (seconds): the healthy ranks arrive together and wait for
  * the late one (rank 2, orange-rimmed); released, one packet runs the single line.
+ * The lanes and B are in lane space and come out through xf; the single line
+ * (merged) is already in place.
  */
-export function scene(time: number, mode: Mode, lanes: Path[], B: { x: number; y: number }, merged: Path | null): Scene {
+export function scene(time: number, mode: Mode, lanes: Path[], B: { x: number; y: number }, merged: Path | null, xf: (p: Pt) => Pt = (p) => p): Scene {
   const sz = SIZE[mode];
   const k = Math.floor(time / STEP), tau = time - k * STEP;
   const lag = lagAt(k);
@@ -132,22 +138,24 @@ export function scene(time: number, mode: Mode, lanes: Path[], B: { x: number; y
     const tl = arrived ? sz.tail * Math.max(0.15, 1 - (tau - dur) / 0.6) : sz.tail;
     const warm = late && warmth > 0.05;
     if (warm) {
-      out.trails.push({ pts: sub(ln, head - tl, head), rgb: "252,115,77", a: 0.75 * warmth * fade, w: 2 });
-      out.trails.push({ pts: sub(ln, head - tl * 0.7, head), rgb: "207,235,250", a: 0.55 * (1 - warmth * 0.6) * fade, w: 1.2 });
+      out.trails.push({ pts: sub(ln, head - tl, head).map(xf), rgb: "252,115,77", a: 0.75 * warmth * fade, w: 2 });
+      out.trails.push({ pts: sub(ln, head - tl * 0.7, head).map(xf), rgb: "207,235,250", a: 0.55 * (1 - warmth * 0.6) * fade, w: 1.2 });
     } else {
-      out.trails.push({ pts: sub(ln, head - tl, head), rgb: "143,211,247", a: 0.85 * fade, w: 1.8 });
+      out.trails.push({ pts: sub(ln, head - tl, head).map(xf), rgb: "143,211,247", a: 0.85 * fade, w: 1.8 });
     }
-    const pt = at(ln, head);
+    const [hx, hy] = at(ln, head);
+    const pt = xf([hx, hy]);
     out.dots.push({ x: pt[0], y: pt[1], s: sz.dot, a: (arrived ? 0.5 : 0.95) * fade, warm });
   }
   // everyone waits at the barrier: the bloom swells; then one packet runs the single line
+  const [bx, by] = xf([B.x, B.y]);
   if (waiting) {
     const w = (tau - ARRIVE) / Math.max(0.01, lag);
-    out.dots.push({ x: B.x, y: B.y, s: sz.wait * (1 + 0.35 * w), a: 0.55 + 0.2 * w, warm: false });
+    out.dots.push({ x: bx, y: by, s: sz.wait * (1 + 0.35 * w), a: 0.55 + 0.2 * w, warm: false });
   } else if (tau >= release) {
     const since = tau - release;
     const flash = clamp01(1 - since / 0.7);
-    out.dots.push({ x: B.x, y: B.y, s: sz.flash * (1 + 0.4 * (1 - flash)), a: 0.9 * flash, warm: false });
+    out.dots.push({ x: bx, y: by, s: sz.flash * (1 + 0.4 * (1 - flash)), a: 0.9 * flash, warm: false });
     const q = clamp01(since / TRAVEL);
     if (q < 1 && merged) {
       const head = q * q * (3 - 2 * q) * merged.total;
@@ -161,7 +169,7 @@ export function scene(time: number, mode: Mode, lanes: Path[], B: { x: number; y
 
 /**
  * The still pose for the server-rendered picture, in the reference lane box:
- * trails in lane-box units (0-1000 on both axes), dots as px offsets from B.
+ * trails in lane-box units (0-1000 on both axes), dots as fractions of the box.
  */
 export function stillScene(mode: Mode) {
   const { bx, hb } = REF[mode];
@@ -171,7 +179,7 @@ export function stillScene(mode: Mode) {
   return {
     rim: s.rim,
     trails: s.trails.map((t) => ({ ...t, pts: t.pts.map(([x, y]): Pt => [(x * 1000) / bx, (y * 1000) / hb]) })),
-    dots: s.dots.map((d) => ({ ...d, x: d.x - bx, y: d.y - by })),
+    dots: s.dots.map((d) => ({ ...d, x: d.x / bx, y: d.y / hb })),
   };
 }
 

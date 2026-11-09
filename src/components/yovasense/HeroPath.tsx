@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { addTask, kick, reducedMotion, type Frame } from "./motion";
-import { BLUE, LANES, LATE, PHONE_QUERY, SIZE, STILL, WARM, bez, laneCtrl, measure, scene, type Mode, type Path, type Pt } from "./heroGeometry";
+import { BLUE, LANES, LATE, PHONE_QUERY, REF, SHAPE, SIZE, STILL, WARM, bez, laneCtrl, measure, scene, type Mode, type Path, type Pt } from "./heroGeometry";
 
 /**
  * The hero's moving layer: packets on the eight rank lanes, the late rank's
@@ -14,7 +14,8 @@ import { BLUE, LANES, LATE, PHONE_QUERY, SIZE, STILL, WARM, bez, laneCtrl, measu
  * at the pose the server-rendered still shows, so nothing jumps when it takes
  * over, and under reduced motion it draws that pose once. Geometry comes from
  * the page: B and the turn from the still's marker elements, the spine's x
- * from the copy's anchor.
+ * from the copy's anchor. The lanes' motion is worked out in the reference lane
+ * box and stretched to the real one, as the server-rendered picture is.
  */
 
 function line(g: CanvasRenderingContext2D, pts: Pt[]) {
@@ -61,7 +62,7 @@ export default function HeroPath() {
     const phoneQ = window.matchMedia(PHONE_QUERY);
 
     let W = 0, H = 0, dpr = 1;
-    let geo: null | { B: { x: number; y: number }; lanes: Path[]; merged: Path; mode: Mode } = null;
+    let geo: null | { B: { x: number; y: number }; lanes: Path[]; rim: Pt[]; xf: (p: Pt) => Pt; merged: Path; mode: Mode } = null;
     const blue = sprite(64, BLUE), warm = sprite(64, WARM);
     let onScreen = true;
     let t = STILL;
@@ -79,8 +80,11 @@ export default function HeroPath() {
       const xTurn = tn.left - r.left, yBase = tn.top - r.top;
       const sx = anchor!.getBoundingClientRect().left - r.left + 1;
       const rad = parseFloat(getComputedStyle(hero!).getPropertyValue("--hx-rad")) || 20;
-      const hb = mode === "phone" ? yBase : r.height;
-      const lanes = Array.from({ length: LANES }, (_, i) => measure(bez(laneCtrl(mode, i, B.x, hb, B.y), 90)));
+      // the lanes in the reference box (B at bx, by there), and the stretch to this one
+      const ref = REF[mode], byRef = SHAPE[mode].by * ref.hb;
+      const lanes = Array.from({ length: LANES }, (_, i) => measure(bez(laneCtrl(mode, i, ref.bx, ref.hb, byRef), 90)));
+      const kx = B.x / ref.bx, ky = B.y / byRef;
+      const xf = (p: Pt): Pt => [p[0] * kx, p[1] * ky];
       const m: Pt[] = [[B.x, B.y]];
       straight(B.x, B.y, xTurn - rad, B.y, m);
       arcPts(xTurn - rad, B.y + rad, rad, -Math.PI / 2, 0, m);
@@ -89,7 +93,7 @@ export default function HeroPath() {
       straight(xTurn - rad, yBase, sx + rad, yBase, m);
       arcPts(sx + rad, yBase + rad, rad, -Math.PI / 2, -Math.PI, m);
       straight(sx, yBase + rad, sx, H + 6, m);
-      geo = { B, lanes, merged: measure(m), mode };
+      geo = { B: { x: ref.bx, y: byRef }, lanes, rim: lanes[LATE].pts.map(xf), xf, merged: measure(m), mode };
     }
 
     function trail(g: CanvasRenderingContext2D, pts: Pt[], rgb: string, alpha: number, width: number) {
@@ -106,8 +110,8 @@ export default function HeroPath() {
 
     function frame(time: number) {
       if (!geo) return;
-      const g = xL!, { B, lanes, merged, mode } = geo;
-      const s = scene(time, mode, lanes, B, merged);
+      const g = xL!, { B, lanes, rim, xf, merged, mode } = geo;
+      const s = scene(time, mode, lanes, B, merged, xf);
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       g.clearRect(0, 0, W, H);
       g.globalCompositeOperation = "lighter";
@@ -118,11 +122,11 @@ export default function HeroPath() {
         g.translate(0, SIZE[mode].rimDy);
         g.strokeStyle = `rgba(252,115,77,${0.55 * s.rim})`;
         g.lineWidth = 1.2;
-        line(g, lanes[LATE].pts);
+        line(g, rim);
         g.stroke();
         g.strokeStyle = `rgba(252,115,77,${0.09 * s.rim})`;
         g.lineWidth = 7;
-        line(g, lanes[LATE].pts);
+        line(g, rim);
         g.stroke();
         g.restore();
       }
