@@ -4,10 +4,12 @@ import { yovasense } from "@/data/yovasense";
 import Header, { Footer } from "@/components/yovasense/Header";
 import Hero from "@/components/yovasense/Hero";
 import Homepage from "@/components/yovasense/Homepage";
+import ScrollField from "@/components/yovasense/ScrollField";
+import ScrollReader from "@/components/yovasense/ScrollReader";
 
 const TITLE = `${yovasense.name} — Find and fix the GPU slowing your training job`;
 const DESCRIPTION =
-  "YovaSense monitors distributed AI training while it runs, pinpoints the slow GPU, link, or host, fixes it within your policies, and verifies throughput recovered. For AI infrastructure teams, across NVIDIA and AMD, on owned or rented clusters.";
+  "YovaSense is building autonomous GPU fleet operations: it watches distributed training while it runs, finds the slow GPU, link or host, applies a supported fix within your policies and verifies throughput recovered. Detection is a prototype; the demo is simulated.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -17,6 +19,7 @@ export const metadata: Metadata = {
     "GPU performance regression",
     "straggler detection",
     "distributed training",
+    "GPU fleet operations",
     "NCCL",
     "RCCL",
     "RDMA",
@@ -41,16 +44,20 @@ export const metadata: Metadata = {
   },
 };
 
-/** A short product introduction. Technical depth lives at /product/. */
+/** The homepage: one luminous line from the hero's all-reduce to the pilot call, over a light field that moves with the reader. */
 export default function YovaSensePage() {
   return (
     <>
-      <Header />
-      <main id="main" tabIndex={-1} className="outline-none">
-        <Hero />
-        <Homepage />
-      </main>
-      <Footer />
+      <ScrollField />
+      <ScrollReader />
+      <div className="ys-page">
+        <Header />
+        <main id="main" tabIndex={-1}>
+          <Hero />
+          <Homepage />
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
