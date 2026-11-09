@@ -53,7 +53,7 @@ p { margin: 0; text-wrap: pretty; }
 /* ---- Header and clock ---- */
 .top {
   position: sticky; top: 0; z-index: var(--z-header);
-  background: rgb(var(--ys-surface-1-rgb) / 0.94);
+  background: rgb(var(--ys-surface-1-rgb) / 0.97); /* opaque enough that the grid does not ghost through */
   border-bottom: 1px solid var(--line);
 }
 /* The header's lit edge: blue light along its lower edge, brightest under the mark and the
