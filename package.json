@@ -1,0 +1,39 @@
+{
+  "name": "yovasense-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1",
+    "build": "next build --webpack",
+    "start": "next start",
+    "og": "node scripts/build-yovasense-og.mjs"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.9",
+    "@react-three/fiber": "^9.8.1",
+    "d3-geo": "^3.1.1",
+    "motion": "^13.3.0",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "simple-icons": "^16.35.0",
+    "three": "^0.186.1",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/d3-geo": "^3.1.1",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.186.0",
+    "@types/topojson-client": "^3.1.5",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
