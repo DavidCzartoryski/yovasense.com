@@ -155,7 +155,7 @@
 .ak-rack-label { font-family: var(--mono); font-stretch: 87.5%; font-size: 13px; color: var(--fg); }
 .ak-rack-sub { font-size: 11.5px; color: var(--faint); }
 .ak-node { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px; margin-top: 10px; }
-.ak-node-label { flex: 0 0 auto; min-width: 44px; font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; color: var(--muted); text-decoration: none; padding-top: 4px; }
+.ak-node-label { flex: 0 0 auto; min-width: 44px; font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); color: var(--muted); text-decoration: none; padding-top: 4px; }
 a.ak-node-label:hover { text-decoration: underline; }
 .ak-node-note { font-size: 11px; color: var(--faint); padding-top: 4px; }
 .ak-node[data-tone="signal"] .ak-node-label { color: var(--signal-ink); }
@@ -163,7 +163,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-group { border: 1px dashed var(--job); padding: 4px 6px 6px; }
 .ak-group[data-join~="up"] { border-top-color: transparent; margin-top: -10px; padding-top: 10px; }
 .ak-group[data-join~="down"] { border-bottom-color: transparent; }
-.ak-group-label { display: block; color: var(--job-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; text-decoration: none; margin-bottom: 5px; }
+.ak-group-label { display: block; color: var(--job-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); text-decoration: none; margin-bottom: 5px; }
 .ak-group-label:hover { text-decoration: underline; }
 .ak-group-sub { color: var(--muted); }
 .ak-group[data-allocation="unknown"] { border-style: dotted; border-color: var(--muted); }
@@ -206,7 +206,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-chart { min-width: 0; }
 .ak-chart-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .ak-chart-title { font-size: 14.5px; font-weight: 600; margin: 0; }
-.ak-chart-unit { font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; color: var(--faint); text-align: right; }
+.ak-chart-unit { font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); color: var(--faint); text-align: right; }
 .ak-plot { position: relative; }
 .ak-overlay { position: absolute; inset: 0; pointer-events: none; }
 .ak-chart-svg { display: block; }
@@ -221,7 +221,7 @@ a.ak-node-label:hover { text-decoration: underline; }
 .ak-chart-svg .ak-chart-note { fill: var(--signal-ink); font-family: var(--mono); font-size: 11px; }
 .ak-chart-svg .ak-gap { fill: var(--wash-2); stroke: var(--line-2); stroke-dasharray: 3 3; }
 .ak-chart-svg .ak-band { fill: var(--signal-band); stroke: none; }
-.ak-chart-svg .ak-band-label { fill: var(--signal-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; }
+.ak-chart-svg .ak-band-label { fill: var(--signal-ink); font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); }
 .ak-chart-svg .ak-ref { stroke: var(--fg); stroke-dasharray: 4 3; opacity: 0.6; }
 .ak-chart-svg .ak-event { stroke: var(--fg); stroke-dasharray: 3 3; opacity: 0.7; }
 .ak-chart-svg .ak-event.restart, .ak-chart-svg .ak-event.data { stroke: var(--data-2); }

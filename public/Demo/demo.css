@@ -35,7 +35,7 @@ p { margin: 0; text-wrap: pretty; }
 }
 .mono { font-family: var(--mono); font-stretch: 87.5%; font-variant-numeric: tabular-nums; }
 .label {
-  font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; letter-spacing: 0.12em;
+  font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); letter-spacing: 0.12em;
   text-transform: uppercase; color: var(--faint);
 }
 .display { font-stretch: 112%; font-weight: 600; letter-spacing: -0.032em; }
@@ -104,7 +104,7 @@ p { margin: 0; text-wrap: pretty; }
 .btn[disabled] { opacity: 0.4; cursor: default; }
 .clock { display: flex; flex-direction: column; line-height: 1.15; min-width: 96px; }
 .clock .now { font-family: var(--mono); font-stretch: 87.5%; font-size: 19px; font-variant-numeric: tabular-nums; }
-.clock .day { font-size: 10px; }
+.clock .day { font-size: var(--ys-fs-label); }
 .speed { display: inline-flex; border: 1px solid var(--control-line); border-radius: 0; padding: 2px; }
 .speed button {
   min-height: 34px; min-width: 38px; border: 0; background: transparent; border-radius: 0; cursor: pointer;
@@ -120,7 +120,7 @@ p { margin: 0; text-wrap: pretty; }
 .ticks span.ctl { background: var(--ctl); }
 .ticks span.step { height: 8px; width: 6px; margin-left: -3px; border-radius: 0; background: var(--fg); top: 1px; height: 6px; }
 .scrub-labels { display: flex; justify-content: space-between; position: absolute; left: 0; right: 0; bottom: -6px; }
-.playstate { font-size: 10px; }
+.playstate { font-size: var(--ys-fs-label); }
 
 /* ---- Layout ---- */
 .layout { padding-top: 18px; padding-bottom: 48px; }
@@ -278,7 +278,7 @@ main:focus, h1:focus { outline: none; }
 .mk-b.many::before { left: 2px; top: 4px; width: calc(100% - 4px); height: 16px; box-sizing: border-box; border-radius: 0; background: var(--panel); border: 1.5px solid var(--faint); }
 .mk-b.many.signal::before { background: var(--panel); border-color: var(--signal); }
 .mk-b.many.ctl::before { background: var(--panel); border-color: var(--ctl); }
-.mk-b .n { position: relative; font-family: var(--mono); font-stretch: 87.5%; font-size: 10px; line-height: 1; color: var(--fg); }
+.mk-b .n { position: relative; font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); line-height: 1; color: var(--fg); }
 .mk-b:hover::before, .mk-b.picked::before, .mk-b[aria-expanded="true"]::before { box-shadow: 0 0 0 3px var(--stroke-thin); }
 .mk-b:focus-visible { outline-offset: 0; }
 .mk-pick { font-size: 13px; color: var(--muted); margin-top: 6px; }
@@ -293,7 +293,7 @@ main:focus, h1:focus { outline: none; }
 .mk-item:hover { border-color: var(--control-line-hover); }
 .mk-item .num { color: var(--muted); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; list-style: none; padding: 0; margin: 0 0 10px; }
-.legend li { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.legend li { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .legend .sw { width: 18px; height: 2px; border-radius: 0; background: var(--data); }
 .legend .sw.thin { background: var(--stroke-thin); }
 .legend .sw.hot { background: var(--signal); }
@@ -538,7 +538,7 @@ pre {
 .side-block .section-head h2 { font-size: 17px; }
 .record-box { min-width: 0; border: 1px solid var(--line-2); background: var(--lit-top) top left / 100% 1px no-repeat, var(--panel); padding: 14px; }
 .record-box .ak-record-title:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
-.record-box .ak-chart-svg .ak-tick { font-size: 9.5px; }
+.record-box .ak-chart-svg .ak-tick { font-size: var(--ys-fs-label); }
 .record-src { margin-top: 10px; font-size: 12px; color: var(--faint); }
 .fleet-chart { margin-top: 28px; }
 .cluster-side .jobs thead { display: none; }
@@ -565,7 +565,7 @@ pre {
 .alert-line a { color: var(--fg); text-underline-offset: 3px; margin-left: 6px; }
 .alert-line a[hidden] { display: none; }
 .job-kpis { margin-top: 16px; }
-.chart-head .unit { font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; color: var(--faint); }
+.chart-head .unit { font-family: var(--mono); font-stretch: 87.5%; font-size: var(--ys-fs-label); color: var(--faint); }
 .tel-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .tel-grid .chart-box { padding: 12px 14px 10px; }
 .res-note { margin-top: 10px; }
