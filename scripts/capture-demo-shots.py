@@ -39,6 +39,7 @@ OUT = ROOT / "out"
 IMG_DIR = ROOT / "public" / "demo-shots"
 DATA = ROOT / "src" / "data" / "demo-shots.json"
 QUALITY = 82
+DPR = 2  # image pixels per CSS pixel
 
 
 class Quiet(SimpleHTTPRequestHandler):
@@ -101,6 +102,10 @@ def heading_panel(title):
 
 
 def shot(page, clip, name, scale=1.0):
+    # A clipped Page.captureScreenshot draws one image pixel per CSS pixel times the clip's
+    # scale, not the context's device_scale_factor (which a detached CDP session can even
+    # reset), so the 2x is in the clip's scale.
+    scale *= DPR
     cdp = page.context.new_cdp_session(page)
     try:
         res = cdp.send("Page.captureScreenshot", {
@@ -142,7 +147,7 @@ def main():
             browser = p.chromium.launch()
             try:
                 # The overview: the whole console at story 3, downscaled to 1600 px wide.
-                ctx = browser.new_context(viewport={"width": 1280, "height": 800}, device_scale_factor=2, reduced_motion="reduce")
+                ctx = browser.new_context(viewport={"width": 1280, "height": 800}, device_scale_factor=DPR, reduced_motion="reduce")
                 page = ctx.new_page()
                 to_story(page, base, 3)
                 page.evaluate("scrollTo(0, 0)")
@@ -151,7 +156,7 @@ def main():
                 ctx.close()
 
                 # Detail crops at a 400 px viewport, readable at their display size on a phone.
-                ctx = browser.new_context(viewport={"width": 400, "height": 900}, device_scale_factor=2, reduced_motion="reduce")
+                ctx = browser.new_context(viewport={"width": 400, "height": 900}, device_scale_factor=DPR, reduced_motion="reduce")
                 page = ctx.new_page()
                 to_story(page, base, 3)
                 incident = page.evaluate("(() => { const a = document.querySelector('#rail a[href^=\"#/incident/\"], a[href^=\"#/incident/\"]'); return a ? a.getAttribute('href') : null; })()")
