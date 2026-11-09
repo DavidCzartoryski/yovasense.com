@@ -401,6 +401,7 @@ main:focus { outline: none; }
 .ys-hero-eyebrow { color: var(--ys-text-blue); }
 .ys-hero-title { margin-top: 20px; font-size: var(--ys-fs-hero); line-height: 0.98; letter-spacing: -0.04em; }
 .ys-hero-title-2 { display: block; margin-top: 0.12em; color: var(--ys-blue-300); }
+.ys-nowrap { white-space: nowrap; }
 .ys-hero-lede { margin-top: 26px; max-width: 48ch; font-size: 17px; line-height: 1.6; color: var(--ys-text-muted); }
 .ys-maturity { margin: 20px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 13px; line-height: 1.4; color: var(--ys-text-muted); }
 .ys-maturity li { display: inline-flex; align-items: center; gap: 8px; }
@@ -651,11 +652,11 @@ main:focus { outline: none; }
 .ys-classes p { margin-top: 8px; font-size: 15px; color: var(--ys-text-muted); }
 .ys-studies { margin: clamp(56px, 7vw, 96px) 0 0; }
 .ys-studies-grid { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
-.ys-studies-grid > div { display: flex; flex-direction: column-reverse; gap: 12px; }
+.ys-studies-grid > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 12px; }
 .ys-studies-grid dt { max-width: 34ch; font-size: 15px; line-height: 1.55; color: var(--ys-text-muted); }
 .ys-studies-grid dd { margin: 0; font-size: clamp(2rem, 1.4rem + 2vw, 2.9rem); line-height: 1; color: var(--ys-text); }
 .ys-studies figcaption { margin-top: 26px; max-width: 80ch; }
-.ys-studies figcaption a { color: var(--ys-text-muted); text-underline-offset: 3px; }
+.ys-studies figcaption a { color: var(--ys-text-muted); text-decoration: underline; text-underline-offset: 3px; }
 .ys-studies figcaption a:hover { color: var(--ys-text); }
 @media (max-width: 899px) {
   .ys-route { grid-template-columns: 1fr; }
@@ -704,7 +705,7 @@ main:focus { outline: none; }
 .ys-pilot .ys-lede { margin-top: 22px; }
 .ys-pilot .ys-cta-row { margin-top: 40px; gap: 18px 28px; }
 .ys-pilot-addr { margin-top: 22px; }
-.ys-pilot-addr a { color: var(--ys-text-muted); text-underline-offset: 3px; }
+.ys-pilot-addr a { color: var(--ys-text-muted); text-decoration: underline; text-underline-offset: 3px; }
 .ys-pilot-addr a:hover { color: var(--ys-text); }
 
 /* ══════════════════════════════════════════════════════════════

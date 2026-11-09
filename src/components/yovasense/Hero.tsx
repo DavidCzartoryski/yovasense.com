@@ -47,7 +47,7 @@ export default function Hero() {
           <div className="ys-hero-copy-inner ys-scrim" data-hero-copy>
             <p className="ys-eyebrow ys-hero-eyebrow">Autonomous GPU fleet operations · in development</p>
             <h1 id="hero-title" className="ys-display ys-hero-title">
-              One slow GPU holds the whole job back. <span className="ys-hero-title-2">Find it. Fix it. Verify it.</span>
+              One slow GPU holds the whole job back. <span className="ys-hero-title-2"><span className="ys-nowrap">Find it.</span> <span className="ys-nowrap">Fix it.</span> <span className="ys-nowrap">Verify it.</span></span>
             </h1>
             <p className="ys-hero-lede">
               That is the loop YovaSense is building: watch GPU jobs while they run, find the GPU, link or host that slowed them, apply a supported fix inside your policy, verify that throughput recovered, and escalate anything that needs an engineer.
