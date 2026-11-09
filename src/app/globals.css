@@ -531,17 +531,6 @@ main:focus { outline: none; }
 .ys-maturity li { display: inline-flex; align-items: center; gap: 8px; }
 .ys-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; }
 .ys-hero-meta { margin-top: 18px; font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono); font-size: var(--ys-fs-label); letter-spacing: 0.06em; color: var(--ys-text-faint); }
-/* the illustration key, beside the picture (Study 2's legend) */
-.ys-hero-key {
-  position: absolute; z-index: 2; top: 28px;
-  left: calc(max(0px, (100% - var(--ys-container)) / 2) + var(--ys-gutter) + 28px);
-  max-width: 34ch; padding: 10px 14px 12px; background: rgb(2 7 10 / 0.82);
-}
-.ys-hero-key ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 3px; font-size: 13px; line-height: 1.45; color: var(--ys-text-muted); }
-.ys-hero-key li { display: flex; align-items: center; gap: 10px; }
-.ys-key-mark { flex: none; width: 18px; height: 2px; background: var(--ys-blue-200); box-shadow: 0 0 6px rgb(2 151 222 / 0.7); }
-.ys-key-mark[data-mark="late"] { background: var(--ys-orange); box-shadow: 0 0 6px rgb(252 115 77 / 0.7); }
-.ys-key-mark[data-mark="gate"] { width: 18px; height: 12px; background: linear-gradient(90deg, transparent 8px, rgb(234 242 245 / 0.6) 8px 9px, transparent 9px); box-shadow: none; }
 @media (max-width: 1099px) {
   /* Phones and tablets: the lanes converge in a band above the copy (--hx-band); the single
      line turns back along the band's foot and runs down the copy's left edge, so the spine
@@ -571,7 +560,6 @@ main:focus { outline: none; }
   .ys-hero-tag[data-tag="late"] { --tag-x: max(12px, calc(var(--hx-bx) * 0.0243)); --tag-y: calc(var(--hx-base) * 0.3152 - 24px); }
   .ys-hero-grid { display: block; min-height: 0; }
   .ys-hero-copy { padding: var(--hx-band) 0 28px var(--ys-rail-pad); }
-  .ys-hero-key { position: static; max-width: none; margin: 0 var(--ys-gutter) 36px calc(var(--ys-gutter) + var(--ys-rail-pad)); padding: 0; background: none; }
 }
 @media (max-width: 759px) {
   .ys-hero-title { margin-top: 14px; }

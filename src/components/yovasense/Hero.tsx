@@ -4,6 +4,10 @@ import { PILOT_SUBJECT } from "./Header";
 import HeroPath from "./HeroPath";
 import { BLUE, LANES, LATE, MODES, SIZE, WARM, laneD, spriteGradient, stillScene } from "./heroGeometry";
 
+/** The hero picture's text alternative (the picture shows no legend). */
+const HERO_PICTURE_LABEL =
+  "Illustration, not live data: eight ranks of one training job. Rank 2 arrives late, and every all-reduce waits for the last rank.";
+
 /**
  * The hero picture that does not move: the haze, the eight lane tracks meeting
  * at the all-reduce gate, the single line they become (turning down the hero
@@ -11,10 +15,14 @@ import { BLUE, LANES, LATE, MODES, SIZE, WARM, laneD, spriteGradient, stillScene
  * out by CSS (the --hx-* properties on .ys-hero), so it is in place before any
  * script runs and stays in place after the canvas starts drawing over it.
  * The lane boxes are scaled to B and the lanes keep a 1px stroke at any size.
+ *
+ * It is the one layer present at every width, with JS on and off, so it carries
+ * the picture's text alternative; the canvas, the still and the tags drawn over
+ * it stay hidden from assistive tech.
  */
 function HeroArt() {
   return (
-    <div className="ys-hero-art" aria-hidden="true">
+    <div className="ys-hero-art" role="img" aria-label={HERO_PICTURE_LABEL}>
       <i className="ys-art-haze" />
       <i className="ys-art-ticks" />
       <i className="ys-art-gate" />
@@ -148,14 +156,6 @@ export default function Hero() {
             <p className="ys-hero-meta">NVIDIA and AMD · Owned or rented clusters</p>
           </div>
         </div>
-      </div>
-      <div className="ys-hero-key">
-        <p className="ys-eyebrow">Illustration, not live data</p>
-        <ul>
-          <li><span className="ys-key-mark" data-mark="lane" aria-hidden="true" />Eight ranks of one training job</li>
-          <li><span className="ys-key-mark" data-mark="late" aria-hidden="true" />Rank 2 arrives late</li>
-          <li><span className="ys-key-mark" data-mark="gate" aria-hidden="true" />All-reduce: every step waits for the last rank</li>
-        </ul>
       </div>
     </section>
   );
