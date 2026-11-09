@@ -4,6 +4,7 @@ import { yovasense } from "@/data/yovasense";
 import Header, { Footer } from "@/components/yovasense/Header";
 import Hero from "@/components/yovasense/Hero";
 import Homepage from "@/components/yovasense/Homepage";
+import FieldStill from "@/components/yovasense/FieldStill";
 import ScrollField from "@/components/yovasense/ScrollField";
 import ScrollReader from "@/components/yovasense/ScrollReader";
 
@@ -48,7 +49,9 @@ export const metadata: Metadata = {
 export default function YovaSensePage() {
   return (
     <>
-      <ScrollField />
+      <ScrollField>
+        <FieldStill />
+      </ScrollField>
       <ScrollReader />
       <div className="ys-page">
         <Header />
