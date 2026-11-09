@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://yovasense.com
+Sitemap: https://yovasense.com/sitemap.xml
