@@ -10,7 +10,7 @@ const results = [
   {
     scope: "YovaSense · 4×V100",
     figure: "8 of 8",
-    label: "injected slowdowns of about 10% and 20% flagged on the right rank, on one node of four V100s",
+    label: "injected slowdowns of about 10% and 20% flagged on the right rank, on one node of four V100s, with a tuned policy profile",
   },
   {
     scope: "YovaSense · 4×V100",
@@ -25,7 +25,7 @@ const results = [
   {
     scope: "GPUBridge · V100 + MI50",
     figure: "2.75×",
-    label: "faster 1 GB all-reduce between a V100 and an MI50 with GPUBridge, using lossy fp8 on the bridge (1.67 s to 0.61 s)",
+    label: "faster 1 GB all-reduce over TCP between a V100 and an MI50 with GPUBridge, using lossy fp8 on the bridge (1.67 s to 0.61 s)",
   },
 ];
 
