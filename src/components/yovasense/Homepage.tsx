@@ -4,7 +4,7 @@ import CrossLayer from "./CrossLayer";
 import Difference from "./Difference";
 import Families from "./Families";
 import HomeResearch from "./HomeResearch";
-import ProductShowcase from "./ProductShowcase";
+import SlackShowcase from "./SlackShowcase";
 import Workflow, { Spine } from "./Workflow";
 
 /** The pilot's mail subject (the header keeps the general PILOT_SUBJECT). */
@@ -47,7 +47,7 @@ export default function Homepage() {
       <Workflow />
       <CrossLayer />
       <Families />
-      <ProductShowcase />
+      <SlackShowcase />
       <HomeResearch />
       <Pilot />
     </>
