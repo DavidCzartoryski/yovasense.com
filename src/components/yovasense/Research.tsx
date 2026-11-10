@@ -71,7 +71,7 @@ export default function Research() {
             href={mailto(`${yovasense.name}: incident data`)}
             className="underline decoration-ar-line-2 underline-offset-4 transition-colors hover:decoration-ar-fg"
           >
-            Write to David
+            Write to us
           </a>
           .
         </p>

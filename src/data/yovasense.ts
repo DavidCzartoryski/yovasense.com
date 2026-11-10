@@ -518,20 +518,20 @@ export const yovasense = {
     },
     demo: "The interactive demo walks through signature-based diagnosis on a simulated fleet, with a scripted model standing in for the AI.",
     flow: ["Findings and telemetry", "Incident record", "Model", "Causes, checks, remedies", "Outcome"],
-    ask: "Have incident write-ups you could share under the right terms? I'd like to hear from you.",
+    ask: "Have incident write-ups you could share under the right terms? We'd like to hear from you.",
   },
 
   feedback: {
     eyebrow: "Feedback",
-    heading: "Tell me where this breaks.",
+    heading: "Tell us where this breaks.",
     body: "What helps most is hearing from people who run GPU infrastructure: which incidents cost you the most capacity, and how you recover from them today. Twenty minutes of skepticism is worth more than a compliment.",
     questions: [
       "Which incidents take your team longest to resolve: GPU hardware, network, drivers and services, scheduler state or power and cooling?",
       "What would you need to see before letting a tool drain a node, reset a GPU or reschedule a job on its own?",
       "When a node becomes unavailable today, how do you find out, and who decides whether it needs a technician?",
-      "What incident data could you share, and on what terms, to train a diagnosis model?",
+      "What incident data could you share, and on what terms, to tune the diagnosis model on your fleet?",
     ],
-    note: "GPUBridge is open source, and issues are welcome. YovaSense's source is private; I'm glad to walk through it on a call.",
+    note: "GPUBridge is open source, and issues are welcome. YovaSense's source is private; we're glad to walk through it on a call.",
   },
 } as const;
 
