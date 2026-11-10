@@ -31,7 +31,7 @@ const items: { q: string; a: string }[] = [
     a: "YovaSense runs in your environment and reads operational telemetry, not your models or datasets. Incident updates go only to the Slack channels and ticketing tools you connect, and it has only the access you grant it.",
   },
   {
-    q: "Why not point a general-purpose AI agent at our cluster?",
+    q: "Couldn't a general AI assistant do this?",
     a: "Because diagnosing a GPU fleet takes context a chat agent doesn't have: how every job maps to its GPUs, servers, network links and racks, and what each kind of failure looks like across them. YovaSense pairs known failure signatures with AI reasoning, and verifies every fix before it closes an incident.",
   },
   {
