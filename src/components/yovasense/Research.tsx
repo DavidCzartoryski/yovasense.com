@@ -54,7 +54,7 @@ export default function Research() {
             <ul className="mt-6 space-y-4">
               {research.next.items.map((item) => (
                 <li key={item} className="flex gap-3 text-[15px] leading-[1.6] text-ar-muted">
-                  <span aria-hidden="true" className="mt-[11px] h-px w-3 shrink-0 bg-ar-fg/40" />
+                  <span aria-hidden="true" className="mt-[11px] h-px w-3 shrink-0 bg-ar-ctl" />
                   {item}
                 </li>
               ))}

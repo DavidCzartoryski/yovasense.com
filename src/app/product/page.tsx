@@ -47,7 +47,7 @@ export default function ProductPage() {
           <Container className="py-14 md:py-24">
             <Link href="/" className="inline-flex min-h-10 items-center gap-2 text-[13px] text-ar-muted hover:text-ar-fg"><span aria-hidden="true">←</span> YovaSense home</Link>
             <p className="ys-eyebrow mt-8">Inside YovaSense</p>
-            <h1 id="product-title" className="ys-display mt-5 max-w-[900px] text-[clamp(2.4rem,5vw,4.25rem)] leading-[1.04]">GPU infrastructure operations,<br /><span className="text-ar-data-ink">from signal to verified recovery.</span></h1>
+            <h1 id="product-title" className="ys-display mt-5 max-w-[15.5em] text-[clamp(2.4rem,4.4vw,3.75rem)] leading-[1.04]">GPU infrastructure operations,<br /><span className="text-ar-data-ink">from signal to verified recovery.</span></h1>
             <p className="mt-7 max-w-[760px] text-[18px] leading-[1.7] text-ar-muted">YovaSense runs autonomous operations for GPU infrastructure. It collects telemetry from GPUs, hosts, networking, schedulers and workloads, correlates it into one incident, diagnoses the likely cause, runs the recovery actions your policy allows and verifies that the capacity is healthy again.</p>
             <p className="mt-4 max-w-[760px] text-[16px] leading-[1.7] text-ar-muted">The result: more healthy, usable GPU capacity from the fleet you already run, and less manual investigation for your GPU infrastructure operations team. Built for owned or rented clusters running training and inference, on NVIDIA and AMD.</p>
             <nav aria-label="Product contents" className="mt-10 flex flex-wrap gap-x-6 gap-y-1 border-y border-ar-line py-3 text-[13px] text-ar-muted">
