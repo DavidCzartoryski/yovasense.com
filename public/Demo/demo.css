@@ -66,8 +66,7 @@ p { margin: 0; text-wrap: pretty; }
 .bar, .clockbar, .layout, .foot { max-width: 1480px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
 .bar { display: flex; align-items: center; gap: 20px; min-height: 60px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
-.brand svg { flex: none; }
-.brand svg circle { fill: var(--ys-orange); } /* the mark's dot, as on the site */
+.brand img { flex: none; }
 .brand-word { font-stretch: var(--ys-stretch-wide); font-size: 13.5px; font-weight: 600; letter-spacing: var(--ys-track-wordmark); }
 .brand-sub { color: var(--muted); font-size: 13.5px; }
 .nav { display: flex; gap: 4px; margin-left: 12px; }
