@@ -58,18 +58,20 @@ const COMPS = {
 
 // ---------- the calm: how far the field is turned down from the first cut ----------
 // The first cut ("currents", 17fb6dd) was too busy. These numbers take about a third of its
-// energy out: the swirls are drawn larger and softer, rise less far up a darker, less cyan ramp,
-// and the current moved to its own layers. The first cut was GROW 1, EDGE [0.34, 0.82], GAIN 1.05,
-// WARP 2.4 / 2.2 and the ramp in the comment below.
+// energy out: the swirls are drawn larger and softer and rise less far up a darker, less cyan
+// ramp, and the current moved to its own layers. Against the first cut's field, in OKLab over the
+// section: lightness spread -44%, mean |grad L| -41%, mean lightness -19%, chroma -21%, bright
+// cyan almost gone (desktop; phones within a few points). The first cut was GROW 1,
+// EDGE [0.34, 0.82], GAIN 1.05, WARP 2.4 / 2.2 and the ramp in the comment below.
 const GROW = 1.12; // swirl size, about the pivot
 const EDGE = [0.31, 0.88]; // where a swirl's edge rises (a wider span is a softer edge)
-const GAIN = 0.97; // how far up the ramp the brightest swirl reaches
+const GAIN = 0.9; // how far up the ramp the brightest swirl reaches
 const WARP = [2.25, 2.1]; // domain-warp strength: lower is lazier, fewer tight curls
 const CURRENT_GAMMA = 0.7; // see currents()
 // first cut: [0 #02070A] [0.18 #021624] [0.34 #03304F] [0.54 #0373B0] [0.74 #0297DE] [0.9 #2CC3F0] [1 #B4EDFF]
 const FIELD_RAMP = [
-  [0.0, "#02070A"], [0.18, "#021624"], [0.36, "#032D4B"], [0.56, "#046BA6"],
-  [0.76, "#0389CC"], [0.9, "#1AA6DF"], [1.0, "#6CCDF0"],
+  [0.0, "#02070A"], [0.18, "#021624"], [0.36, "#032C49"], [0.56, "#045F98"],
+  [0.76, "#037AB9"], [0.9, "#1394CF"], [1.0, "#58BCE6"],
 ];
 
 // ---------- seeded randomness and noise ----------
