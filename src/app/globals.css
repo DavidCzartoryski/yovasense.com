@@ -693,8 +693,10 @@ main:focus { outline: none; }
    drift with the field. At rest, a medium glow; ScrollReader sets the opacity (and the bloom's
    scale) from the section's scroll position. */
 .ys-glow { position: absolute; inset: var(--ys-glow-desk); background: 0 0 / 100% 100% no-repeat; }
-.ys-glow-bloom { background-image: url("/textures/product-bloom-desk.webp"); opacity: 0.45; }
+.ys-glow-bloom { background-image: url("/textures/product-bloom-desk.webp"); opacity: 0.46; }
 .ys-glow-current { background-image: url("/textures/product-current-desk.webp"); opacity: 0.68; }
+.ys-reading .ys-glow-bloom { will-change: opacity, transform; }
+.ys-reading .ys-glow-current { will-change: opacity; }
 @media (max-width: 959px) {
   .ys-fold-drift { background-image: url("/textures/product-field-phone.webp"); }
   .ys-glow { inset: var(--ys-glow-phone); }
