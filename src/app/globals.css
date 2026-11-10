@@ -502,7 +502,8 @@ main:focus { outline: none; }
 .ys-art-mark[data-hx="b"] { left: var(--hx-bx); top: var(--hx-by); }
 .ys-art-mark[data-hx="turn"] { left: calc(var(--hx-bx) + var(--hx-turn)); top: var(--hx-base); }
 /* labels on navy chips, fully opaque at every phase of the loop; placed from the same geometry
-   (the late label rides lane 2 at a fifth of its way, heroGeometry.ts) */
+   (the fault label rides lane 2 of six at a fifth of its way, just above it: laneCtrl in
+   heroGeometry.ts puts that point at 44.90% of the desktop lane box and 39.64% of the phone band) */
 .ys-hero-tag {
   position: absolute; z-index: 1;
   left: var(--tag-x); top: var(--tag-y);
@@ -513,8 +514,8 @@ main:focus { outline: none; }
   color: var(--ys-text-muted);
 }
 .ys-hero-tag[data-tag="gate"] { --tag-x: calc(var(--hx-bx) - 34px); --tag-y: calc(var(--hx-by) - var(--hx-gate) - 26px); }
-.ys-hero-tag[data-tag="late"] { --tag-x: max(calc(var(--hx-sx) + 6px), calc(var(--hx-bx) * 0.1913)); --tag-y: calc(39.06% - 30px); }
-.ys-hero-tag-late { color: var(--ys-text-warm); }
+.ys-hero-tag[data-tag="fault"] { --tag-x: max(calc(var(--hx-sx) + 6px), calc(var(--hx-bx) * 0.1913)); --tag-y: calc(44.9% - 30px); }
+.ys-hero-tag-fault { color: var(--ys-text-warm); }
 .ys-hero-grid {
   position: relative; z-index: 2;
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px;
@@ -524,11 +525,15 @@ main:focus { outline: none; }
 .ys-hero-copy { grid-column: 6 / 13; padding-block: clamp(28px, 6vh, 88px) 112px; }
 .ys-hero-eyebrow { color: var(--ys-text-blue); }
 .ys-hero-title { margin-top: 20px; font-size: var(--ys-fs-hero); line-height: 0.98; letter-spacing: -0.04em; }
-.ys-hero-title-2 { display: block; margin-top: 0.12em; color: var(--ys-blue-300); }
+/* the supporting line: the display face in blue, about half the H1 */
+.ys-hero-sub {
+  margin-top: 0.6em; max-width: 24em;
+  font-size: max(1.3125rem, calc(var(--ys-fs-hero) * 0.48)); line-height: 1.14;
+  font-stretch: var(--ys-stretch-display); font-weight: 600; letter-spacing: -0.025em; text-wrap: balance;
+  color: var(--ys-blue-300);
+}
 .ys-nowrap { white-space: nowrap; }
 .ys-hero-lede { margin-top: 26px; max-width: 48ch; font-size: 17px; line-height: 1.6; color: var(--ys-text-muted); }
-.ys-maturity { margin: 20px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 13px; line-height: 1.4; color: var(--ys-text-muted); }
-.ys-maturity li { display: inline-flex; align-items: center; gap: 8px; }
 .ys-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; }
 .ys-hero-meta { margin-top: 18px; font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono); font-size: var(--ys-fs-label); letter-spacing: 0.06em; color: var(--ys-text-faint); }
 @media (max-width: 1099px) {
@@ -557,16 +562,14 @@ main:focus { outline: none; }
   .ys-art-line[data-l="3"] { --w: 2.2px; --c: rgb(143 211 247 / 0.8); }
   .ys-art-line[data-l="4"] { --w: 1px; --c: rgb(235 248 255 / 0.95); }
   .ys-hero-tag[data-tag="gate"] { --tag-x: calc(var(--hx-bx) + 14px); --tag-y: calc(var(--hx-by) - 30px); }
-  .ys-hero-tag[data-tag="late"] { --tag-x: max(12px, calc(var(--hx-bx) * 0.0243)); --tag-y: calc(var(--hx-base) * 0.3152 - 24px); }
+  .ys-hero-tag[data-tag="fault"] { --tag-x: max(12px, calc(var(--hx-bx) * 0.0243)); --tag-y: calc(var(--hx-base) * 0.3964 - 24px); }
   .ys-hero-grid { display: block; min-height: 0; }
   .ys-hero-copy { padding: var(--hx-band) 0 36px var(--ys-rail-pad); }
 }
 @media (max-width: 759px) {
   .ys-hero-title { margin-top: 14px; }
   .ys-hero-lede { margin-top: 18px; font-size: 16px; }
-  .ys-hero-copy-inner { display: flex; flex-direction: column; }
-  .ys-maturity { order: 5; margin-top: 18px; gap: 8px; flex-direction: column; }
-  .ys-hero-meta { order: 6; }
+  .ys-hero-sub { margin-top: 12px; }
   .ys-cta-row { margin-top: 22px; gap: 10px; }
   .ys-hero-copy .ys-cta-row .ys-btn { flex: 1 1 100%; }
 }

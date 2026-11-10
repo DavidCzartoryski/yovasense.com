@@ -24,14 +24,18 @@ export const MODES: Mode[] = ["phone", "desk"];
  */
 export const PHONE_QUERY = "(max-width: 1099px)";
 
-export const LANES = 8;
-export const LATE = 2;
-export const STEP = 5.0; // seconds per training step
-export const ARRIVE = 2.1; // healthy ranks reach the barrier
+/** One lane per signal layer: GPU, host, network, scheduler, storage, workload. */
+export const LANES = 6;
+/** The lane that carries the fault (drawn orange). */
+export const FAULT = 2;
+export const STEP = 5.0; // seconds per cycle: evidence in, a diagnosis, the path to recovery
+export const ARRIVE = 2.1; // the last healthy signal reaches B
 export const TRAVEL = 1.75; // the merged packet runs the single line
-const LAGS = [0, 0.45, 0.85, 0.95, 0.4, 0, 0]; // the late rank's lag per step
+const LAGS = [0, 0.45, 0.85, 0.95, 0.4, 0, 0]; // how long after ARRIVE the fault's signal lands, per cycle
 const MAXLAG = 0.95;
-/** The composed still: step 3, seven healthy ranks waiting, the late rank most of the way in. */
+/** How much earlier than ARRIVE each healthy lane lands, s, so the signals come in one by one (the fault lane's entry is unused). */
+const SETTLE = [0.5, 0.2, 0, 0.4, 0.1, 0.55];
+/** The composed still: cycle 3, the healthy signals in, the fault's most of the way in. */
 export const STILL = 2 * STEP + ARRIVE + 0.62;
 
 /**
@@ -111,12 +115,13 @@ const lagAt = (k: number) => LAGS[((k % LAGS.length) + LAGS.length) % LAGS.lengt
 
 export type Trail = { pts: Pt[]; rgb: string; a: number; w: number };
 export type Dot = { x: number; y: number; s: number; a: number; warm: boolean };
-/** Everything that moves, at one moment. rim: strength of the late lane's orange edge (0-1). */
+/** Everything that moves, at one moment. rim: strength of the fault lane's orange edge (0-1). */
 export type Scene = { rim: number; trails: Trail[]; dots: Dot[] };
 
 /**
- * The pose at time t (seconds): the healthy ranks arrive together and wait for
- * the late one (rank 2, orange-rimmed); released, one packet runs the single line.
+ * The pose at time t (seconds): the healthy signals land at B one by one, the
+ * fault's signal (lane 2, orange-rimmed) completes the picture, B blooms into
+ * one diagnosis, and one packet runs the single line toward recovery.
  * The lanes and B are in lane space and come out through xf; the single line
  * (merged) is already in place.
  */
@@ -129,18 +134,18 @@ export function scene(time: number, mode: Mode, lanes: Path[], B: { x: number; y
   const release = ARRIVE + lag;
   const waiting = tau >= ARRIVE && tau < release;
   const out: Scene = { rim: warmth, trails: [], dots: [] };
-  // packets in lockstep; the late rank on its own clock
+  // each healthy signal on its own clock; the fault's lands last
   for (let i = 0; i < lanes.length; i++) {
     const ln = lanes[i];
-    const late = i === LATE;
-    const dur = late ? ARRIVE + lag : ARRIVE;
+    const fault = i === FAULT;
+    const dur = fault ? ARRIVE + lag : ARRIVE - SETTLE[i % SETTLE.length];
     const p = clamp01(tau / dur);
     const fade = tau > release ? clamp01(1 - (tau - release) / 0.35) : 1;
     if (fade <= 0) continue;
     const head = ease(p) * ln.total;
     const arrived = p >= 1;
     const tl = arrived ? sz.tail * Math.max(0.15, 1 - (tau - dur) / 0.6) : sz.tail;
-    const warm = late && warmth > 0.05;
+    const warm = fault && warmth > 0.05;
     if (warm) {
       out.trails.push({ pts: sub(ln, head - tl, head).map(xf), rgb: "252,115,77", a: 0.75 * warmth * fade, w: 2 });
       out.trails.push({ pts: sub(ln, head - tl * 0.7, head).map(xf), rgb: "207,235,250", a: 0.55 * (1 - warmth * 0.6) * fade, w: 1.2 });
@@ -151,7 +156,7 @@ export function scene(time: number, mode: Mode, lanes: Path[], B: { x: number; y
     const pt = xf([hx, hy]);
     out.dots.push({ x: pt[0], y: pt[1], s: sz.dot, a: (arrived ? 0.5 : 0.95) * fade, warm });
   }
-  // everyone waits at the barrier: the bloom swells; then one packet runs the single line
+  // the evidence gathers at B: the bloom swells; with the fault's signal in, one packet runs the single line
   const [bx, by] = xf([B.x, B.y]);
   if (waiting) {
     const w = (tau - ARRIVE) / Math.max(0.01, lag);

@@ -2,12 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { addTask, kick, reducedMotion, type Frame } from "./motion";
-import { BLUE, LANES, LATE, PHONE_QUERY, REF, SHAPE, SIZE, STILL, WARM, bez, laneCtrl, measure, scene, type Mode, type Path, type Pt } from "./heroGeometry";
+import { BLUE, FAULT, LANES, PHONE_QUERY, REF, SHAPE, SIZE, STILL, WARM, bez, laneCtrl, measure, scene, type Mode, type Path, type Pt } from "./heroGeometry";
 
 /**
- * The hero's moving layer: packets on the eight rank lanes, the late rank's
- * orange rim, the blooms at the all-reduce and the packet that runs the single
- * line. Illustration only.
+ * The hero's moving layer: signals on the six layer lanes (GPU, host, network,
+ * scheduler, storage, workload), the fault lane's orange rim, the bloom where
+ * they converge into one diagnosis and the packet that runs the single line.
+ * Illustration only.
  *
  * The lanes, the line and the light around them are server-rendered (Hero.tsx)
  * and stay in place; this canvas draws only what moves, over them. It starts
@@ -93,7 +94,7 @@ export default function HeroPath() {
       straight(xTurn - rad, yBase, sx + rad, yBase, m);
       arcPts(sx + rad, yBase + rad, rad, -Math.PI / 2, -Math.PI, m);
       straight(sx, yBase + rad, sx, H + 6, m);
-      geo = { B: { x: ref.bx, y: byRef }, lanes, rim: lanes[LATE].pts.map(xf), xf, merged: measure(m), mode };
+      geo = { B: { x: ref.bx, y: byRef }, lanes, rim: lanes[FAULT].pts.map(xf), xf, merged: measure(m), mode };
     }
 
     function trail(g: CanvasRenderingContext2D, pts: Pt[], rgb: string, alpha: number, width: number) {
@@ -116,7 +117,7 @@ export default function HeroPath() {
       g.clearRect(0, 0, W, H);
       g.globalCompositeOperation = "lighter";
       g.lineCap = "round";
-      // the late lane's orange rim: a restrained edge on its lower side
+      // the fault lane's orange rim: a restrained edge on its lower side
       if (s.rim > 0.01) {
         g.save();
         g.translate(0, SIZE[mode].rimDy);
