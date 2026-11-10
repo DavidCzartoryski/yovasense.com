@@ -10,7 +10,7 @@ import ScrollReader from "@/components/yovasense/ScrollReader";
 
 const TITLE = `${yovasense.name} — Autonomous operations for GPU infrastructure`;
 const DESCRIPTION =
-  "Built for GPU cloud providers and research computing teams. YovaSense finds the root cause, automates the fix and escalates what remains.";
+  "Built for GPU cloud providers and HPC operators. YovaSense finds the root cause, automates the fix and escalates what remains.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "autonomous GPU operations",
     "GPU incident response",
     "GPU cloud providers",
-    "research computing",
+    "HPC operators",
     "Slurm",
     "Kubernetes",
     "Slack",

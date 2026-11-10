@@ -1,9 +1,9 @@
-import { siAmd, siMeta, siNvidia } from "simple-icons";
+import { siAmd, siMeta } from "simple-icons";
 import { Spine } from "./Workflow";
 
 /*
  * Where the team worked: David's own statement, and the page's only team claim.
- * The marks are the trademarks of their owners (Meta Platforms, NVIDIA, AMD), used here
+ * The marks are the trademarks of their owners (Meta Platforms, AMD), used here
  * only to name the engineers' former employers; they imply no endorsement or partnership.
  * Paths from simple-icons 16.35.0 (the collection is CC0-1.0; see its DISCLAIMER.md),
  * drawn monochrome in the muted text colour with their shapes unaltered. Amazon and
@@ -17,7 +17,6 @@ const square = (path: string): Mark => ({ path, viewBox: "0 0 24 24" });
 
 const names: { name: string; mark?: Mark; markOnly?: boolean }[] = [
   { name: "Meta", mark: square(siMeta.path) },
-  { name: "NVIDIA", mark: square(siNvidia.path) },
   // AMD's mark is its wordmark, so it stands alone. The viewBox is cropped to the glyph
   // (y 9.137 to 14.814 of the 24-unit square), so its letters can match the names' cap height.
   { name: "AMD", mark: { path: siAmd.path, viewBox: "0 9.137 24 5.677" }, markOnly: true },

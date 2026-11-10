@@ -8,7 +8,7 @@ const martian = Martian_Mono({ subsets: ["latin"], axes: ["wdth"], variable: "--
 export const metadata: Metadata = {
   metadataBase: new URL("https://yovasense.com"),
   title: "YovaSense — Autonomous operations for GPU infrastructure",
-  description: "Built for GPU cloud providers and research computing teams. YovaSense finds the root cause, automates the fix and escalates what remains.",
+  description: "Built for GPU cloud providers and HPC operators. YovaSense finds the root cause, automates the fix and escalates what remains.",
   applicationName: "YovaSense",
   authors: [{ name: "David Czartoryski" }, { name: "Thomas Czartoryski" }],
   alternates: { canonical: "/" },
