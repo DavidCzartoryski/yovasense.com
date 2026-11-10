@@ -1,11 +1,11 @@
 import { Spine } from "./Workflow";
 
-const monitoring = ["A node is drained.", "A GPU stopped reporting.", "A link is flapping.", "A job failed."];
+const monitoring = ["A node is out of service.", "A GPU stopped reporting.", "A network link keeps dropping.", "A job failed."];
 
 const adds = [
   "One incident instead of four alerts.",
-  "A named GPU and a likely cause.",
-  "Capacity back in the scheduler, checked.",
+  "A named GPU and its likely cause.",
+  "Capacity back in service, verified.",
   "A technician ticket only when needed.",
 ];
 
@@ -23,7 +23,7 @@ export default function Difference() {
           </div>
           <div className="ys-sec-body">
             <p>
-              Monitoring tells an operator that a GPU disappeared or a job failed. The evidence for why is spread across the scheduler, the host, the GPU, the fabric and the job, and an engineer still connects it by hand.
+              Monitoring tells your team that a GPU disappeared or a job failed. Finding out why still takes an engineer, pulling evidence by hand from the scheduler, the servers, the GPUs, the network and the job.
             </p>
           </div>
         </div>
