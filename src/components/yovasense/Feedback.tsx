@@ -1,6 +1,7 @@
 import { yovasense, mailto } from "@/data/yovasense";
 import CopyEmail from "@/components/recruiter/CopyEmail";
 import { Arrow, Container, Eyebrow, button } from "./bits";
+import { GET_ACCESS_SUBJECT } from "./Header";
 
 const { feedback } = yovasense;
 
@@ -16,8 +17,8 @@ export default function Feedback() {
             </h2>
             <p className="mt-6 max-w-[520px] text-[17px] leading-[1.65] text-ar-muted">{feedback.body}</p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <a href={mailto(`${yovasense.name}: feedback`)} className={button.solid}>
-                Talk to the founders
+              <a href={mailto(GET_ACCESS_SUBJECT)} className={button.solid}>
+                Get access
                 <Arrow className="transition-transform group-hover:translate-x-0.5" />
               </a>
               <a href={yovasense.github} className={button.line}>
