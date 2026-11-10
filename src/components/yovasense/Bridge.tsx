@@ -26,10 +26,22 @@ export default function Bridge() {
               </figcaption>
               <pre className="ar-mono overflow-x-auto px-4 py-4 text-[12.5px] leading-[1.9] text-ar-fg">
                 <code>
+                  {/* Nothing runs off the edge: a line that doesn't fit breaks after "(" and a note
+                      drops under its line, both indented 2ch. Copying still gives the original lines. */}
                   {bridge.snippet.map((line) => (
-                    <span key={line.code} className="block">
-                      {line.code}
-                      {"note" in line && <span className="text-ar-faint">{`  # ${line.note}`}</span>}
+                    <span key={line.code} className="block whitespace-pre-wrap pl-[2ch] -indent-[2ch]">
+                      {line.code.split(/(?<=\()/).map((part, i) => (
+                        <span key={i}>
+                          {i > 0 && <wbr />}
+                          {part}
+                        </span>
+                      ))}
+                      {"note" in line && (
+                        <>
+                          {"  "}
+                          <span className="inline-block indent-0 text-ar-faint">{`# ${line.note}`}</span>
+                        </>
+                      )}
                     </span>
                   ))}
                 </code>
