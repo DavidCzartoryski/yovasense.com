@@ -3,7 +3,8 @@ import BuiltBy from "./BuiltBy";
 import Difference from "./Difference";
 import Families from "./Families";
 import Faq from "./Faq";
-import { EVALUATE_SUBJECT, WRITE_SUBJECT } from "./Header";
+import ArrowUpRight from "./ArrowUpRight";
+import { GET_ACCESS_SUBJECT, WRITE_SUBJECT } from "./Header";
 import SlackShowcase from "./SlackShowcase";
 import Workflow, { Spine } from "./Workflow";
 
@@ -21,8 +22,8 @@ function Access() {
             Tell us about your fleet, and we&apos;ll show you what YovaSense would find, fix and escalate on it.
           </p>
           <div className="ys-cta-row">
-            <a className="ys-btn ys-btn-primary ys-btn-lg" href={mailto(EVALUATE_SUBJECT)}>
-              Evaluate YovaSense on your fleet <span aria-hidden="true">↗</span>
+            <a className="ys-btn ys-btn-primary ys-btn-lg" href={mailto(GET_ACCESS_SUBJECT)}>
+              Get access <ArrowUpRight />
             </a>
           </div>
           <p className="ys-fine ys-pilot-addr">

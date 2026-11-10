@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { mailto } from "@/data/yovasense";
+import ArrowUpRight from "@/components/yovasense/ArrowUpRight";
 import Header, { Footer, GET_ACCESS_SUBJECT } from "@/components/yovasense/Header";
 
 // Old paths (/artemis, /demo, /architecture) land on the right page instead of this one.
@@ -19,7 +20,7 @@ export default function NotFound() {
           <p className="ys-lede">There&apos;s no page at this address.</p>
           <ul className="ys-404-links">
             <li><Link className="ys-link" href="/">YovaSense home <span aria-hidden="true">→</span></Link></li>
-            <li><a className="ys-link" href={mailto(GET_ACCESS_SUBJECT)}>Get access <span aria-hidden="true">↗</span></a></li>
+            <li><a className="ys-link" href={mailto(GET_ACCESS_SUBJECT)}>Get access <ArrowUpRight /></a></li>
           </ul>
         </div>
       </main>

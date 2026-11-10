@@ -4,7 +4,6 @@ import Mark from "./Mark";
 
 /** The page's three mail subjects. Every mailto on the site uses one of these. */
 export const GET_ACCESS_SUBJECT = "YovaSense: get access";
-export const EVALUATE_SUBJECT = "YovaSense: evaluate on our fleet";
 export const WRITE_SUBJECT = "YovaSense";
 
 /** Shared by /, /product/ and the 404. Sticky, with "Get access" always one Tab away. */

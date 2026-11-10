@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { mailto } from "@/data/yovasense";
-import { EVALUATE_SUBJECT } from "./Header";
+import ArrowUpRight from "./ArrowUpRight";
+import { GET_ACCESS_SUBJECT } from "./Header";
 import HeroPath from "./HeroPath";
 import { BLUE, FAULT, LANES, MODES, SIZE, WARM, laneD, spriteGradient, stillScene } from "./heroGeometry";
 
@@ -134,15 +135,15 @@ export default function Hero() {
         <div className="ys-hero-copy">
           <div className="ys-hero-copy-inner ys-scrim" data-hero-copy>
             <h1 id="hero-title" className="ys-display ys-hero-title">Autonomous operations for GPU infrastructure.</h1>
-            <p className="ys-hero-lede">Built for GPU cloud providers and research computing teams.</p>
+            <p className="ys-hero-lede">Built for GPU cloud providers and HPC operators.</p>
             <p className="ys-hero-sub">
               <span>Find the root cause.</span>{" "}
               <span>Automate the fix.</span>{" "}
               <span>Escalate what remains.</span>
             </p>
             <div className="ys-cta-row">
-              <a className="ys-btn ys-btn-primary" href={mailto(EVALUATE_SUBJECT)}>
-                Evaluate YovaSense on your fleet <span aria-hidden="true">↗</span>
+              <a className="ys-btn ys-btn-primary" href={mailto(GET_ACCESS_SUBJECT)}>
+                Get access <ArrowUpRight />
               </a>
               <a className="ys-link" href="#slack">
                 See it in Slack <span aria-hidden="true">↓</span>
