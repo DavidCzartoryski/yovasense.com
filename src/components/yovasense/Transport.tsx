@@ -83,7 +83,6 @@ export default function Transport() {
             </li>
           ))}
         </ul>
-        <p className="mt-6 text-[15px] leading-[1.6] text-ar-muted">{transport.next}</p>
 
         <div className="mt-16 md:mt-20">
           <h3 className="ar-label text-ar-faint">The terms, precisely</h3>

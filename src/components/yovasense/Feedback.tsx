@@ -17,7 +17,7 @@ export default function Feedback() {
             <p className="mt-6 max-w-[520px] text-[17px] leading-[1.65] text-ar-muted">{feedback.body}</p>
             <div className="mt-9 flex flex-wrap gap-3">
               <a href={mailto(`${yovasense.name}: feedback`)} className={button.solid}>
-                Email David
+                Talk to the founders
                 <Arrow className="transition-transform group-hover:translate-x-0.5" />
               </a>
               <a href={yovasense.github} className={button.line}>
@@ -36,7 +36,7 @@ export default function Feedback() {
             </CopyEmail>
           </div>
           <div className="lg:col-span-6">
-            <p className="ar-label text-ar-faint">Questions I&apos;d love answered</p>
+            <p className="ar-label text-ar-faint">Questions we&apos;d love answered</p>
             <ol className="mt-5 border-t border-ar-line">
               {feedback.questions.map((q, i) => (
                 <li key={q} className="grid grid-cols-[40px_1fr] border-b border-ar-line py-4">

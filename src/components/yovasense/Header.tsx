@@ -35,7 +35,7 @@ export function Footer() {
     <footer className="ys-footer">
       <div className="ys-wrap ys-foot-grid">
         <div>
-          <p className="ys-foot-line">YovaSense: performance diagnosis and recovery for distributed AI training.</p>
+          <p className="ys-foot-line">YovaSense: autonomous operations for GPU infrastructure, across training and inference.</p>
           <p className="ys-foot-fine">© {new Date().getFullYear()} YovaSense · Cofounded by {yovasense.founder}</p>
         </div>
         <nav aria-label="Footer" className="ys-foot-nav">
