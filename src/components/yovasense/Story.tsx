@@ -12,18 +12,11 @@ export default function Story() {
 
         <ol className="relative mt-14 grid gap-px overflow-hidden border border-ar-line bg-ar-line md:grid-cols-2 xl:grid-cols-3">
           {story.steps.map((s, i) => {
-            const last = i === story.steps.length - 1;
             const body = (
               <>
                 <div className="flex items-center justify-between gap-4">
                   <span className="ar-mono text-[11px] text-ar-faint">{String(i + 1).padStart(2, "0")}</span>
-                  <span
-                    className={`ar-label rounded-full border px-2.5 py-1 text-[11px] ${
-                      last ? "border-dashed border-ar-line-2 text-ar-faint" : "border-ar-line-2 text-ar-muted"
-                    }`}
-                  >
-                    {s.tag}
-                  </span>
+                  <span className="ar-label rounded-full border border-ar-line-2 px-2.5 py-1 text-[11px] text-ar-muted">{s.tag}</span>
                 </div>
                 <h3 className="ar-display mt-8 text-[24px] leading-tight text-ar-fg">{s.title}</h3>
                 <p className="mt-3 text-[15px] leading-[1.6] text-ar-muted">{s.body}</p>
