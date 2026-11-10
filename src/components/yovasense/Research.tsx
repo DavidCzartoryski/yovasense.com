@@ -61,6 +61,7 @@ export default function Research() {
             </ul>
           </div>
         </div>
+        <p className="mt-6 max-w-[760px] text-[14.5px] leading-[1.6] text-ar-muted">{research.demo}</p>
 
         <Flow />
 

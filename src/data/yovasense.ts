@@ -516,6 +516,7 @@ export const yovasense = {
         "It is judged on held-out, resolved incidents, and its suggestions stay hypotheses until the evidence confirms them.",
       ],
     },
+    demo: "The interactive demo walks through signature-based diagnosis on a simulated fleet, with a scripted model standing in for the AI.",
     flow: ["Findings and telemetry", "Incident record", "Model", "Causes, checks, remedies", "Outcome"],
     ask: "Have incident write-ups you could share under the right terms? I'd like to hear from you.",
   },
