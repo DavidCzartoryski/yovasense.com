@@ -660,22 +660,21 @@ main:focus { outline: none; }
 }
 
 /* ---------- product: a grainy gradient, folded ----------
-   The section is one soft colour field, pre-rendered (scripts/build-product-gradient.mjs) and
-   chosen by data-gradient on the section (ProductShowcase.tsx): a "logo light", b "currents",
-   c "ember". A desktop and a phone composition each keep the copy over the calm, dark part of
-   the field and put the colour around the screenshots. Over it, a film grain from a tiny tile
-   at device pixels (scripts/build-grain-tile.mjs), so the grain stays sharp while the soft
-   field is scaled up. The field drifts a little as the section passes (ScrollReader, transform
-   only); under reduced motion it rests. --ys-grain sets the grain's strength per variant. */
+   The section is one soft colour field, "currents": navy with soft, liquid blue swirls and one
+   thin orange current through the open space, pre-rendered (scripts/build-product-gradient.mjs)
+   as three layers so the current can light up on its own: the field, the current, and a wide
+   pre-blurred bloom round it. A desktop and a phone composition each keep the copy over the calm,
+   dark part of the field, the colour round the screenshots and the orange away from the copy.
+   Over it, a film grain from a tiny tile at device pixels (scripts/build-grain-tile.mjs), so the
+   grain stays sharp while the soft field is scaled up. The field drifts a little as the section
+   passes, and the current glows and pulses with the reader's scroll (ScrollReader, transform and
+   opacity only); under reduced motion and without JS it all rests at a medium glow. */
 .ys-product {
   --cut: clamp(56px, 8vw, 128px); --cut2: clamp(36px, 5vw, 84px);
   --ys-focus: var(--ys-paper); color: var(--ys-text);
   --ys-product-muted: #B9C8D0; /* small type on the field: 11.79 on navy */
   --ys-grain: 0.1;
 }
-.ys-product[data-gradient="a"] { --ys-grain: 0.09; }
-.ys-product[data-gradient="b"] { --ys-grain: 0.1; }
-.ys-product[data-gradient="c"] { --ys-grain: 0.11; }
 .ys-fold { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .ys-fold-field {
   position: absolute; inset: 0; overflow: hidden;
@@ -686,16 +685,21 @@ main:focus { outline: none; }
    drift never shows an edge; the image is stretched to it, the composition is relative */
 .ys-fold-drift {
   position: absolute; inset: -5% -3%;
-  background: var(--ys-navy) 0 0 / 100% 100% no-repeat;
+  background: var(--ys-navy) url("/textures/product-field-desk.webp") 0 0 / 100% 100% no-repeat;
 }
 .ys-reading .ys-fold-drift { will-change: transform; }
-.ys-product[data-gradient="a"] .ys-fold-drift { background-image: url("/textures/product-a-desk.webp"); }
-.ys-product[data-gradient="b"] .ys-fold-drift { background-image: url("/textures/product-b-desk.webp"); }
-.ys-product[data-gradient="c"] .ys-fold-drift { background-image: url("/textures/product-c-desk.webp"); }
+/* The current and its bloom, each cropped to where it has light and placed on the drift layer
+   by the generator (src/data/product-glow.json, handed over as --ys-glow-desk / -phone), so they
+   drift with the field. At rest, a medium glow; ScrollReader sets the opacity (and the bloom's
+   scale) from the section's scroll position. */
+.ys-glow { position: absolute; inset: var(--ys-glow-desk); background: 0 0 / 100% 100% no-repeat; }
+.ys-glow-bloom { background-image: url("/textures/product-bloom-desk.webp"); opacity: 0.45; }
+.ys-glow-current { background-image: url("/textures/product-current-desk.webp"); opacity: 0.68; }
 @media (max-width: 959px) {
-  .ys-product[data-gradient="a"] .ys-fold-drift { background-image: url("/textures/product-a-phone.webp"); }
-  .ys-product[data-gradient="b"] .ys-fold-drift { background-image: url("/textures/product-b-phone.webp"); }
-  .ys-product[data-gradient="c"] .ys-fold-drift { background-image: url("/textures/product-c-phone.webp"); }
+  .ys-fold-drift { background-image: url("/textures/product-field-phone.webp"); }
+  .ys-glow { inset: var(--ys-glow-phone); }
+  .ys-glow-bloom { background-image: url("/textures/product-bloom-phone.webp"); }
+  .ys-glow-current { background-image: url("/textures/product-current-phone.webp"); }
 }
 /* Film grain: one 256 px tile of black and white specks drawn at 128 CSS px, so a speck is
    one device pixel at 2x; pixelated keeps each speck sharp at 1x and 3x instead of blurring

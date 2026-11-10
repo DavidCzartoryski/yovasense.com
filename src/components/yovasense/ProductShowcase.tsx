@@ -1,13 +1,13 @@
+import type { CSSProperties } from "react";
 import demoShots from "@/data/demo-shots.json";
+import glow from "@/data/product-glow.json";
 import { Spine } from "./Workflow";
 
 const { shots } = demoShots;
 
-/**
- * The section's grainy gradient, one of three (globals.css, "product: a grainy gradient"):
- * "a" logo light, "b" currents, "c" ember. This is the one switch.
- */
-const GRADIENT: "a" | "b" | "c" = "b";
+/** Where a cropped glow layer sits on the drift layer, desktop and phone (scripts/build-product-gradient.mjs). */
+const place = (layer: "current" | "bloom") =>
+  ({ "--ys-glow-desk": glow.desk[layer], "--ys-glow-phone": glow.phone[layer] }) as CSSProperties;
 
 /** The demo's own step titles, matched to the stage each one shows. */
 const beats = [
@@ -27,11 +27,14 @@ const crops = [
 export default function ProductShowcase() {
   const o = shots.overview;
   return (
-    <section id="product" className="ys-sec ys-product" data-gradient={GRADIENT} aria-labelledby="product-title">
+    <section id="product" className="ys-sec ys-product" aria-labelledby="product-title">
       <div className="ys-fold" aria-hidden="true">
         <div className="ys-fold-back" />
         <div className="ys-fold-field">
-          <div className="ys-fold-drift" data-drift />
+          <div className="ys-fold-drift" data-drift>
+            <div className="ys-glow ys-glow-bloom" style={place("bloom")} data-glow="bloom" />
+            <div className="ys-glow ys-glow-current" style={place("current")} data-glow="current" />
+          </div>
         </div>
         <div className="ys-fold-edge" data-arrive />
         <div className="ys-fold-under" />
