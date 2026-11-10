@@ -6,7 +6,7 @@ const adds = [
   "One incident instead of four alerts.",
   "A named GPU and a likely cause.",
   "Capacity back in the scheduler, checked.",
-  "A technician ticket only when hands are needed.",
+  "A technician ticket only when needed.",
 ];
 
 /** What YovaSense adds to monitoring: the alert is where it starts, not where it ends. */

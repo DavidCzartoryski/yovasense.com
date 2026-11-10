@@ -505,7 +505,7 @@ export const yovasense = {
         "Every incident becomes a versioned record: what was flagged, the GPUs and software involved, and measurements from before and after.",
         "Likely causes are ranked across the six incident families: GPU hardware failures, network and interconnect, performance degradation, drivers and services, unavailable GPU nodes, and power and cooling. They're ordered by the kind of evidence behind them, never by an invented probability.",
         "Missing or stale evidence is listed as missing, and competing causes stay on the record.",
-        "Each record suggests the next check that would separate the leading causes, then tracks the fix and whether healthy, usable GPU capacity came back.",
+        "Each record suggests the next check that would separate the leading causes, then tracks the fix until healthy, usable GPU capacity is back.",
       ],
     },
     next: {

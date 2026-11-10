@@ -61,7 +61,7 @@ export default function Research() {
             </ul>
           </div>
         </div>
-        <p className="mt-6 max-w-[760px] text-[14.5px] leading-[1.6] text-ar-muted">{research.demo}</p>
+        <p className="mt-6 text-[14.5px] leading-[1.6] text-ar-muted">{research.demo}</p>
 
         <Flow />
 
@@ -69,7 +69,7 @@ export default function Research() {
           {research.ask}{" "}
           <a
             href={mailto(`${yovasense.name}: incident data`)}
-            className="underline decoration-ar-line-2 underline-offset-4 transition-colors hover:decoration-ar-fg"
+            className="whitespace-nowrap underline decoration-ar-line-2 underline-offset-4 transition-colors hover:decoration-ar-fg"
           >
             Write to us
           </a>
