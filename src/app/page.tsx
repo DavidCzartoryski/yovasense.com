@@ -8,26 +8,28 @@ import FieldStill from "@/components/yovasense/FieldStill";
 import ScrollField from "@/components/yovasense/ScrollField";
 import ScrollReader from "@/components/yovasense/ScrollReader";
 
-const TITLE = `${yovasense.name} — Find and fix the GPU slowing your training job`;
+const TITLE = `${yovasense.name} — Autonomous operations for GPU infrastructure`;
 const DESCRIPTION =
-  "YovaSense is building autonomous GPU fleet operations: it watches distributed training while it runs, finds the slow GPU, link or host, applies a supported fix within your policies and verifies throughput recovered. Detection is a prototype; the demo is simulated.";
+  "YovaSense correlates telemetry across GPUs, hosts, networking, schedulers and workloads to diagnose infrastructure incidents, run safe, approved recovery actions and verify that GPU capacity is healthy again, for training and inference.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   authors: [{ name: yovasense.founder, url: SITE_URL }],
   keywords: [
-    "GPU performance regression",
-    "straggler detection",
-    "distributed training",
+    "GPU infrastructure operations",
     "GPU fleet operations",
-    "NCCL",
-    "RCCL",
-    "RDMA",
+    "GPU incident diagnosis",
+    "Xid 79",
+    "GPU fallen off the bus",
     "InfiniBand",
-    "mixed-vendor GPU training",
+    "NCCL",
+    "RDMA",
+    "Slurm",
+    "Kubernetes",
+    "DCGM",
+    "straggler detection",
     "GPUBridge",
-    "PyTorch",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -45,7 +47,7 @@ export const metadata: Metadata = {
   },
 };
 
-/** The homepage: one luminous line from the hero's all-reduce to the pilot call, over a light field that moves with the reader. */
+/** The homepage: signal layers converge into one diagnosis in the hero and become one luminous line that runs to the pilot call, over a light field that moves with the reader. */
 export default function YovaSensePage() {
   return (
     <>

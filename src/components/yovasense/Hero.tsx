@@ -2,16 +2,16 @@ import { Fragment } from "react";
 import { mailto } from "@/data/yovasense";
 import { PILOT_SUBJECT } from "./Header";
 import HeroPath from "./HeroPath";
-import { BLUE, LANES, LATE, MODES, SIZE, WARM, laneD, spriteGradient, stillScene } from "./heroGeometry";
+import { BLUE, FAULT, LANES, MODES, SIZE, WARM, laneD, spriteGradient, stillScene } from "./heroGeometry";
 
 /** The hero picture's text alternative (the picture shows no legend). */
 const HERO_PICTURE_LABEL =
-  "Illustration, not live data: eight ranks of one training job. Rank 2 arrives late, and every all-reduce waits for the last rank.";
+  "Illustration: signals from six layers (GPU, host, network, scheduler, storage and workload) converge into one diagnosis. The orange signal is the fault.";
 
 /**
- * The hero picture that does not move: the haze, the eight lane tracks meeting
- * at the all-reduce gate, the single line they become (turning down the hero
- * and landing on the page's spine), its light at B. Server-rendered and laid
+ * The hero picture that does not move: the haze, the six signal-layer lanes
+ * meeting at the diagnosis gate, the single line they become (turning down the
+ * hero and landing on the page's spine), its light at B. Server-rendered and laid
  * out by CSS (the --hx-* properties on .ys-hero), so it is in place before any
  * script runs and stays in place after the canvas starts drawing over it.
  * The lane boxes are scaled to B and the lanes keep a 1px stroke at any size.
@@ -65,8 +65,8 @@ function HeroArt() {
 
 /**
  * What the canvas draws first, drawn without it: the pose at STILL (the healthy
- * ranks waiting at the gate, the late rank orange-rimmed and nearly in, the
- * bloom swelling). Shown before hydration and without JS; hidden once the
+ * signals in at the gate, the fault lane orange-rimmed and its signal nearly
+ * in, the bloom swelling). Shown before hydration and without JS; hidden once the
  * canvas (HeroPath) is live.
  */
 function HeroStill() {
@@ -74,12 +74,12 @@ function HeroStill() {
     <div className="ys-hero-still" aria-hidden="true">
       {MODES.map((m) => {
         const s = stillScene(m);
-        const late = laneD(m, LATE);
+        const fault = laneD(m, FAULT);
         return (
           <Fragment key={m}>
             <svg className="ys-lanebox" data-mode={m} style={{ transform: `translateY(${SIZE[m].rimDy}px)` }} viewBox="0 0 1000 1000" preserveAspectRatio="none">
-              <path d={late} stroke="#FC734D" strokeOpacity={+(0.09 * s.rim).toFixed(4)} strokeWidth="7" />
-              <path d={late} stroke="#FC734D" strokeOpacity={+(0.55 * s.rim).toFixed(4)} strokeWidth="1.2" />
+              <path d={fault} stroke="#FC734D" strokeOpacity={+(0.09 * s.rim).toFixed(4)} strokeWidth="7" />
+              <path d={fault} stroke="#FC734D" strokeOpacity={+(0.55 * s.rim).toFixed(4)} strokeWidth="1.2" />
             </svg>
             <svg className="ys-lanebox" data-mode={m} viewBox="0 0 1000 1000" preserveAspectRatio="none">
               <defs>
@@ -126,34 +126,30 @@ export default function Hero() {
       <HeroPath />
       <HeroStill />
       <div className="ys-hero-tags" aria-hidden="true">
-        <span className="ys-hero-tag" data-tag="gate">all-reduce</span>
-        <span className="ys-hero-tag ys-hero-tag-late" data-tag="late">rank 2 · late</span>
+        <span className="ys-hero-tag" data-tag="gate">diagnosis</span>
+        <span className="ys-hero-tag ys-hero-tag-fault" data-tag="fault">gpu · xid 79</span>
       </div>
       <div className="ys-wrap ys-hero-grid">
         <span className="ys-spine-anchor" data-spine-anchor aria-hidden="true" />
         <div className="ys-hero-copy">
           <div className="ys-hero-copy-inner ys-scrim" data-hero-copy>
-            <p className="ys-eyebrow ys-hero-eyebrow">Autonomous GPU fleet operations · in development</p>
-            <h1 id="hero-title" className="ys-display ys-hero-title">
-              One slow GPU holds the whole job back. <span className="ys-hero-title-2"><span className="ys-nowrap">Find it.</span> <span className="ys-nowrap">Fix it.</span> <span className="ys-nowrap">Verify it.</span></span>
-            </h1>
-            <p className="ys-hero-lede">
-              That is the loop YovaSense is building: watch GPU jobs while they run, find the GPU, link or host that slowed them, apply a supported fix inside your policy, verify that throughput recovered, and escalate anything that needs an engineer.
+            <p className="ys-eyebrow ys-hero-eyebrow">Cross-layer diagnosis and recovery</p>
+            <h1 id="hero-title" className="ys-display ys-hero-title">Autonomous operations for GPU infrastructure.</h1>
+            <p className="ys-hero-sub">
+              <span className="ys-nowrap">Find the root cause.</span> <span className="ys-nowrap">Fix what you can.</span> <span>Know exactly what needs a technician.</span>
             </p>
-            <ul className="ys-maturity" aria-label="What exists today">
-              <li><span className="ys-chip" data-kind="prototype">Prototype</span> Detection, tested on one node</li>
-              <li><span className="ys-chip" data-kind="direction">Direction</span> The full workflow</li>
-              <li><span className="ys-chip" data-kind="simulated">Simulated</span> The fleet demo</li>
-            </ul>
+            <p className="ys-hero-lede">
+              YovaSense correlates telemetry across GPUs, servers, networking, schedulers and workloads to diagnose infrastructure failures, execute safe, approved recovery actions and verify that affected capacity is healthy again.
+            </p>
             <div className="ys-cta-row">
               <a className="ys-btn ys-btn-primary" href="/Demo/">
-                Open the simulated demo <span aria-hidden="true">→</span>
+                Open the interactive demo <span aria-hidden="true">→</span>
               </a>
               <a className="ys-btn ys-btn-pilot" href={mailto(PILOT_SUBJECT)}>
                 Talk to the founders <span aria-hidden="true">↗</span>
               </a>
             </div>
-            <p className="ys-hero-meta">NVIDIA and AMD · Owned or rented clusters</p>
+            <p className="ys-hero-meta">NVIDIA and AMD · Slurm and Kubernetes · Training and inference</p>
           </div>
         </div>
       </div>
