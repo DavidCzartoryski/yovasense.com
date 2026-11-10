@@ -1,7 +1,7 @@
 // Draws the YovaSense share card in the site's identity: navy, the hero's
-// eight rank trails meeting at the all-reduce and becoming one luminous line,
-// a folded blue corner with an orange-lit crease, the crescent mark and the
-// homepage headline. Writes
+// six signal trails (one orange, the fault) converging into one diagnosis and
+// becoming one luminous line, a folded blue corner with an orange-lit crease,
+// the crescent mark and the homepage headline. Writes
 // src/app/opengraph-image.png and twitter-image.png (1200x630) and
 // their .alt.txt files.
 //
@@ -22,7 +22,7 @@ const ROOT = new URL("../", import.meta.url).pathname;
 const OUT = `${ROOT}src/app`;
 const W = 1200, H = 630;
 const ALT =
-  "YovaSense: one slow GPU holds the whole job back. Find it, fix it, verify it: the loop YovaSense is building for GPU fleets. Eight rank trails meet at an all-reduce and become one line. In development; the demo is simulated.";
+  "YovaSense: autonomous operations for GPU infrastructure. Find the root cause, fix what you can, know exactly what needs a technician. Six signal trails, one of them orange, converge into one diagnosis and become one line.";
 
 const FONT_URLS = {
   archivo: "https://raw.githubusercontent.com/google/fonts/main/ofl/archivo/Archivo%5Bwdth,wght%5D.ttf",
@@ -78,10 +78,10 @@ try {
 
 // ── Card ─────────────────────────────────────────────────────────────────────
 function card() {
-  // eight lanes converge at the all-reduce (B); the late one (rank 2) carries the orange rim
+  // six signal lanes converge at the diagnosis (B); the third one carries the orange fault
   const B = { x: 958, y: 318 };
-  const lanes = Array.from({ length: 8 }, (_, i) => {
-    const y0 = 150 + i * 48;
+  const lanes = Array.from({ length: 6 }, (_, i) => {
+    const y0 = 150 + i * 67.2;
     return `M700 ${y0} C${700 + (B.x - 700) * 0.4} ${y0} ${700 + (B.x - 700) * 0.72} ${B.y + (y0 - B.y) * 0.16} ${B.x} ${B.y}`;
   });
   const merged = `M${B.x} ${B.y} H1046 a34 34 0 0 1 34 34 V${H + 10}`;
@@ -98,7 +98,7 @@ function card() {
       <stop offset="0.6" stop-color="#8FD3F7" stop-opacity="0.3"/>
       <stop offset="1" stop-color="#CFEBFA" stop-opacity="0.8"/>
     </linearGradient>
-    <linearGradient id="late" x1="700" x2="${B.x}" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+    <linearGradient id="fault" x1="700" x2="${B.x}" y1="0" y2="0" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#FC734D" stop-opacity="0"/>
       <stop offset="0.35" stop-color="#FC734D" stop-opacity="0.7"/>
       <stop offset="1" stop-color="#FF9A7A" stop-opacity="0.9"/>
@@ -129,7 +129,7 @@ function card() {
   <polygon points="1010,0 1200,0 1200,206" fill="url(#lit)"/>
   <line x1="1010" y1="0" x2="1200" y2="206" stroke="url(#edge)" stroke-width="2.5"/>
   <line x1="1010" y1="0" x2="1200" y2="206" stroke="#FC734D" stroke-opacity="0.5" stroke-width="7" filter="url(#glow)"/>
-  ${lanes.map((d, i) => `<path d="${d}" fill="none" stroke="${i === 2 ? "url(#late)" : "url(#lane)"}" stroke-width="${i === 2 ? 1.6 : 1.3}"/>`).join("")}
+  ${lanes.map((d, i) => `<path d="${d}" fill="none" stroke="${i === 2 ? "url(#fault)" : "url(#lane)"}" stroke-width="${i === 2 ? 1.6 : 1.3}"/>`).join("")}
   <line x1="${B.x}" y1="${B.y - 120}" x2="${B.x}" y2="${B.y + 120}" stroke="#EAF2F5" stroke-opacity="0.22"/>
   <path d="${merged}" fill="none" stroke="#0297DE" stroke-opacity="0.35" stroke-width="14" filter="url(#glow)"/>
   <path d="${merged}" fill="none" stroke="#4DB8EE" stroke-opacity="0.7" stroke-width="4"/>
@@ -140,14 +140,16 @@ function card() {
     <circle cx="21" cy="13" r="3.2" fill="#FC734D"/>
   </g>
   <text x="118" y="81" font-family="AR Wide" font-size="22" letter-spacing="3.52" fill="#EAF2F5">YOVASENSE</text>
-  <g font-family="AR Display" font-size="60" letter-spacing="-2.2" fill="#EAF2F5">
-    <text x="60" y="226">One slow GPU holds</text>
-    <text x="60" y="294">the whole job back.</text>
-    <text x="60" y="380" fill="#4DB8EE">Find it. Fix it.</text>
-    <text x="60" y="448" fill="#4DB8EE">Verify it.</text>
+  <g font-family="AR Display" font-size="54" letter-spacing="-2" fill="#EAF2F5">
+    <text x="60" y="194">Autonomous</text>
+    <text x="60" y="256">operations for GPU</text>
+    <text x="60" y="318">infrastructure.</text>
   </g>
-  <text x="64" y="540" font-family="AR Mono" font-size="14" letter-spacing="1.6" fill="#A7B8C2">AUTONOMOUS GPU FLEET OPERATIONS · IN DEVELOPMENT</text>
-  <text x="64" y="568" font-family="AR Mono" font-size="14" letter-spacing="1.6" fill="#FF9A7A">THE DEMO IS SIMULATED</text>
-  <text x="${B.x - 40}" y="${B.y - 138}" font-family="AR Mono" font-size="12" letter-spacing="1.6" fill="#A7B8C2">ALL-REDUCE</text>
+  <g font-family="AR Display" font-size="40" letter-spacing="-1.2" fill="#4DB8EE">
+    <text x="61" y="392">Find the root cause.</text>
+    <text x="61" y="442">Fix what you can.</text>
+  </g>
+  <text x="64" y="540" font-family="AR Mono" font-size="13" letter-spacing="1.4" fill="#A7B8C2">COLLECT · CORRELATE · DIAGNOSE · REMEDIATE · VERIFY · ESCALATE</text>
+  <text x="${B.x}" y="${B.y - 138}" text-anchor="middle" font-family="AR Mono" font-size="12" letter-spacing="1.6" fill="#A7B8C2">DIAGNOSIS</text>
 </svg>`;
 }
