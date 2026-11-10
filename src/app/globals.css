@@ -660,13 +660,37 @@ main:focus { outline: none; }
 }
 
 /* ---------- product: the one lit field, folded ---------- */
-.ys-product { --cut: clamp(56px, 8vw, 128px); --cut2: clamp(36px, 5vw, 84px); --ys-focus: var(--ys-navy); color: var(--ys-ink); }
+.ys-product {
+  --cut: clamp(56px, 8vw, 128px); --cut2: clamp(36px, 5vw, 84px); --ys-focus: var(--ys-navy); color: var(--ys-ink);
+  /* the grain on the field: --ys-grain is the one knob, the opacity of the speck layer.
+     Three strengths to choose from; medium is the default. */
+  --ys-grain-subtle: 0.025;
+  --ys-grain-medium: 0.045;
+  --ys-grain-strong: 0.07;
+  --ys-grain: var(--ys-grain-medium);
+}
 .ys-fold { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* Static grain: one 256 px tile of black and white specks (public/textures/grain.webp,
+   scripts/build-grain-tile.mjs) drawn at 128 CSS px, so a speck is one device pixel at 2x;
+   pixelated keeps each speck sharp at 1x and 3x instead of blurring it. Plain alpha, no blend
+   mode: the layer is painted once and the scroll-linked layers under it only recomposite. */
+.ys-fold-field::after, .ys-fold-back::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url("/textures/grain.webp") 0 0 / 128px 128px repeat;
+  image-rendering: pixelated;
+  opacity: var(--ys-grain);
+}
 /* the plane folding back above the cut: a deep navy wedge, darkest away from the crease */
 .ys-fold-back {
   position: absolute; left: 0; right: 0; top: 0; height: var(--cut);
   clip-path: polygon(0 0, 100% 0, 0 100%);
   background: linear-gradient(165deg, rgb(2 7 10 / 0) 10%, var(--ys-blue-950) 55%, var(--ys-blue-800) 100%);
+}
+/* a fainter grain on the wedge, only where the wedge itself is (not on the page behind it) */
+.ys-fold-back::after {
+  opacity: calc(var(--ys-grain) * 0.5);
+  -webkit-mask-image: linear-gradient(165deg, transparent 10%, #000 55%);
+  mask-image: linear-gradient(165deg, transparent 10%, #000 55%);
 }
 .ys-fold-field {
   position: absolute; inset: 0; overflow: hidden;
