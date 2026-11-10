@@ -3,6 +3,12 @@ import { Spine } from "./Workflow";
 
 const { shots } = demoShots;
 
+/**
+ * The section's grainy gradient, one of three (globals.css, "product: a grainy gradient"):
+ * "a" logo light, "b" currents, "c" ember. This is the one switch.
+ */
+const GRADIENT: "a" | "b" | "c" = "b";
+
 /** The demo's own step titles, matched to the stage each one shows. */
 const beats = [
   { n: "2/12", title: "speech-asr stalls", verb: "Collect" },
@@ -21,21 +27,20 @@ const crops = [
 export default function ProductShowcase() {
   const o = shots.overview;
   return (
-    <section id="product" className="ys-sec ys-product" aria-labelledby="product-title">
+    <section id="product" className="ys-sec ys-product" data-gradient={GRADIENT} aria-labelledby="product-title">
       <div className="ys-fold" aria-hidden="true">
         <div className="ys-fold-back" />
         <div className="ys-fold-field">
-          <div className="ys-fold-sweep" data-sweep />
-          <div className="ys-fold-face" />
+          <div className="ys-fold-drift" data-drift />
         </div>
         <div className="ys-fold-edge" data-arrive />
         <div className="ys-fold-under" />
       </div>
-      <div className="ys-wrap ys-rail ys-rail-ink">
-        <Spine ink />
+      <div className="ys-wrap ys-rail">
+        <Spine />
         <div className="ys-product-grid">
           <div className="ys-product-copy">
-            <span className="ys-node ys-node-ink" data-reader-mark aria-hidden="true" />
+            <span className="ys-node" data-reader-mark aria-hidden="true" />
             <p className="ys-eyebrow">The product · interactive demo</p>
             <h2 id="product-title" className="ys-display ys-h2">Watch YovaSense run a demo fleet through a day.</h2>
             <p className="ys-product-lede">
@@ -51,7 +56,7 @@ export default function ProductShowcase() {
                 </li>
               ))}
             </ol>
-            <a className="ys-btn ys-btn-ink" href="/Demo/">
+            <a className="ys-btn ys-btn-paper" href="/Demo/">
               Open the interactive demo <span aria-hidden="true">→</span>
             </a>
             <p className="ys-product-fine">Demo fleet: 192 GPUs, 24 nodes, 6 racks.</p>

@@ -659,61 +659,68 @@ main:focus { outline: none; }
   .ys-branch { width: calc(var(--ys-rail-pad) + 34px + 2px); height: 58px; border-bottom-left-radius: 34px; }
 }
 
-/* ---------- product: the one lit field, folded ---------- */
+/* ---------- product: a grainy gradient, folded ----------
+   The section is one soft colour field, pre-rendered (scripts/build-product-gradient.mjs) and
+   chosen by data-gradient on the section (ProductShowcase.tsx): a "logo light", b "currents",
+   c "ember". A desktop and a phone composition each keep the copy over the calm, dark part of
+   the field and put the colour around the screenshots. Over it, a film grain from a tiny tile
+   at device pixels (scripts/build-grain-tile.mjs), so the grain stays sharp while the soft
+   field is scaled up. The field drifts a little as the section passes (ScrollReader, transform
+   only); under reduced motion it rests. --ys-grain sets the grain's strength per variant. */
 .ys-product {
-  --cut: clamp(56px, 8vw, 128px); --cut2: clamp(36px, 5vw, 84px); --ys-focus: var(--ys-navy); color: var(--ys-ink);
-  /* the grain on the field: --ys-grain is the one knob, the opacity of the speck layer.
-     Three strengths to choose from; medium is the default. */
-  --ys-grain-subtle: 0.025;
-  --ys-grain-medium: 0.045;
-  --ys-grain-strong: 0.07;
-  --ys-grain: var(--ys-grain-medium);
+  --cut: clamp(56px, 8vw, 128px); --cut2: clamp(36px, 5vw, 84px);
+  --ys-focus: var(--ys-paper); color: var(--ys-text);
+  --ys-product-muted: #B9C8D0; /* small type on the field: 11.1 on navy */
+  --ys-grain: 0.1;
 }
+.ys-product[data-gradient="a"] { --ys-grain: 0.09; }
+.ys-product[data-gradient="b"] { --ys-grain: 0.1; }
+.ys-product[data-gradient="c"] { --ys-grain: 0.11; }
 .ys-fold { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-/* Static grain: one 256 px tile of black and white specks (public/textures/grain.webp,
-   scripts/build-grain-tile.mjs) drawn at 128 CSS px, so a speck is one device pixel at 2x;
-   pixelated keeps each speck sharp at 1x and 3x instead of blurring it. Plain alpha, no blend
-   mode: the layer is painted once and the scroll-linked layers under it only recomposite. */
-.ys-fold-field::after, .ys-fold-back::after {
+.ys-fold-field {
+  position: absolute; inset: 0; overflow: hidden;
+  clip-path: polygon(0 var(--cut), 100% 0, 100% calc(100% - var(--cut2)), 0 100%);
+  background: var(--ys-navy);
+}
+/* the field: a little larger than the section (5% above and below, 3% each side), so the
+   drift never shows an edge; the image is stretched to it, the composition is relative */
+.ys-fold-drift {
+  position: absolute; inset: -5% -3%;
+  background: var(--ys-navy) 0 0 / 100% 100% no-repeat;
+}
+.ys-reading .ys-fold-drift { will-change: transform; }
+.ys-product[data-gradient="a"] .ys-fold-drift { background-image: url("/textures/product-a-desk.webp"); }
+.ys-product[data-gradient="b"] .ys-fold-drift { background-image: url("/textures/product-b-desk.webp"); }
+.ys-product[data-gradient="c"] .ys-fold-drift { background-image: url("/textures/product-c-desk.webp"); }
+@media (max-width: 959px) {
+  .ys-product[data-gradient="a"] .ys-fold-drift { background-image: url("/textures/product-a-phone.webp"); }
+  .ys-product[data-gradient="b"] .ys-fold-drift { background-image: url("/textures/product-b-phone.webp"); }
+  .ys-product[data-gradient="c"] .ys-fold-drift { background-image: url("/textures/product-c-phone.webp"); }
+}
+/* Film grain: one 256 px tile of black and white specks drawn at 128 CSS px, so a speck is
+   one device pixel at 2x; pixelated keeps each speck sharp at 1x and 3x instead of blurring
+   it. Plain alpha (a white speck screens, a black one multiplies), no blend mode: soft-light
+   and overlay barely touch near-black, and most of this field is navy. Static, so it is
+   painted once while the field under it only moves. */
+.ys-fold-field::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: url("/textures/grain.webp") 0 0 / 128px 128px repeat;
   image-rendering: pixelated;
   opacity: var(--ys-grain);
+}
+/* a 1x speck is a whole CSS pixel, so it reads stronger: ease it off. At 3x a 128 px tile would
+   make a speck one and a half device pixels (uneven); 170.667 px makes it exactly two. */
+@media (max-resolution: 1.5dppx), (-webkit-max-device-pixel-ratio: 1.5) {
+  .ys-fold-field::after { opacity: calc(var(--ys-grain) * 0.85); }
+}
+@media (min-resolution: 2.5dppx), (-webkit-min-device-pixel-ratio: 2.5) {
+  .ys-fold-field::after { background-size: 170.667px 170.667px; }
 }
 /* the plane folding back above the cut: a deep navy wedge, darkest away from the crease */
 .ys-fold-back {
   position: absolute; left: 0; right: 0; top: 0; height: var(--cut);
   clip-path: polygon(0 0, 100% 0, 0 100%);
   background: linear-gradient(165deg, rgb(2 7 10 / 0) 10%, var(--ys-blue-950) 55%, var(--ys-blue-800) 100%);
-}
-/* a fainter grain on the wedge, only where the wedge itself is (not on the page behind it) */
-.ys-fold-back::after {
-  opacity: calc(var(--ys-grain) * 0.5);
-  -webkit-mask-image: linear-gradient(165deg, transparent 10%, #000 55%);
-  mask-image: linear-gradient(165deg, transparent 10%, #000 55%);
-}
-.ys-fold-field {
-  position: absolute; inset: 0; overflow: hidden;
-  clip-path: polygon(0 var(--cut), 100% 0, 100% calc(100% - var(--cut2)), 0 100%);
-  background:
-    radial-gradient(70% 55% at 8% 6%, rgb(207 235 250 / 0.9), transparent 70%),
-    linear-gradient(162deg, var(--ys-blue-100) 0%, var(--ys-blue-200) 38%, var(--ys-blue-300) 100%);
-}
-/* the light, sliding across the field as the section passes (ScrollReader) */
-.ys-fold-sweep {
-  position: absolute; left: -30%; top: -20%; width: 160%; height: 140%;
-  background: radial-gradient(30% 26% at 50% 50%, rgb(235 248 255 / 0.6), rgb(235 248 255 / 0) 70%);
-}
-/* a second plane, turned away from the light, in the top-right corner: no text sits on it */
-.ys-fold-face {
-  position: absolute; inset: 0;
-  clip-path: polygon(64% 0, 100% 0, 100% 46%);
-  background: linear-gradient(205deg, var(--ys-blue-600) 0%, var(--ys-blue) 55%, var(--ys-blue-300) 100%);
-}
-.ys-fold-face::after {
-  content: ""; position: absolute; inset: 0;
-  clip-path: polygon(64% 0, 64.25% 0, 100% 46.2%, 100% 46%);
-  background: rgb(235 248 255 / 0.8);
 }
 /* the warm edge along the cut */
 .ys-fold-edge { position: absolute; left: 0; right: 0; top: 0; height: calc(var(--cut) + 4px); filter: drop-shadow(0 0 5px rgb(252 115 77 / 0.75)); }
@@ -728,33 +735,32 @@ main:focus { outline: none; }
   clip-path: polygon(0 calc(100% - 44px), 100% 0, 100% 44px, 0 100%);
   background: linear-gradient(180deg, rgb(1 4 6 / 0.9), rgb(1 4 6 / 0.2));
 }
-@media (max-width: 759px) {
-  .ys-fold-face { clip-path: polygon(calc(100% - 46vw) 0, 100% 0, 100% 38vw); }
-  .ys-fold-face::after { display: none; }
-}
 .ys-product .ys-rail { position: relative; z-index: 1; padding-top: calc(var(--ys-section) + var(--cut)); padding-bottom: calc(var(--ys-section) + var(--cut2)); }
 .ys-product-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: 56px; align-items: start; }
 .ys-product-copy { position: relative; }
-.ys-product .ys-eyebrow { color: var(--ys-ink-muted); }
-.ys-product .ys-h2 { margin-top: 18px; color: var(--ys-ink); }
-.ys-product-lede { margin-top: 22px; max-width: 46ch; color: var(--ys-ink-muted); font-weight: 500; }
-.ys-product-caption { margin-top: 14px; max-width: 46ch; font-size: 14px; line-height: 1.5; color: var(--ys-ink-muted); }
-.ys-beats { margin: 28px 0 30px; padding: 0; list-style: none; border-top: 1px solid var(--ys-line-ink); }
+.ys-product .ys-eyebrow { color: var(--ys-blue-200); }
+.ys-product .ys-h2 { margin-top: 18px; color: var(--ys-text); }
+.ys-product-lede { margin-top: 22px; max-width: 46ch; color: var(--ys-text); font-weight: 500; }
+.ys-product-caption { margin-top: 14px; max-width: 46ch; font-size: 14px; line-height: 1.5; color: var(--ys-product-muted); }
+.ys-beats { margin: 28px 0 30px; padding: 0; list-style: none; border-top: 1px solid var(--ys-line-2); }
 .ys-beats li {
   display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: baseline;
-  padding: 10px 0; border-bottom: 1px solid var(--ys-line-ink); font-size: 15px; font-weight: 500; color: var(--ys-ink);
+  padding: 10px 0; border-bottom: 1px solid var(--ys-line-2); font-size: 15px; font-weight: 500; color: var(--ys-text);
 }
-.ys-beat-n, .ys-beat-k { font-size: var(--ys-fs-label); letter-spacing: 0.06em; color: var(--ys-ink-muted); }
+.ys-beat-n, .ys-beat-k { font-size: var(--ys-fs-label); letter-spacing: 0.06em; color: var(--ys-product-muted); }
 .ys-beat-k { text-transform: uppercase; }
-.ys-product-fine { margin-top: 16px; font-size: 13px; color: var(--ys-ink-muted); }
-/* the console, framed like a lit object on the field */
+.ys-product-fine { margin-top: 16px; font-size: 13px; color: var(--ys-product-muted); }
+/* the light button, for a dark field: paper with navy type */
+.ys-btn-paper { background: var(--ys-paper); color: var(--ys-navy); }
+.ys-btn-paper:hover { background: var(--ys-blue-100); }
+/* the console, framed like a lit object on the field: a hairline of light round it and a deep shadow lift it off */
 .ys-console {
   position: relative; margin: 0; background: var(--ys-navy); color: var(--ys-text);
-  box-shadow: 0 40px 90px -30px rgb(2 7 10 / 0.75), 0 8px 24px -8px rgb(2 7 10 / 0.5), 6px 0 0 -2px var(--ys-orange), 12px 0 30px -14px rgb(252 115 77 / 0.8);
+  box-shadow: 0 0 0 1px rgb(234 242 245 / 0.14), 0 40px 90px -30px rgb(1 4 6 / 0.9), 0 8px 24px -8px rgb(1 4 6 / 0.6), 6px 0 0 -2px var(--ys-orange), 12px 0 30px -14px rgb(252 115 77 / 0.8);
 }
 .ys-console::before {
   content: ""; position: absolute; z-index: -1; inset: -22px 22px 22px -22px;
-  background: var(--ys-surface-2); opacity: 0.55; box-shadow: 0 30px 60px -30px rgb(2 7 10 / 0.6);
+  background: rgb(6 18 26 / 0.5); box-shadow: inset 0 0 0 1px rgb(234 242 245 / 0.08), 0 30px 60px -30px rgb(1 4 6 / 0.7);
 }
 .ys-console img, .ys-crop-img img { display: block; width: 100%; height: auto; }
 .ys-console-bar, .ys-crop-bar {
@@ -764,8 +770,8 @@ main:focus { outline: none; }
 }
 .ys-console-note, .ys-crop-note { padding: 12px 14px 14px; font-size: 13px; line-height: 1.5; color: var(--ys-text-muted); border-top: 1px solid var(--ys-line); }
 .ys-crops { margin: clamp(48px, 6vw, 80px) 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 28px; align-items: start; }
-.ys-crop figure { margin: 0; max-width: 420px; background: var(--ys-navy); color: var(--ys-text); box-shadow: 0 30px 60px -28px rgb(2 7 10 / 0.75), 0 0 0 1px rgb(2 7 10 / 0.4); }
-.ys-crop-finding figure { box-shadow: 0 30px 60px -28px rgb(2 7 10 / 0.75), inset 0 2px 0 var(--ys-orange); }
+.ys-crop figure { margin: 0; max-width: 420px; background: var(--ys-navy); color: var(--ys-text); box-shadow: 0 0 0 1px rgb(234 242 245 / 0.14), 0 30px 60px -28px rgb(1 4 6 / 0.9); }
+.ys-crop-finding figure { box-shadow: 0 0 0 1px rgb(234 242 245 / 0.14), 0 30px 60px -28px rgb(1 4 6 / 0.9), inset 0 2px 0 var(--ys-orange); }
 @media (max-width: 959px) {
   .ys-product-grid { grid-template-columns: 1fr; row-gap: 48px; }
 }
