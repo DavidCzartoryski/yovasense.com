@@ -11,7 +11,7 @@ This repository contains public website code and simulated data, not the private
 
 ## Build
 
-Use Node.js 24 or newer, then `npm ci` and `npm run build`. Next.js statically exports the site to `out/`. The static demo and architecture explorer live in `public/` and are copied by the build. `npm run og` regenerates the YovaSense share cards. The YS logo files in `public/brand/` (header, favicons, apple-touch icon) come from David's square artwork: `npm run brand -- --source <logo.png>` writes them; the artwork itself stays out of the repo. Run `npm run og` after it, since the share cards draw the logo from `public/brand/apple-touch-icon.png`.
+Use Node.js 24 or newer, then `npm ci` and `npm run build`. Next.js statically exports the site to `out/`. The static demo and architecture explorer live in `public/` and are copied by the build. `npm run og` regenerates the YovaSense share cards. The YS logo files in `public/brand/` (header, favicons, apple-touch icon) and `public/favicon.ico` come from David's square artwork: `npm run brand -- --source <logo.png>` writes them; the artwork itself stays out of the repo. Run `npm run og` after it, since the share cards draw the logo from `public/brand/apple-touch-icon.png`.
 
 ## Product shots
 
