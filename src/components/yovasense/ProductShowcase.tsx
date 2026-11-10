@@ -1,7 +1,13 @@
+import type { CSSProperties } from "react";
 import demoShots from "@/data/demo-shots.json";
+import glow from "@/data/product-glow.json";
 import { Spine } from "./Workflow";
 
 const { shots } = demoShots;
+
+/** Where a cropped glow layer sits on the drift layer, desktop and phone (scripts/build-product-gradient.mjs). */
+const place = (layer: "current" | "bloom") =>
+  ({ "--ys-glow-desk": glow.desk[layer], "--ys-glow-phone": glow.phone[layer] }) as CSSProperties;
 
 /** The demo's own step titles, matched to the stage each one shows. */
 const beats = [
@@ -25,17 +31,19 @@ export default function ProductShowcase() {
       <div className="ys-fold" aria-hidden="true">
         <div className="ys-fold-back" />
         <div className="ys-fold-field">
-          <div className="ys-fold-sweep" data-sweep />
-          <div className="ys-fold-face" />
+          <div className="ys-fold-drift" data-drift>
+            <div className="ys-glow ys-glow-bloom" style={place("bloom")} data-glow="bloom" />
+            <div className="ys-glow ys-glow-current" style={place("current")} data-glow="current" />
+          </div>
         </div>
         <div className="ys-fold-edge" data-arrive />
         <div className="ys-fold-under" />
       </div>
-      <div className="ys-wrap ys-rail ys-rail-ink">
-        <Spine ink />
+      <div className="ys-wrap ys-rail">
+        <Spine />
         <div className="ys-product-grid">
           <div className="ys-product-copy">
-            <span className="ys-node ys-node-ink" data-reader-mark aria-hidden="true" />
+            <span className="ys-node" data-reader-mark aria-hidden="true" />
             <p className="ys-eyebrow">The product · interactive demo</p>
             <h2 id="product-title" className="ys-display ys-h2">Watch YovaSense run a demo fleet through a day.</h2>
             <p className="ys-product-lede">
@@ -51,7 +59,7 @@ export default function ProductShowcase() {
                 </li>
               ))}
             </ol>
-            <a className="ys-btn ys-btn-ink" href="/Demo/">
+            <a className="ys-btn ys-btn-paper" href="/Demo/">
               Open the interactive demo <span aria-hidden="true">→</span>
             </a>
             <p className="ys-product-fine">Demo fleet: 192 GPUs, 24 nodes, 6 racks.</p>
