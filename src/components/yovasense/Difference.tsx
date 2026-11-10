@@ -3,10 +3,10 @@ import { Spine } from "./Workflow";
 const monitoring = ["A node is drained.", "A GPU stopped reporting.", "A link is flapping.", "A job failed."];
 
 const adds = [
-  "Which GPU, on which node, under which jobs.",
-  "The likely cause, with the evidence for and against it.",
-  "The recovery action your policy allows, run and verified.",
-  "A ticket for anything that needs a technician.",
+  "One incident instead of four alerts.",
+  "A named GPU and a likely cause.",
+  "Capacity back in the scheduler, checked.",
+  "A technician ticket only when hands are needed.",
 ];
 
 /** What YovaSense adds to monitoring: the alert is where it starts, not where it ends. */
@@ -23,7 +23,7 @@ export default function Difference() {
           </div>
           <div className="ys-sec-body">
             <p>
-              Monitoring tells an operator that a GPU disappeared or a job failed. The evidence for why is spread across the scheduler, the host, the GPU, the fabric and the job, and an engineer still connects it by hand. YovaSense connects that evidence across systems, determines the likely cause and drives the incident to resolution.
+              Monitoring tells an operator that a GPU disappeared or a job failed. The evidence for why is spread across the scheduler, the host, the GPU, the fabric and the job, and an engineer still connects it by hand.
             </p>
           </div>
         </div>
