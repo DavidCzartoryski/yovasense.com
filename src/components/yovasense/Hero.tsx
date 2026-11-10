@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { mailto } from "@/data/yovasense";
-import { PILOT_SUBJECT } from "./Header";
+import { EVALUATE_SUBJECT } from "./Header";
 import HeroPath from "./HeroPath";
 import { BLUE, FAULT, LANES, MODES, SIZE, WARM, laneD, spriteGradient, stillScene } from "./heroGeometry";
 
@@ -133,23 +133,22 @@ export default function Hero() {
         <span className="ys-spine-anchor" data-spine-anchor aria-hidden="true" />
         <div className="ys-hero-copy">
           <div className="ys-hero-copy-inner ys-scrim" data-hero-copy>
-            <p className="ys-eyebrow ys-hero-eyebrow">Cross-layer diagnosis and recovery</p>
             <h1 id="hero-title" className="ys-display ys-hero-title">Autonomous operations for GPU infrastructure.</h1>
+            <p className="ys-hero-lede">Built for GPU cloud providers and research computing teams.</p>
             <p className="ys-hero-sub">
-              <span className="ys-nowrap">Find the root cause.</span> <span className="ys-nowrap">Fix what you can.</span> <span>Know exactly what needs a technician.</span>
-            </p>
-            <p className="ys-hero-lede">
-              YovaSense correlates telemetry across GPUs, servers, networking, schedulers and workloads to diagnose infrastructure failures, execute safe, approved recovery actions and verify that affected capacity is healthy again.
+              <span>Find the root cause.</span>{" "}
+              <span>Automate the fix.</span>{" "}
+              <span>Escalate what remains.</span>
             </p>
             <div className="ys-cta-row">
-              <a className="ys-btn ys-btn-primary" href="/Demo/">
-                Open the interactive demo <span aria-hidden="true">→</span>
+              <a className="ys-btn ys-btn-primary" href={mailto(EVALUATE_SUBJECT)}>
+                Evaluate YovaSense on your fleet <span aria-hidden="true">↗</span>
               </a>
-              <a className="ys-btn ys-btn-pilot" href={mailto(PILOT_SUBJECT)}>
-                Talk to the founders <span aria-hidden="true">↗</span>
+              <a className="ys-link" href="#slack">
+                See it in Slack <span aria-hidden="true">↓</span>
               </a>
             </div>
-            <p className="ys-hero-meta">NVIDIA and AMD · Slurm and Kubernetes · Training and inference</p>
+            <p className="ys-hero-meta">Slurm and Kubernetes · Training and inference · Owned or rented clusters</p>
           </div>
         </div>
       </div>

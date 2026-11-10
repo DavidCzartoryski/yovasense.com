@@ -1,1 +1,1 @@
-YovaSense: autonomous operations for GPU infrastructure. Find the root cause, fix what you can, know exactly what needs a technician. Six signal trails, one of them orange, converge into one diagnosis and become one line.
+YovaSense: autonomous operations for GPU infrastructure. Find the root cause. Automate the fix. Escalate what remains. Six signal trails, one of them orange, converge into one diagnosis and become one line.

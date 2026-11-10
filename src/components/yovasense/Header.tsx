@@ -2,10 +2,13 @@ import Link from "next/link";
 import { yovasense, mailto } from "@/data/yovasense";
 import Mark from "./Mark";
 
-export const PILOT_SUBJECT = "YovaSense: let's talk";
+/** The page's three mail subjects. Every mailto on the site uses one of these. */
+export const GET_ACCESS_SUBJECT = "YovaSense: get access";
+export const EVALUATE_SUBJECT = "YovaSense: evaluate on our fleet";
+export const WRITE_SUBJECT = "YovaSense";
 
-/** Shared by / and /product/. Sticky, with the pilot path always one Tab away. */
-export default function Header({ current }: { current?: "product" }) {
+/** Shared by /, /product/ and the 404. Sticky, with "Get access" always one Tab away. */
+export default function Header() {
   return (
     <header className="ys-header">
       <a href="#main" className="ys-skip">Skip to content</a>
@@ -15,14 +18,10 @@ export default function Header({ current }: { current?: "product" }) {
           <span className="ys-wordmark">YOVASENSE</span>
         </Link>
         <nav className="ys-nav" aria-label="Main">
-          <Link href="/product/" className="ys-nav-link ys-nav-wide ys-nav-product" aria-current={current === "product" ? "page" : undefined}>
-            Product
-          </Link>
-          <a href="/Demo/" className="ys-nav-link">Demo</a>
-          <a href="/Architecture/" className="ys-nav-link ys-nav-wide">Architecture</a>
-          <a href={mailto(PILOT_SUBJECT)} className="ys-btn ys-btn-pilot ys-btn-sm">
-            <span className="ys-lbl-wide">Talk to the founders</span>
-            <span className="ys-lbl-narrow">Talk to us</span>
+          <Link href="/#how" className="ys-nav-link ys-nav-wide">How it works</Link>
+          <Link href="/#faq" className="ys-nav-link ys-nav-wide">FAQ</Link>
+          <a href={mailto(GET_ACCESS_SUBJECT)} className="ys-btn ys-btn-pilot ys-btn-sm">
+            Get access
           </a>
         </nav>
       </div>
@@ -35,15 +34,12 @@ export function Footer() {
     <footer className="ys-footer">
       <div className="ys-wrap ys-foot-grid">
         <div>
-          <p className="ys-foot-line">YovaSense: autonomous operations for GPU infrastructure, across training and inference.</p>
-          <p className="ys-foot-fine">© {new Date().getFullYear()} YovaSense · Cofounded by {yovasense.founder}</p>
+          <p className="ys-foot-line">YovaSense. Autonomous operations for GPU infrastructure.</p>
+          <p className="ys-foot-fine">© {new Date().getFullYear()} YovaSense</p>
         </div>
         <nav aria-label="Footer" className="ys-foot-nav">
-          <Link href="/product/">Product</Link>
-          <a href="/Demo/">Demo</a>
-          <a href="/Architecture/">Architecture</a>
-          <a href={yovasense.github}>GPUBridge <span aria-hidden="true">↗</span></a>
-          <a href={mailto(PILOT_SUBJECT)}>Contact</a>
+          <a href={mailto(GET_ACCESS_SUBJECT)}>Get access</a>
+          <a href={mailto(WRITE_SUBJECT)}>{yovasense.email}</a>
         </nav>
       </div>
     </footer>

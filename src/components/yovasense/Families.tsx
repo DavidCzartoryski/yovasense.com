@@ -2,12 +2,12 @@ import { Spine } from "./Workflow";
 
 /** The incident families YovaSense handles. Titles are matched exactly by the positioning check. */
 const families = [
-  { title: "GPU hardware failures", body: "Xid errors, ECC faults, GPUs that fall off the bus." },
-  { title: "Network and interconnect", body: "RDMA failures, NCCL timeouts, NVLink degradation." },
-  { title: "Performance degradation", body: "Training stragglers, throttling, throughput regressions." },
-  { title: "Drivers and services", body: "CUDA, GPU drivers, Fabric Manager, firmware." },
-  { title: "Unavailable GPU nodes", body: "Slurm drains, Kubernetes health checks, stranded capacity." },
-  { title: "Power and cooling", body: "Thermal throttling, rack-level power and cooling faults." },
+  { title: "GPU hardware failures", body: "Faulty GPUs, memory errors and GPUs that drop off the node." },
+  { title: "Network and interconnect", body: "Slow or failing links between GPUs, servers and racks." },
+  { title: "Performance degradation", body: "Jobs that slow down without failing: stragglers, throttling, regressions." },
+  { title: "Drivers and services", body: "The drivers, firmware and services every GPU depends on." },
+  { title: "Unavailable GPU nodes", body: "Nodes pulled out of service, and the capacity stranded with them." },
+  { title: "Power and cooling", body: "Thermal and power faults, from one GPU to a whole rack." },
 ];
 
 export default function Families() {
@@ -19,7 +19,7 @@ export default function Families() {
           <span className="ys-node" data-reader-mark aria-hidden="true" />
           <p className="ys-eyebrow">What it handles</p>
           <h2 id="incidents-title" className="ys-display ys-h2">Six families of infrastructure incidents.</h2>
-          <p className="ys-lede">Built for GPU infrastructure operations teams running training and inference. The same loop runs for every family.</p>
+          <p className="ys-lede">The same three steps run for every one, across training and inference.</p>
         </div>
         <ul className="ys-families ys-scrim">
           {families.map((f) => (

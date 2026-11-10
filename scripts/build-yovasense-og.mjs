@@ -28,7 +28,7 @@ const OUT = `${ROOT}src/app`;
 const W = 1200, H = 630;
 const LOGO = { x: 64, y: 52, size: 40 }; // left of the wordmark, centred on its capitals
 const ALT =
-  "YovaSense: autonomous operations for GPU infrastructure. Find the root cause, fix what you can, know exactly what needs a technician. Six signal trails, one of them orange, converge into one diagnosis and become one line.";
+  "YovaSense: autonomous operations for GPU infrastructure. Find the root cause. Automate the fix. Escalate what remains. Six signal trails, one of them orange, converge into one diagnosis and become one line.";
 
 const FONT_URLS = {
   archivo: "https://raw.githubusercontent.com/google/fonts/main/ofl/archivo/Archivo%5Bwdth,wght%5D.ttf",
@@ -162,9 +162,10 @@ function card() {
   </g>
   <g font-family="AR Display" font-size="40" letter-spacing="-1.2" fill="#4DB8EE">
     <text x="61" y="392">Find the root cause.</text>
-    <text x="61" y="442">Fix what you can.</text>
+    <text x="61" y="442">Automate the fix.</text>
+    <text x="61" y="492">Escalate what remains.</text>
   </g>
-  <text x="64" y="540" font-family="AR Mono" font-size="13" letter-spacing="1.4" fill="#A7B8C2">COLLECT · CORRELATE · DIAGNOSE · REMEDIATE · VERIFY · ESCALATE</text>
+  <text x="64" y="540" font-family="AR Mono" font-size="13" letter-spacing="1.4" fill="#A7B8C2">BUILT FOR GPU CLOUD PROVIDERS AND RESEARCH COMPUTING TEAMS</text>
   <text x="${B.x}" y="${B.y - 138}" text-anchor="middle" font-family="AR Mono" font-size="12" letter-spacing="1.6" fill="#A7B8C2">DIAGNOSIS</text>
 </svg>`;
 }

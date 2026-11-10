@@ -10,7 +10,7 @@ import ScrollReader from "@/components/yovasense/ScrollReader";
 
 const TITLE = `${yovasense.name} — Autonomous operations for GPU infrastructure`;
 const DESCRIPTION =
-  "YovaSense correlates telemetry across GPUs, hosts, networking, schedulers and workloads to diagnose infrastructure incidents, run safe, approved recovery actions and verify that GPU capacity is healthy again, for training and inference.";
+  "Built for GPU cloud providers and research computing teams. YovaSense finds the root cause, automates the fix and escalates what remains.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -18,18 +18,13 @@ export const metadata: Metadata = {
   authors: [{ name: yovasense.founder, url: SITE_URL }],
   keywords: [
     "GPU infrastructure operations",
-    "GPU fleet operations",
-    "GPU incident diagnosis",
-    "Xid 79",
-    "GPU fallen off the bus",
-    "InfiniBand",
-    "NCCL",
-    "RDMA",
+    "autonomous GPU operations",
+    "GPU incident response",
+    "GPU cloud providers",
+    "research computing",
     "Slurm",
     "Kubernetes",
-    "DCGM",
-    "straggler detection",
-    "GPUBridge",
+    "Slack",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -47,7 +42,7 @@ export const metadata: Metadata = {
   },
 };
 
-/** The homepage: signal layers converge into one diagnosis in the hero and become one luminous line that runs to the pilot call, over a light field that moves with the reader. */
+/** The landing page: signal layers converge into one diagnosis in the hero and become one luminous line that runs to the final call to action, over a light field that moves with the reader. */
 export default function YovaSensePage() {
   return (
     <>
