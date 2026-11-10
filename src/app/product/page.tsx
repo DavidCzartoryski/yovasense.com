@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SITE_URL } from "@/data/site";
@@ -17,12 +19,24 @@ import Transport from "@/components/yovasense/Transport";
 
 const title = "Inside YovaSense · Product, architecture, and research";
 const description = "How YovaSense runs GPU infrastructure operations: the incident loop from collection to verified recovery, the research behind it, GPUBridge, and measurements on real GPUs.";
+/**
+ * The site's share card (src/app/opengraph-image.png, twitter-image.png and their .alt.txt).
+ * Setting openGraph or twitter here replaces the root layout's, file-based images included,
+ * so this page names the root card itself.
+ */
+const card = (name: "opengraph-image" | "twitter-image") => ({
+  url: `/${name}.png`,
+  width: 1200,
+  height: 630,
+  type: "image/png",
+  alt: readFileSync(join(process.cwd(), "src/app", `${name}.alt.txt`), "utf8").trim(),
+});
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/product/" },
-  openGraph: { title, description, url: `${SITE_URL}/product/`, siteName: "YovaSense", type: "website" },
-  twitter: { card: "summary_large_image", title, description },
+  openGraph: { title, description, url: `${SITE_URL}/product/`, siteName: "YovaSense", type: "website", images: [card("opengraph-image")] },
+  twitter: { card: "summary_large_image", title, description, images: [card("twitter-image")] },
 };
 
 const workflow = [
