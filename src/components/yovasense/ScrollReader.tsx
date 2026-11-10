@@ -8,7 +8,9 @@ import { addTask, reducedMotion, type Frame } from "./motion";
  * shared loop. The spine is lit down to the reading line and dim ahead of it;
  * station nodes, the escalation branch and other [data-reader-mark] elements
  * light as the line passes them; [data-sweep] layers slide their light across
- * a section as it passes; [data-arrive] layers warm up as their section arrives.
+ * a section as it passes; [data-drift] layers (a field slightly larger than its
+ * section) drift a few percent as it passes; [data-arrive] layers warm up as
+ * their section arrives.
  *
  * Everything is written as transform, opacity or one attribute toggle, and
  * positions are measured on resize only. Without JS and under reduced motion
@@ -31,6 +33,7 @@ export default function ScrollReader() {
     let segs: Seg[] = [];
     let marks: Mark[] = [];
     let sweeps: Span[] = [];
+    let drifts: Span[] = [];
     let arrives: Span[] = [];
     let vh = window.innerHeight;
     let force = true;
@@ -54,6 +57,7 @@ export default function ScrollReader() {
           return { el, top: r.top + y, h: Math.max(1, r.height), last: -1 };
         });
       sweeps = span("[data-sweep]");
+      drifts = span("[data-drift]");
       arrives = span("[data-arrive]");
       force = true;
     }
@@ -81,6 +85,14 @@ export default function ScrollReader() {
           s.last = t;
         }
       }
+      // inside the layer's overscan (globals.css .ys-fold-drift: 3% each side, 5% above and below)
+      for (const s of drifts) {
+        const t = clamp01((scrollY + vh - s.top) / (s.h + vh));
+        if (force || Math.abs(t - s.last) > 0.0005) {
+          s.el.style.transform = `translate3d(${((0.5 - t) * 2.4).toFixed(3)}%, ${((t - 0.5) * 7).toFixed(3)}%, 0)`;
+          s.last = t;
+        }
+      }
       for (const s of arrives) {
         const t = clamp01((scrollY + vh - s.top) / (vh * 0.7));
         const o = 0.35 + 0.65 * t * t * (3 - 2 * t);
@@ -96,7 +108,7 @@ export default function ScrollReader() {
       main!.classList.remove("ys-reading");
       for (const s of segs) s.fill.style.transform = "";
       for (const m of marks) m.el.removeAttribute("data-lit");
-      for (const s of [...sweeps, ...arrives]) {
+      for (const s of [...sweeps, ...drifts, ...arrives]) {
         s.el.style.transform = "";
         s.el.style.opacity = "";
       }
