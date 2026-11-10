@@ -7,6 +7,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "og": "node scripts/build-yovasense-og.mjs",
+    "brand": "node scripts/build-yovasense-brand.mjs",
     "shots": "${PW_PYTHON:-python3} scripts/capture-demo-shots.py"
   },
   "dependencies": {

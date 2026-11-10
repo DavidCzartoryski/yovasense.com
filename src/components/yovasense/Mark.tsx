@@ -1,9 +1,22 @@
-/** The crescent that has caught the one orange dot. */
+/**
+ * The YovaSense logo: David's YS tile (navy to blue to cyan, an orange glow in
+ * one corner), corners rounded. Files in public/brand/, made by `npm run brand`;
+ * `sizes` lets the browser take the file that matches `size` at 1x, 2x or 3x.
+ * Decorative (`alt=""`): the link around it names YovaSense.
+ */
+const SRC_SET = [24, 26, 48, 52, 72, 78].map((px) => `/brand/ys-logo-${px}.webp ${px}w`).join(", ");
+
 export default function Mark({ size = 28, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" className={className}>
-      <path fill="currentColor" d="M17.9 2.63A13.5 13.5 0 1 0 28.91 19.94A10.5 10.5 0 1 1 17.9 2.63Z" />
-      <circle cx="21" cy="13" r="3.2" fill="#FC734D" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element -- static export, images unoptimized
+    <img
+      src="/brand/ys-logo-26.webp"
+      srcSet={SRC_SET}
+      sizes={`${size}px`}
+      width={size}
+      height={size}
+      alt=""
+      className={className}
+    />
   );
 }

@@ -1,9 +1,14 @@
 // Draws the YovaSense share card in the site's identity: navy, the hero's
 // six signal trails (one orange, the fault) converging into one diagnosis and
 // becoming one luminous line, a folded blue corner with an orange-lit crease,
-// the crescent mark and the homepage headline. Writes
+// the YS logo and the homepage headline. Writes
 // src/app/opengraph-image.png and twitter-image.png (1200x630) and
 // their .alt.txt files.
+//
+// The logo is David's artwork, not drawn here: sharp scales
+// public/brand/apple-touch-icon.png (made by `npm run brand`) to a 40 px tile,
+// rounds its corners at 6/32 like the site's favicon and lays it over the
+// rendered card left of the wordmark.
 //
 // The type is the page's own: Archivo (wdth 112 / wght 600 for the headline,
 // wdth 125 for the wordmark) and Martian Mono (wdth 87.5). Pass the variable
@@ -21,6 +26,7 @@ import { parseArgs } from "node:util";
 const ROOT = new URL("../", import.meta.url).pathname;
 const OUT = `${ROOT}src/app`;
 const W = 1200, H = 630;
+const LOGO = { x: 64, y: 52, size: 40 }; // left of the wordmark, centred on its capitals
 const ALT =
   "YovaSense: autonomous operations for GPU infrastructure. Find the root cause, fix what you can, know exactly what needs a technician. Six signal trails, one of them orange, converge into one diagnosis and become one line.";
 
@@ -66,7 +72,17 @@ try {
   process.env.PANGOCAIRO_BACKEND = "fc";
 
   const { default: sharp } = await import("sharp");
-  const png = await sharp(Buffer.from(card())).removeAlpha().png({ compressionLevel: 9 }).toBuffer();
+  const logo = await sharp(`${ROOT}public/brand/apple-touch-icon.png`)
+    .resize(LOGO.size, LOGO.size, { kernel: "lanczos3" })
+    .ensureAlpha()
+    .composite([{ input: Buffer.from(roundedSquare(LOGO.size)), blend: "dest-in" }])
+    .png()
+    .toBuffer();
+  const withLogo = await sharp(Buffer.from(card()))
+    .composite([{ input: logo, left: LOGO.x, top: LOGO.y }])
+    .png()
+    .toBuffer();
+  const png = await sharp(withLogo).removeAlpha().png({ compressionLevel: 9 }).toBuffer();
   writeFileSync(`${OUT}/opengraph-image.png`, png);
   writeFileSync(`${OUT}/twitter-image.png`, png);
   writeFileSync(`${OUT}/opengraph-image.alt.txt`, ALT);
@@ -77,6 +93,10 @@ try {
 }
 
 // ── Card ─────────────────────────────────────────────────────────────────────
+function roundedSquare(px) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}"><rect width="${px}" height="${px}" rx="${(px * 6) / 32}"/></svg>`;
+}
+
 function card() {
   // six signal lanes converge at the diagnosis (B); the third one carries the orange fault
   const B = { x: 958, y: 318 };
@@ -120,7 +140,6 @@ function card() {
       <stop offset="1" stop-color="#FF9A7A"/>
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/></filter>
-    <mask id="crescent"><rect width="32" height="32" fill="#fff"/><circle cx="21.5" cy="12.5" r="10.5" fill="#000"/></mask>
   </defs>
   <rect width="${W}" height="${H}" fill="#02070A"/>
   <rect width="${W}" height="${H}" fill="url(#haze)"/>
@@ -135,10 +154,6 @@ function card() {
   <path d="${merged}" fill="none" stroke="#4DB8EE" stroke-opacity="0.7" stroke-width="4"/>
   <path d="${merged}" fill="none" stroke="#EBF8FF" stroke-width="1.6"/>
   <circle cx="${B.x}" cy="${B.y}" r="80" fill="url(#bloom)"/>
-  <g transform="translate(64 52) scale(1.25)">
-    <circle cx="16" cy="16" r="13.5" fill="#EAF2F5" mask="url(#crescent)"/>
-    <circle cx="21" cy="13" r="3.2" fill="#FC734D"/>
-  </g>
   <text x="118" y="81" font-family="AR Wide" font-size="22" letter-spacing="3.52" fill="#EAF2F5">YOVASENSE</text>
   <g font-family="AR Display" font-size="54" letter-spacing="-2" fill="#EAF2F5">
     <text x="60" y="194">Autonomous</text>
