@@ -1,4 +1,5 @@
 :HL["/_next/static/media/1127fb4e4fa79faf-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/c214ffb7f5362987-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-:HL["/_next/static/css/8738caccb6d792ac.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"product","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"qawyPmSm_Xcyu6EeFSFcT"}
+:HL["/_next/static/css/15943d6eaf23d5a5.css","style"]
+:HL["/brand/ys-logo-26.webp","image",{"imageSrcSet":"/brand/ys-logo-24.webp 24w, /brand/ys-logo-26.webp 26w, /brand/ys-logo-48.webp 48w, /brand/ys-logo-52.webp 52w, /brand/ys-logo-72.webp 72w, /brand/ys-logo-78.webp 78w","imageSizes":"26px"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"product","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"S7fMDqyDy0zHquJ4reywy"}
