@@ -28,7 +28,7 @@ const items: { q: string; a: string }[] = [
   },
   {
     q: "Where does our data go?",
-    a: "It stays with you. YovaSense runs in your environment, reads operational telemetry rather than your models or datasets, and has only the access you grant it.",
+    a: "YovaSense runs in your environment and reads operational telemetry, not your models or datasets. Incident updates go only to the Slack channels and ticketing tools you connect, and it has only the access you grant it.",
   },
   {
     q: "Why not point a general-purpose AI agent at our cluster?",
