@@ -1,8 +1,8 @@
 import { profile } from "@/data/site";
 
 /**
- * Copy for : the project page for YovaSense, a runtime detector for GPU
- * performance regressions in distributed training, and GPUBridge, the
+ * Copy for /product: how YovaSense runs GPU infrastructure operations, and the
+ * research it grew out of: the straggler detector and GPUBridge, the
  * open-source layer that lets one job span NVIDIA and AMD.
  *
  * Every number says what it was measured on. GPUBridge's come from its public
@@ -22,16 +22,6 @@ export const yovasense = {
   githubIssues: "https://github.com/sidebandstudio/gpubridge/issues",
 
   hero: {
-    eyebrow: "Runtime diagnostics for distributed GPU training",
-    lead: "GPU performance regressions,",
-    mark: "caught while the job runs.",
-    lede: "A GPU that drops its clocks, a link that degrades, a host that stalls on input: none of them crash a training job. They slow every step instead, by a few percent, for days. YovaSense times the collectives every rank already runs, flags the rank, link or vendor island that regressed, estimates what it costs per step and, if you opt in, rebalances work across the GPUs the job already has. It's built for NVIDIA, AMD or both in one job.",
-    specs: [
-      { k: "Watches", v: "Collectives on NCCL, RCCL or GPUBridge" },
-      { k: "Built for", v: "NVIDIA, AMD, or both in one job" },
-      { k: "Tested on", v: "NVIDIA V100s, with InfiniBand; AMD is next" },
-      { k: "Built in", v: "C, Rust and Python" },
-    ],
     caption:
       "Illustration. Eight ranks in synchronous data-parallel training, four NVIDIA and four AMD. Rank 2 has regressed, so the other seven reach every all-reduce early and wait for it. Press Rebalance to apply the plan.",
     captionBalanced:
@@ -39,7 +29,7 @@ export const yovasense = {
   },
 
   problem: {
-    eyebrow: "The problem",
+    eyebrow: "Research · stragglers",
     heading: "Nothing crashes. Every step just gets slower.",
     body: [
       "Synchronous training moves in lockstep. Each step ends in a collective, such as the all-reduce that averages gradients, and a collective finishes only when the last rank arrives. One slow rank, often called a straggler, sets the pace for every GPU in the job while the rest sit idle at the barrier.",
@@ -103,10 +93,10 @@ export const yovasense = {
         href: "#detector",
       },
       {
-        title: "Learned diagnosis",
-        tag: "In development",
-        body: "Research into a model, trained on GPU incident and recovery data, that suggests likely causes, the checks that confirm them and the fixes.",
-        href: "#research",
+        title: "Fleet operations",
+        tag: "The product",
+        body: "The detector became one signal in a larger loop. YovaSense now collects, correlates, diagnoses, remediates, verifies and escalates infrastructure incidents across GPUs, hosts, networking, schedulers and workloads.",
+        href: "#workflow",
       },
     ],
   },
@@ -289,14 +279,13 @@ export const yovasense = {
         status: "Has run end to end during real 4-rank DDP training on one host, over InfiniBand.",
       },
     ],
-    next: "Next for both channels: across machines and on AMD. For training data, GPU memory straight to the NIC with GPUDirect RDMA.",
   },
 
   detector: {
-    eyebrow: "YovaSense · the detector",
+    eyebrow: "Research · the straggler detector",
     heading: "From collective timings to a finding you can act on.",
     body: "Every rank already checks in at the same place several times a step: the collectives. YovaSense times them on each rank, scores each window of steps against the rank's peers and its own history, and reports what slowed down, by how much and why. Collection never blocks a rank, and scoring happens away from the training step.",
-    source: "Source private for now",
+    source: "Source private",
     attach: "straggler run --plugin --every 50 --jsonl findings.jsonl -- torchrun ... train.py",
     attachNote:
       "Runs the detector in-process, on the profiler plugin or GPUBridge's records. Opt-in rebalancing adds one call per step boundary to the training loop.",
@@ -358,12 +347,12 @@ export const yovasense = {
       {
         n: "02",
         title: "Score",
-        body: "Each window, every rank is compared with the other ranks in its island: about 10% over their median makes it suspect, and 3 suspect windows out of the last 4 flag it. Each island's warmup baseline catches a whole island slowing together. Opt-in hardware classes, tested in simulation so far, keep a slower GPU generation from reading as a fault.",
+        body: "Each window, every rank is compared with the other ranks in its island: about 10% over their median makes it suspect, and 3 suspect windows out of the last 4 flag it. Each island's warmup baseline catches a whole island slowing together. Opt-in hardware classes keep a slower GPU generation from reading as a fault.",
       },
       {
         n: "03",
         title: "Explain",
-        body: "Each finding carries its cost in milliseconds and percent of the step, and a likely cause from GPU telemetry: thermal, power, clocks, PCIe or host, tested against simulated telemetry so far. Missing telemetry is reported as missing. A hang names the ranks behind and dumps each rank's last 256 collectives.",
+        body: "Each finding carries its cost in milliseconds and percent of the step, and a likely cause from GPU telemetry: thermal, power, clocks, PCIe or host. Missing telemetry is reported as missing. A hang names the ranks behind and dumps each rank's last 256 collectives.",
       },
       {
         n: "04",
@@ -373,7 +362,7 @@ export const yovasense = {
       },
     ],
     chainHint: "Open a step to see what it looks like.",
-    chainSample: "Real field names. The values are illustrative: the plan from the strip at the top of the page.",
+    chainSample: "Real field names. The values are illustrative: the plan from the rebalance strip above.",
     chain: [
       {
         title: "Finding",
@@ -464,7 +453,7 @@ export const yovasense = {
 
   evidence: {
     eyebrow: "Evidence",
-    heading: "What's been measured so far.",
+    heading: "What's been measured.",
     body: "The real-GPU runs are small and specific: one node of four V100s for the detector, and one V100 paired with one MI50 for mixed-vendor training. Counts are cases, not accuracy rates.",
     items: [
       {
@@ -504,24 +493,14 @@ export const yovasense = {
         setup: "Best hand-tuned split; the automatic one gave 1.07×. LLaMA-style model, 134M parameters, 500 steps, two runs each.",
       },
     ],
-    next: {
-      heading: "Next to prove",
-      items: [
-        "Detection beyond one node, and on AMD with RCCL",
-        "A default policy that stays quiet on long healthy runs without tuning",
-        "RDMA across machines, on AMD, and with GPUDirect",
-        "Larger mixed-vendor jobs, trained to the same numbers as native NCCL",
-        "Real production workloads",
-      ],
-    },
   },
 
   research: {
-    eyebrow: "Next · in development",
-    heading: "Teaching a model to suggest the cause.",
-    body: "Flagging the slow GPU is half the job. The other half is knowing what to check and what to do about it.",
+    eyebrow: "Diagnosis",
+    heading: "How YovaSense ranks the cause.",
+    body: "Finding the failing component is half the job. The other half is knowing what to check and what to do about it.",
     today: {
-      title: "Today: rules over evidence",
+      title: "Known failure signatures",
       items: [
         "Every incident becomes a versioned record: what was flagged, the GPUs and software involved, and measurements from before and after.",
         "Likely causes are ranked across power, clocks and configuration; thermal; communication; and host and input. They're ordered by the kind of evidence behind them, never by an invented probability.",
@@ -530,54 +509,39 @@ export const yovasense = {
       ],
     },
     next: {
-      title: "Next: a model trained on incidents",
+      title: "AI reasoning, trained on incidents",
       items: [
-        "Train or adapt an LLM on permitted, labeled GPU incident and recovery records.",
-        "Have it suggest likely causes, the checks that would confirm them and remedies, citing the evidence it used.",
-        "Judge it on held-out, resolved incidents before relying on it. Its suggestions stay hypotheses until the evidence confirms them.",
+        "An LLM, trained or adapted on permitted, labeled GPU incident and recovery records.",
+        "It suggests likely causes, the checks that would confirm them and remedies, citing the evidence it used.",
+        "It is judged on held-out, resolved incidents, and its suggestions stay hypotheses until the evidence confirms them.",
       ],
     },
     flow: ["Findings and telemetry", "Incident record", "Model", "Causes, checks, remedies", "Outcome"],
     ask: "Have incident write-ups you could share under the right terms? I'd like to hear from you.",
   },
 
-  about: {
-    heading: "Built by David Czartoryski",
-    role: "Founder",
-    photo: { src: "/team/david.webp", alt: "David Czartoryski in a dark suit and tie." },
-    body: [
-      "David started YovaSense to answer one question about distributed training: which GPU is slowing this job down, and why? Answering it across vendors meant building GPUBridge first.",
-      "The work runs from PyTorch distributed and a C profiler plugin to Rust agents and RDMA transports, tested on real NVIDIA and AMD GPUs. He studies Computer Science and Business Administration at Northeastern University.",
-    ],
-    links: [
-      { href: "https://davidczartoryski.com/recruiter/", label: "Résumé" },
-      { href: profile.github, label: "GitHub" },
-      { href: profile.linkedin, label: "LinkedIn" },
-    ],
-  },
-
   feedback: {
     eyebrow: "Feedback",
     heading: "Tell me where this breaks.",
-    body: "YovaSense is early, and what helps most right now is feedback from people who run multi-node GPU training. Twenty minutes of skepticism is worth more than a compliment.",
+    body: "What helps most is hearing from people who run GPU infrastructure: which incidents cost you the most capacity, and how you recover from them today. Twenty minutes of skepticism is worth more than a compliment.",
     questions: [
-      "Which regressions take your team longest to find: clocks and thermals, links, host stalls or software changes?",
-      "What would you need to see before letting a tool rebalance work inside a running job?",
-      "Do you run, or want to run, NVIDIA and AMD in the same job? Over what interconnect?",
+      "Which incidents take your team longest to resolve: GPU hardware, network, drivers and services, scheduler state or power and cooling?",
+      "What would you need to see before letting a tool drain a node, reset a GPU or reschedule a job on its own?",
+      "When a node becomes unavailable today, how do you find out, and who decides whether it needs a technician?",
       "What incident data could you share, and on what terms, to train a diagnosis model?",
     ],
-    note: "GPUBridge is open source, and issues are welcome. The detector's source is private for now; I'm glad to walk through it on a call.",
+    note: "GPUBridge is open source, and issues are welcome. YovaSense's source is private; I'm glad to walk through it on a call.",
   },
 } as const;
 
 export const yovasenseNav = [
-  { id: "problem", label: "Problem" },
+  { id: "problem", label: "Stragglers" },
   { id: "story", label: "Story" },
   { id: "gpubridge", label: "GPUBridge" },
   { id: "transport", label: "RDMA" },
   { id: "detector", label: "Detector" },
   { id: "evidence", label: "Evidence" },
-  { id: "research", label: "Research" },
+  { id: "research", label: "Diagnosis" },
 ] as const;
 
 export function mailto(subject: string) {

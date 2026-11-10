@@ -1,1 +1,1 @@
-YovaSense: one slow GPU holds the whole job back. Find it, fix it, verify it: the loop YovaSense is building for GPU fleets. Eight rank trails meet at an all-reduce and become one line. In development; the demo is simulated.
+YovaSense: autonomous operations for GPU infrastructure. Find the root cause, fix what you can, know exactly what needs a technician. Six signal trails, one of them orange, converge into one diagnosis and become one line.
