@@ -216,6 +216,7 @@ export default function SlackThread() {
     let want = false; // the visitor wants it playing
     let pass = false; // a reduced-motion pass the visitor started
     let inView = false;
+    let onScreen = false; // any part of the panel is in the viewport
     let running = false;
     let evs: readonly Ev[] = CYCLE;
     let next = 0; // index of the next event in evs
@@ -339,7 +340,10 @@ export default function SlackThread() {
       update();
     };
 
-    /** Motion allowed: start from the empty thread and wait for the panel to come into view.
+    /** Motion allowed: start from the empty thread and wait for the panel to come into view. If the
+     * complete thread is already on screen (a reload or back/forward with the panel in view, /#slack),
+     * join the loop at its hold on the complete thread instead, so the thread never blanks in front
+     * of the visitor: the hold, then the loop's fade starts the sequence.
      * Reduced: rest on the complete thread with Play. */
     function boot() {
       booted = true;
@@ -354,7 +358,11 @@ export default function SlackThread() {
         set(LAST, "static");
       } else {
         choose(true);
-        set(0, "ready");
+        if (onScreen && cur === LAST) {
+          next = CYCLE_FADE;
+          elapsed = BEATS[LAST];
+          set(LAST, "paused");
+        } else set(0, "ready");
       }
       update();
     }
@@ -363,7 +371,8 @@ export default function SlackThread() {
       (entries) => {
         const e = entries[entries.length - 1];
         const vh = e.rootBounds?.height ?? window.innerHeight;
-        inView = e.isIntersecting && (e.intersectionRatio >= 0.35 || e.intersectionRect.height >= vh * 0.5);
+        onScreen = e.isIntersecting;
+        inView = onScreen && (e.intersectionRatio >= 0.35 || e.intersectionRect.height >= vh * 0.5);
         if (!booted) boot();
         else update();
       },
