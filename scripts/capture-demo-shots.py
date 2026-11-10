@@ -11,7 +11,7 @@ reduced motion (the demo's clock starts paused) and writes WebP images at 2x:
     public/demo-shots/overview.webp  story 3/12, the cluster at 05:00, 1280x800 viewport
     public/demo-shots/finding.webp   story 3/12, the incident's Diagnosis panel, to "... never the cause."
     public/demo-shots/evidence.webp  story 3/12, the incident's GPU readings
-    public/demo-shots/approval.webp  story 10/12, the ticket waiting for a person's approval
+    public/demo-shots/approval.webp  story 9/12, the cooling ticket waiting for a person's approval
 
 and src/data/demo-shots.json with each image's CSS size, which the homepage reads. The
 crops are found by the demo's own headings and labels, not by its class names, so a
@@ -187,7 +187,8 @@ def main():
                 b = box_of(page, heading_panel("GPU readings"))
                 shots["evidence"] = {**shot(page, pad(b, 6, 400), "evidence"), "story": "3/12", "title": "The evidence"}
 
-                to_story(page, base, 10)
+                # Story 9 ("Back to normal pace") is where the thermal incident's cooling ticket opens.
+                to_story(page, base, 9)
                 page.goto(base + "/Demo/#/tickets", wait_until="networkidle")
                 settle(page)
                 # the ticket whose title asks a person to approve a fix; its card is the list item around it
@@ -201,7 +202,7 @@ def main():
                     return lab ? lab.getBoundingClientRect().top + scrollY : null; }""", card["y"])
                 h = (stop - card["y"] - 6) if stop else card["height"]
                 shots["approval"] = {**shot(page, pad({**card, "height": min(h, 560)}, 6, 400), "approval"),
-                                     "story": "10/12", "title": "Waiting for approval"}
+                                     "story": "9/12", "title": "Waiting for approval"}
                 ctx.close()
             finally:
                 browser.close()
