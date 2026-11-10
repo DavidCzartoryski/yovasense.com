@@ -136,7 +136,7 @@ export default function Hero() {
             <p className="ys-eyebrow ys-hero-eyebrow">Cross-layer diagnosis and recovery</p>
             <h1 id="hero-title" className="ys-display ys-hero-title">Autonomous operations for GPU infrastructure.</h1>
             <p className="ys-hero-sub">
-              <span className="ys-nowrap">Find the root cause.</span> <span className="ys-nowrap">Fix what you can.</span> Know exactly what needs a technician.
+              <span className="ys-nowrap">Find the root cause.</span> <span className="ys-nowrap">Fix what you can.</span> <span>Know exactly what needs a technician.</span>
             </p>
             <p className="ys-hero-lede">
               YovaSense correlates telemetry across GPUs, servers, networking, schedulers and workloads to diagnose infrastructure failures, execute safe, approved recovery actions and verify that affected capacity is healthy again.
