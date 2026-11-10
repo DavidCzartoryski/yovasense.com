@@ -1,6 +1,6 @@
 import { Spine } from "./Workflow";
 
-/** What each system sees when a GPU falls off the bus: part of the failure, never the cause. */
+/** What each system sees when a GPU falls off the bus: part of the failure, never the whole incident. */
 const signals = [
   { layer: "Scheduler", text: "Slurm reports that the node is drained." },
   { layer: "Kubernetes", text: "The GPU device plugin reports seven GPUs instead of eight." },
@@ -18,7 +18,7 @@ export default function CrossLayer() {
           <span className="ys-node" data-reader-mark aria-hidden="true" />
           <p className="ys-eyebrow">Cross-layer correlation</p>
           <h2 id="example-title" className="ys-display ys-h2">A GPU node becomes unavailable.</h2>
-          <p className="ys-lede">Four systems each see part of the failure. None of them sees the cause.</p>
+          <p className="ys-lede">Four systems each see part of the failure. None of them connects it to the job, the node and the fix.</p>
         </div>
         <div className="ys-xl">
           <div className="ys-xl-main ys-scrim">
