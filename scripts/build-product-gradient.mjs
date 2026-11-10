@@ -1,4 +1,4 @@
-// Makes the grainy-gradient background of the homepage's product section (#product), "currents":
+// Makes the grainy-gradient background of the homepage's gradient section (#slack, the Slack showcase), "currents":
 // a navy field with soft, liquid blue swirls and one thin orange current through the open space.
 //
 // Three layers per composition, so the page can light the current as the reader scrolls
@@ -8,7 +8,7 @@
 //   public/textures/product-bloom-<comp>.webp    a wide, pre-blurred orange glow round the current,
 //                                                on transparent, at a third of CSS size, cropped
 // and src/data/product-glow.json, where the two cropped layers sit on the field (CSS inset, as
-// percentages of the drift layer), which ProductShowcase.tsx hands to the CSS.
+// percentages of the drift layer), which SlackShowcase.tsx hands to the CSS.
 //
 // Every pixel is computed here in plain JS (seeded gradient noise, domain-warped fBm, colour
 // ramps mixed in linear light), so the same seed always gives the same images. The field is soft,
