@@ -18,7 +18,7 @@ export default function NotFound() {
           <p className="ys-lede">There is no page at this address. These are the ones that exist:</p>
           <ul className="ys-404-links">
             <li><Link className="ys-link" href="/">YovaSense home <span aria-hidden="true">→</span></Link></li>
-            <li><a className="ys-link" href="/Demo/">The simulated fleet demo <span aria-hidden="true">→</span></a></li>
+            <li><a className="ys-link" href="/Demo/">The interactive demo <span aria-hidden="true">→</span></a></li>
             <li><Link className="ys-link" href="/product/">Inside YovaSense <span aria-hidden="true">→</span></Link></li>
             <li><a className="ys-link" href="/Architecture/">The architecture explorer <span aria-hidden="true">→</span></a></li>
           </ul>
