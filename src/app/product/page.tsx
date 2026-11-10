@@ -51,7 +51,7 @@ const workflow = [
 export default function ProductPage() {
   return (
     <div className="ys-page">
-      <Header current="product" />
+      <Header />
       <main id="main" tabIndex={-1} className="outline-none">
         <section aria-labelledby="product-title" className="ys-intro">
           <div className="ys-intro-fold" aria-hidden="true">
