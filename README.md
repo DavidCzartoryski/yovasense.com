@@ -25,4 +25,4 @@ It builds the site, serves `out/` on 127.0.0.1, steps the demo's guide to the di
 
 GitHub Pages publishes the `gh-pages` branch. Publish the complete `out/` directory, including `_next`, `CNAME` and `.nojekyll`; retain the custom domain `yovasense.com`. The personal portfolio at davidczartoryski.com remains a separate site.
 
-Branding changes do not turn prototype functionality or simulated results into production qualification. Preserve the simulation and development labels when updating the site.
+Demo data is always called a demo: product shots and links say "demo" or "interactive demo", and /Demo/ keeps its simulated-fleet banner. Site copy describes the product as designed, in the present tense. It never invents customers, logos, savings, testimonials, funding or statistics; every number traces to the site, /product or the demo.
