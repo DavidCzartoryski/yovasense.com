@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ["/", "/product/", "/Demo/", "/Architecture/"].map(path => ({ url: `https://yovasense.com${path}` }));
+  // Only the landing page. /product/, /Demo/ and /Architecture/ are unlisted (noindex, unlinked).
+  return ["/"].map(path => ({ url: `https://yovasense.com${path}` }));
 }

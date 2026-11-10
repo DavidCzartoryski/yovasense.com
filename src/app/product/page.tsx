@@ -34,6 +34,8 @@ const card = (name: "opengraph-image" | "twitter-image") => ({
 export const metadata: Metadata = {
   title,
   description,
+  // Unlisted: kept at its URL for links already sent, out of the sitemap and search results.
+  robots: "noindex",
   alternates: { canonical: "/product/" },
   openGraph: { title, description, url: `${SITE_URL}/product/`, siteName: "YovaSense", type: "website", images: [card("opengraph-image")] },
   twitter: { card: "summary_large_image", title, description, images: [card("twitter-image")] },
