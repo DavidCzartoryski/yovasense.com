@@ -1,10 +1,9 @@
-import { yovasense, mailto } from "@/data/yovasense";
+import ArrowUpRight from "./ArrowUpRight";
 import BuiltBy from "./BuiltBy";
 import Difference from "./Difference";
 import Families from "./Families";
 import Faq from "./Faq";
-import ArrowUpRight from "./ArrowUpRight";
-import { GET_ACCESS_SUBJECT, WRITE_SUBJECT } from "./Header";
+import { ACCESS_HREF } from "./Header";
 import SlackShowcase from "./SlackShowcase";
 import Workflow, { Spine } from "./Workflow";
 
@@ -22,13 +21,10 @@ function Access() {
             Tell us about your fleet, and we&apos;ll show you what YovaSense would find, fix and escalate on it.
           </p>
           <div className="ys-cta-row">
-            <a className="ys-btn ys-btn-primary ys-btn-lg" href={mailto(GET_ACCESS_SUBJECT)}>
+            <a className="ys-btn ys-btn-primary ys-btn-lg" href={ACCESS_HREF}>
               Get access <ArrowUpRight />
             </a>
           </div>
-          <p className="ys-fine ys-pilot-addr">
-            Or write to <a href={mailto(WRITE_SUBJECT)}>{yovasense.email}</a>
-          </p>
         </div>
       </div>
     </section>

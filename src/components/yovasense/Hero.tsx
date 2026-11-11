@@ -1,7 +1,6 @@
 import { Fragment } from "react";
-import { mailto } from "@/data/yovasense";
 import ArrowUpRight from "./ArrowUpRight";
-import { GET_ACCESS_SUBJECT } from "./Header";
+import { ACCESS_HREF } from "./Header";
 import HeroPath from "./HeroPath";
 import { BLUE, FAULT, LANES, MODES, SIZE, WARM, laneD, spriteGradient, stillScene } from "./heroGeometry";
 
@@ -142,7 +141,7 @@ export default function Hero() {
               <span>Escalate what remains.</span>
             </p>
             <div className="ys-cta-row">
-              <a className="ys-btn ys-btn-primary" href={mailto(GET_ACCESS_SUBJECT)}>
+              <a className="ys-btn ys-btn-primary" href={ACCESS_HREF}>
                 Get access <ArrowUpRight />
               </a>
               <a className="ys-link" href="#slack">

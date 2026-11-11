@@ -259,15 +259,8 @@ main:focus { outline: none; }
 .ys-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ys-paper); text-decoration: none; min-height: 44px; flex-shrink: 0; }
 .ys-wordmark { font-stretch: var(--ys-stretch-wide); font-weight: 600; font-size: 14px; letter-spacing: var(--ys-track-wordmark); }
 .ys-nav { display: flex; align-items: center; gap: 28px; }
-.ys-nav-link {
-  display: inline-flex; align-items: center; min-height: 40px;
-  color: var(--ys-text-muted); font-size: 14px; text-decoration: none;
-  transition: color var(--ys-dur-1) var(--ys-ease-out);
-}
-.ys-nav-link:hover { color: var(--ys-text); }
 @media (max-width: 759px) {
   .ys-nav { gap: 18px; }
-  .ys-nav-wide { display: none; }
   .ys-wordmark { font-size: 13px; }
   .ys-brand { gap: 10px; }
 }
@@ -329,7 +322,7 @@ main:focus { outline: none; }
 @keyframes ar-wire-v { to { background-position: 0 14px; } }
 @media (prefers-reduced-motion: reduce) {
   :is(.ar-pulse, .ar-type, .ar-flow, .ar-wire) { animation: none; }
-  .ys-btn, .ys-link, .ys-nav-link { transition: none; }
+  .ys-btn, .ys-link, .ys-ga-input { transition: none; }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -806,9 +799,72 @@ main:focus { outline: none; }
 .ys-pilot .ys-h1 { margin-top: 18px; max-width: 18ch; }
 .ys-pilot .ys-lede { margin-top: 22px; }
 .ys-pilot .ys-cta-row { margin-top: 40px; gap: 18px 28px; }
-.ys-pilot-addr { margin-top: 22px; }
-.ys-pilot-addr a { color: var(--ys-text-muted); text-decoration: underline; text-underline-offset: 3px; }
-.ys-pilot-addr a:hover { color: var(--ys-text); }
+
+/* ---------- /get-access/: an intro and the form card on a calm glow ----------
+   Blue light from above and a deeper pool below, over navy, with the product section's film
+   grain; the card is a dark plate with a hairline edge, like the rest of the page's panels. */
+.ys-ga {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding-block: clamp(56px, 8vw, 112px) clamp(72px, 9vw, 128px);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -8%, rgb(3 115 176 / 0.30), rgb(3 115 176 / 0) 70%),
+    radial-gradient(ellipse 60% 45% at 50% 108%, rgb(4 61 99 / 0.45), rgb(4 61 99 / 0) 70%),
+    var(--ys-navy);
+}
+.ys-ga::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: url("/textures/grain.webp") 0 0 / 128px 128px repeat;
+  image-rendering: pixelated; opacity: 0.05;
+}
+@media (max-resolution: 1.5dppx), (-webkit-max-device-pixel-ratio: 1.5) {
+  .ys-ga::after { opacity: 0.035; }
+}
+.ys-ga-wrap { display: flex; flex-direction: column; align-items: center; }
+.ys-ga-head { max-width: 1000px; text-align: center; }
+.ys-ga-title { text-wrap: balance; }
+.ys-ga-lede { margin: 22px auto 0; max-width: 54ch; }
+.ys-ga-card {
+  width: 100%; max-width: 760px; margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(24px, 4vw, 48px);
+  background: rgb(6 18 26 / 0.86); border: 1px solid var(--ys-line-2); border-radius: 4px;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.35);
+}
+.ys-ga-form { display: flex; flex-direction: column; gap: 16px; }
+.ys-ga-names { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ys-ga-field { display: flex; flex-direction: column; min-width: 0; }
+.ys-ga-label { margin: 8px 0 10px; color: var(--ys-text-muted); font-size: 15px; line-height: 1.4; }
+.ys-ga-input {
+  width: 100%; min-width: 0; min-height: 56px; padding: 0 18px;
+  background: var(--ys-well); color: var(--ys-text);
+  border: 1px solid var(--ys-line-control); border-radius: var(--ys-radius-1);
+  font: inherit; font-size: 16px; /* 16px keeps iOS from zooming in on focus */
+  transition: border-color var(--ys-dur-1) var(--ys-ease-out);
+}
+.ys-ga-input::placeholder { color: var(--ys-text-faint); opacity: 1; }
+.ys-ga-input:hover { border-color: var(--ys-text-faint); }
+.ys-ga-input:focus { border-color: var(--ys-blue-300); }
+.ys-ga-select-wrap { position: relative; }
+.ys-ga-select { appearance: none; -webkit-appearance: none; padding-right: 52px; cursor: pointer; }
+.ys-ga-select:has(option[value=""]:checked) { color: var(--ys-text-faint); }
+.ys-ga-select option { color: var(--ys-text); background: var(--ys-surface-1); }
+.ys-ga-chevron {
+  position: absolute; right: 18px; top: 50%; width: 18px; height: 18px; margin-top: -9px; pointer-events: none;
+  fill: none; stroke: var(--ys-text-muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.ys-ga-submit { width: 100%; margin-top: 8px; }
+.ys-ga-submit:disabled { cursor: progress; opacity: 0.7; }
+.ys-ga-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.ys-ga-error { font-size: 14px; line-height: 1.55; color: var(--ys-text-warm); text-align: center; }
+.ys-ga-error:empty { display: none; }
+.ys-ga-error a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.ys-ga-note { margin-top: 8px; text-align: center; font-size: 14px; color: var(--ys-text-faint); }
+.ys-ga-done { text-align: center; }
+.ys-ga-done-title { font-size: var(--ys-fs-h2); outline: none; }
+.ys-ga-done-text { margin-top: 14px; font-size: var(--ys-fs-lede); line-height: 1.5; color: var(--ys-text-muted); }
+.ys-ga-done-text strong { color: var(--ys-text-blue); font-weight: 500; overflow-wrap: anywhere; }
+@media (max-width: 559px) {
+  .ys-ga-names { grid-template-columns: 1fr; }
+}
 
 /* ══════════════════════════════════════════════════════════════
    /product/: the same shell, type and color; a static fold at the
