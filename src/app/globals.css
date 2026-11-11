@@ -259,15 +259,8 @@ main:focus { outline: none; }
 .ys-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ys-paper); text-decoration: none; min-height: 44px; flex-shrink: 0; }
 .ys-wordmark { font-stretch: var(--ys-stretch-wide); font-weight: 600; font-size: 14px; letter-spacing: var(--ys-track-wordmark); }
 .ys-nav { display: flex; align-items: center; gap: 28px; }
-.ys-nav-link {
-  display: inline-flex; align-items: center; min-height: 40px;
-  color: var(--ys-text-muted); font-size: 14px; text-decoration: none;
-  transition: color var(--ys-dur-1) var(--ys-ease-out);
-}
-.ys-nav-link:hover { color: var(--ys-text); }
 @media (max-width: 759px) {
   .ys-nav { gap: 18px; }
-  .ys-nav-wide { display: none; }
   .ys-wordmark { font-size: 13px; }
   .ys-brand { gap: 10px; }
 }
@@ -329,7 +322,7 @@ main:focus { outline: none; }
 @keyframes ar-wire-v { to { background-position: 0 14px; } }
 @media (prefers-reduced-motion: reduce) {
   :is(.ar-pulse, .ar-type, .ar-flow, .ar-wire) { animation: none; }
-  .ys-btn, .ys-link, .ys-nav-link { transition: none; }
+  .ys-btn, .ys-link, .ys-access-input { transition: none; }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -805,10 +798,37 @@ main:focus { outline: none; }
 .ys-reading .ys-terminal:not([data-lit]) { opacity: 0.35; }
 .ys-pilot .ys-h1 { margin-top: 18px; max-width: 18ch; }
 .ys-pilot .ys-lede { margin-top: 22px; }
-.ys-pilot .ys-cta-row { margin-top: 40px; gap: 18px 28px; }
-.ys-pilot-addr { margin-top: 22px; }
-.ys-pilot-addr a { color: var(--ys-text-muted); text-decoration: underline; text-underline-offset: 3px; }
-.ys-pilot-addr a:hover { color: var(--ys-text); }
+/* the access form: a work email and Send, side by side; stacked on phones */
+.ys-access-form { margin-top: 40px; max-width: 560px; }
+.ys-access-label {
+  display: block; margin-bottom: 10px; color: var(--ys-text-faint);
+  font-family: var(--ys-font-mono); font-stretch: var(--ys-stretch-mono);
+  font-size: var(--ys-fs-label); letter-spacing: var(--ys-track-label); text-transform: uppercase; line-height: 1.5;
+}
+.ys-access-row { display: flex; gap: 12px; }
+.ys-access-input {
+  flex: 1 1 auto; min-width: 0; min-height: 56px; padding: 0 18px;
+  background: var(--ys-surface-1); color: var(--ys-text);
+  border: 1px solid var(--ys-line-control); border-radius: var(--ys-radius-1);
+  font: inherit; font-size: 16px; /* 16px keeps iOS from zooming in on focus */
+  transition: border-color var(--ys-dur-1) var(--ys-ease-out);
+}
+.ys-access-input::placeholder { color: var(--ys-text-faint); opacity: 1; }
+.ys-access-input:hover { border-color: var(--ys-text-faint); }
+.ys-access-input:focus { border-color: var(--ys-blue-300); }
+.ys-access-send { flex: none; }
+.ys-access-send:disabled { cursor: progress; opacity: 0.7; }
+.ys-access-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.ys-access-error { margin-top: 14px; font-size: 14px; line-height: 1.55; color: var(--ys-text-warm); }
+.ys-access-error:empty { display: none; }
+.ys-access-error a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.ys-access-done { margin-top: 40px; font-size: var(--ys-fs-lede); line-height: 1.5; color: var(--ys-text); max-width: 56ch; }
+.ys-access-done strong { color: var(--ys-text-blue); font-weight: 500; overflow-wrap: anywhere; }
+@media (max-width: 559px) {
+  .ys-access-form { margin-top: 30px; }
+  .ys-access-row { flex-direction: column; }
+  .ys-access-send { width: 100%; }
+}
 
 /* ══════════════════════════════════════════════════════════════
    /product/: the same shell, type and color; a static fold at the

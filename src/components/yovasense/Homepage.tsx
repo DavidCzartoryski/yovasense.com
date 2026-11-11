@@ -1,14 +1,12 @@
-import { yovasense, mailto } from "@/data/yovasense";
+import AccessForm from "./AccessForm";
 import BuiltBy from "./BuiltBy";
 import Difference from "./Difference";
 import Families from "./Families";
 import Faq from "./Faq";
-import ArrowUpRight from "./ArrowUpRight";
-import { GET_ACCESS_SUBJECT, WRITE_SUBJECT } from "./Header";
 import SlackShowcase from "./SlackShowcase";
 import Workflow, { Spine } from "./Workflow";
 
-/** The final call to action: the line ends here. */
+/** The final call to action, where every "Get access" lands: the line ends here. */
 function Access() {
   return (
     <section id="access" className="ys-sec ys-sec-end" aria-labelledby="access-title">
@@ -19,16 +17,9 @@ function Access() {
           <p className="ys-eyebrow">Get access</p>
           <h2 id="access-title" className="ys-display ys-h1">See it on your own fleet.</h2>
           <p className="ys-lede">
-            Tell us about your fleet, and we&apos;ll show you what YovaSense would find, fix and escalate on it.
+            Leave your work email, and we&apos;ll show you what YovaSense would find, fix and escalate on your fleet.
           </p>
-          <div className="ys-cta-row">
-            <a className="ys-btn ys-btn-primary ys-btn-lg" href={mailto(GET_ACCESS_SUBJECT)}>
-              Get access <ArrowUpRight />
-            </a>
-          </div>
-          <p className="ys-fine ys-pilot-addr">
-            Or write to <a href={mailto(WRITE_SUBJECT)}>{yovasense.email}</a>
-          </p>
+          <AccessForm />
         </div>
       </div>
     </section>

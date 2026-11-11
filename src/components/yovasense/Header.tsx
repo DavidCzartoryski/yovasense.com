@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { yovasense, mailto } from "@/data/yovasense";
 import Mark from "./Mark";
 
-/** The page's three mail subjects. Every mailto on the site uses one of these. */
+/** Mail subjects for the remaining mailto links (the access form's fallback and the unlisted /product/). */
 export const GET_ACCESS_SUBJECT = "YovaSense: get access";
 export const WRITE_SUBJECT = "YovaSense";
 
-/** Shared by /, /product/ and the 404. Sticky, with "Get access" always one Tab away. */
+/** Every "Get access" goes to the email form at the end of the home page. */
+export const ACCESS_HREF = "/#access";
+
+/** Shared by /, /product/ and the 404. Sticky: the brand and "Get access", nothing else. */
 export default function Header() {
   return (
     <header className="ys-header">
@@ -17,9 +19,7 @@ export default function Header() {
           <span className="ys-wordmark">YOVASENSE</span>
         </Link>
         <nav className="ys-nav" aria-label="Main">
-          <Link href="/#how" className="ys-nav-link ys-nav-wide">How it works</Link>
-          <Link href="/#faq" className="ys-nav-link ys-nav-wide">FAQ</Link>
-          <a href={mailto(GET_ACCESS_SUBJECT)} className="ys-btn ys-btn-pilot ys-btn-sm">
+          <a href={ACCESS_HREF} className="ys-btn ys-btn-pilot ys-btn-sm">
             Get access
           </a>
         </nav>
@@ -37,8 +37,7 @@ export function Footer() {
           <p className="ys-foot-fine">© {new Date().getFullYear()} YovaSense</p>
         </div>
         <nav aria-label="Footer" className="ys-foot-nav">
-          <a href={mailto(GET_ACCESS_SUBJECT)}>Get access</a>
-          <a href={mailto(WRITE_SUBJECT)}>{yovasense.email}</a>
+          <a href={ACCESS_HREF}>Get access</a>
         </nav>
       </div>
     </footer>
