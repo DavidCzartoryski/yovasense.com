@@ -1,12 +1,13 @@
-import AccessForm from "./AccessForm";
+import ArrowUpRight from "./ArrowUpRight";
 import BuiltBy from "./BuiltBy";
 import Difference from "./Difference";
 import Families from "./Families";
 import Faq from "./Faq";
+import { ACCESS_HREF } from "./Header";
 import SlackShowcase from "./SlackShowcase";
 import Workflow, { Spine } from "./Workflow";
 
-/** The final call to action, where every "Get access" lands: the line ends here. */
+/** The final call to action: the line ends here. */
 function Access() {
   return (
     <section id="access" className="ys-sec ys-sec-end" aria-labelledby="access-title">
@@ -17,9 +18,13 @@ function Access() {
           <p className="ys-eyebrow">Get access</p>
           <h2 id="access-title" className="ys-display ys-h1">See it on your own fleet.</h2>
           <p className="ys-lede">
-            Leave your work email, and we&apos;ll show you what YovaSense would find, fix and escalate on your fleet.
+            Tell us about your fleet, and we&apos;ll show you what YovaSense would find, fix and escalate on it.
           </p>
-          <AccessForm />
+          <div className="ys-cta-row">
+            <a className="ys-btn ys-btn-primary ys-btn-lg" href={ACCESS_HREF}>
+              Get access <ArrowUpRight />
+            </a>
+          </div>
         </div>
       </div>
     </section>

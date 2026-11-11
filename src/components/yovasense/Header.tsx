@@ -5,11 +5,14 @@ import Mark from "./Mark";
 export const GET_ACCESS_SUBJECT = "YovaSense: get access";
 export const WRITE_SUBJECT = "YovaSense";
 
-/** Every "Get access" goes to the email form at the end of the home page. */
-export const ACCESS_HREF = "/#access";
+/** Every "Get access" goes to the form page. */
+export const ACCESS_HREF = "/get-access/";
 
-/** Shared by /, /product/ and the 404. Sticky: the brand and "Get access", nothing else. */
-export default function Header() {
+/**
+ * Shared by every page. Sticky: the brand and "Get access", nothing else; /get-access/ itself
+ * passes cta={false}.
+ */
+export default function Header({ cta = true }: { cta?: boolean }) {
   return (
     <header className="ys-header">
       <a href="#main" className="ys-skip">Skip to content</a>
@@ -19,9 +22,11 @@ export default function Header() {
           <span className="ys-wordmark">YOVASENSE</span>
         </Link>
         <nav className="ys-nav" aria-label="Main">
-          <a href={ACCESS_HREF} className="ys-btn ys-btn-pilot ys-btn-sm">
-            Get access
-          </a>
+          {cta ? (
+            <a href={ACCESS_HREF} className="ys-btn ys-btn-pilot ys-btn-sm">
+              Get access
+            </a>
+          ) : null}
         </nav>
       </div>
     </header>
