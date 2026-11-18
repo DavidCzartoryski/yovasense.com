@@ -11,8 +11,8 @@ export function Spine({ ink = false }: { ink?: boolean }) {
 const stations: { title: string; body: string; io: string }[] = [
   {
     title: "Find the root cause",
-    body: "YovaSense reads your GPUs, servers, network, scheduler and workloads together. A burst of alerts becomes one incident with a named cause.",
-    io: "GPUs · servers · network · scheduler · workloads",
+    body: "YovaSense reads every layer of your stack together: GPUs, servers, network, storage, power and cooling, scheduler and workloads. A burst of alerts, or a slow regression nobody alerted on, becomes one incident with a named cause.",
+    io: "GPUs · servers · network · storage · power · scheduler · workloads",
   },
   {
     title: "Automate the fix",

@@ -133,8 +133,8 @@ export default function Hero() {
         <span className="ys-spine-anchor" data-spine-anchor aria-hidden="true" />
         <div className="ys-hero-copy">
           <div className="ys-hero-copy-inner ys-scrim" data-hero-copy>
-            <h1 id="hero-title" className="ys-display ys-hero-title">Autonomous operations for GPU infrastructure.</h1>
-            <p className="ys-hero-lede">Built for GPU cloud providers and HPC operators.</p>
+            <h1 id="hero-title" className="ys-display ys-hero-title">Autonomous operations for AI infrastructure.</h1>
+            <p className="ys-hero-lede">One platform for the full stack. Built for GPU cloud providers and HPC operators.</p>
             <p className="ys-hero-sub">
               <span>Find the root cause.</span>{" "}
               <span>Automate the fix.</span>{" "}

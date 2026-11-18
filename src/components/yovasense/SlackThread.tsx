@@ -7,7 +7,7 @@ import styles from "./SlackShowcase.module.css";
 
 /**
  * The Slack example in the homepage's gradient section: YovaSense takes one incident from alert to
- * resolved in #gpu-ops (copy deck, "Slack thread script"). A coded animation, not a video: every
+ * resolved in #infra-ops (copy deck, "Slack thread script"). A coded animation, not a video: every
  * message is server-rendered, and a beat only flips `data-shown` on the parts it reveals, which
  * CSS fades in (opacity and transform only, layout space reserved, so nothing shifts).
  *
@@ -405,14 +405,14 @@ export default function SlackThread() {
   return (
     <figure ref={ref} className={styles.panel} data-slack-anim data-state={phase} data-step={step}>
       <figcaption className="sr-only">
-        Example Slack thread in #gpu-ops. YovaSense handles one incident from alert to resolved.
+        Example Slack thread in #infra-ops. YovaSense handles one incident from alert to resolved.
       </figcaption>
 
       <div className={styles.bar}>
         <p className={styles.channel}>
           <span className={styles.channelName} aria-hidden="true">
             <Hash className={styles.hash} />
-            gpu-ops
+            infra-ops
           </span>
           <span className={styles.chip} aria-hidden="true">Example</span>
         </p>
@@ -525,7 +525,7 @@ export default function SlackThread() {
 
       <div className={styles.foot} aria-hidden="true">
         <div className={styles.composer}>
-          <span className={styles.placeholder} data-placeholder="Message #gpu-ops" />
+          <span className={styles.placeholder} data-placeholder="Message #infra-ops" />
           <ToolIcons />
         </div>
         <p className={styles.typingRow} data-anim-transient>

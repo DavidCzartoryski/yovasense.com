@@ -50,7 +50,7 @@ const POINTS = [
 
 /**
  * The homepage's gradient section, now the Slack integration: the copy on the left, the animated
- * #gpu-ops thread on the right, and three points under an open stretch of the field where the
+ * #infra-ops thread on the right, and three points under an open stretch of the field where the
  * orange current glows. The fold (field, grain, glow, warm cut) is the product section's, unchanged:
  * ScrollReader finds its layers by their data attributes.
  */

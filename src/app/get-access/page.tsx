@@ -7,7 +7,7 @@ import GetAccessForm from "@/components/yovasense/GetAccessForm";
 
 const title = "Get access · YovaSense";
 const description =
-  "Set up a call to see what YovaSense would find, fix and escalate on your GPU fleet.";
+  "Set up a call to see what YovaSense would find, fix and escalate on your AI infrastructure.";
 /** Setting openGraph or twitter replaces the root layout's, file-based images included, so name the site card here. */
 const card = (name: "opengraph-image" | "twitter-image") => ({
   url: `/${name}.png`,

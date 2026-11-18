@@ -8,7 +8,7 @@ import { Spine } from "./Workflow";
 const items: { q: string; a: string }[] = [
   {
     q: "What does YovaSense take off my team's plate?",
-    a: "The investigation and the routine recovery. YovaSense works out why GPU capacity went down, runs the fixes your policy allows and checks that the capacity is healthy again, so your engineers only see the incidents that need them, with the evidence already gathered.",
+    a: "The investigation and the routine recovery. YovaSense works out why capacity went down, runs the fixes your policy allows and checks that the capacity is healthy again, so your engineers only see the incidents that need them, with the evidence already gathered.",
   },
   {
     q: "Does it replace our monitoring?",
@@ -24,7 +24,7 @@ const items: { q: string; a: string }[] = [
   },
   {
     q: "What infrastructure does it support?",
-    a: "NVIDIA and AMD GPUs, Slurm and Kubernetes, training and inference, on clusters you own or rent. One deployment covers several clusters, and each keeps its own policy.",
+    a: "The full AI infrastructure stack: GPUs, the servers around them, network and interconnect, storage, power and cooling, drivers and firmware, and the scheduler. It runs on NVIDIA and AMD GPUs, Slurm and Kubernetes, for training and inference, on clusters you own or rent. One deployment covers several clusters, and each keeps its own policy.",
   },
   {
     q: "Where does our data go?",
@@ -32,7 +32,7 @@ const items: { q: string; a: string }[] = [
   },
   {
     q: "Couldn't a general AI assistant do this?",
-    a: "Because diagnosing a GPU fleet takes context a chat agent doesn't have: how every job maps to its GPUs, servers, network links and racks, and what each kind of failure looks like across them. YovaSense pairs known failure signatures with AI reasoning, and verifies every fix before it closes an incident.",
+    a: "Because diagnosing AI infrastructure takes context a chat agent doesn't have: how every job maps to its GPUs, servers, network links, storage and racks, and what each kind of failure looks like across them. YovaSense pairs known failure signatures with AI reasoning, and verifies every fix before it closes an incident.",
   },
   {
     q: "How do we evaluate it?",

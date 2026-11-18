@@ -7,12 +7,12 @@ const martian = Martian_Mono({ subsets: ["latin"], axes: ["wdth"], variable: "--
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://yovasense.com"),
-  title: "YovaSense — Autonomous operations for GPU infrastructure",
-  description: "Built for GPU cloud providers and HPC operators. YovaSense finds the root cause, automates the fix and escalates what remains.",
+  title: "YovaSense — Autonomous operations for AI infrastructure",
+  description: "Autonomous operations for the full AI infrastructure stack. YovaSense finds the root cause, automates the fix and escalates what remains.",
   applicationName: "YovaSense",
   authors: [{ name: "David Czartoryski" }, { name: "Thomas Czartoryski" }],
   alternates: { canonical: "/" },
-  openGraph: { type: "website", siteName: "YovaSense", url: "https://yovasense.com", title: "YovaSense — Autonomous operations for GPU infrastructure" },
+  openGraph: { type: "website", siteName: "YovaSense", url: "https://yovasense.com", title: "YovaSense — Autonomous operations for AI infrastructure" },
   twitter: { card: "summary_large_image" },
   icons: {
     icon: [

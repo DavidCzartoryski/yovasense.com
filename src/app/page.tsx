@@ -8,18 +8,19 @@ import FieldStill from "@/components/yovasense/FieldStill";
 import ScrollField from "@/components/yovasense/ScrollField";
 import ScrollReader from "@/components/yovasense/ScrollReader";
 
-const TITLE = `${yovasense.name} — Autonomous operations for GPU infrastructure`;
+const TITLE = `${yovasense.name} — Autonomous operations for AI infrastructure`;
 const DESCRIPTION =
-  "Built for GPU cloud providers and HPC operators. YovaSense finds the root cause, automates the fix and escalates what remains.";
+  "Autonomous operations for the full AI infrastructure stack. YovaSense finds the root cause, automates the fix and escalates what remains.";
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   authors: [{ name: yovasense.founder, url: SITE_URL }],
   keywords: [
+    "AI infrastructure operations",
+    "autonomous infrastructure operations",
+    "AI infrastructure incident response",
     "GPU infrastructure operations",
-    "autonomous GPU operations",
-    "GPU incident response",
     "GPU cloud providers",
     "HPC operators",
     "Slurm",
