@@ -4,7 +4,7 @@ const monitoring = ["A node is out of service.", "A GPU stopped reporting.", "A 
 
 const adds = [
   "One incident instead of four alerts.",
-  "A named GPU and its likely cause.",
+  "A named component and its likely cause.",
   "Capacity back in service, verified.",
   "A technician ticket only when needed.",
 ];
@@ -23,7 +23,7 @@ export default function Difference() {
           </div>
           <div className="ys-sec-body">
             <p>
-              Monitoring tells your team that a GPU disappeared or a job failed. Finding out why still takes an engineer, pulling evidence by hand from the scheduler, the servers, the GPUs, the network and the job.
+              Monitoring tells your team that a GPU disappeared or a job failed. Finding out why still takes an engineer, pulling evidence by hand from the scheduler, the servers, the GPUs, the network, the storage and the job.
             </p>
           </div>
         </div>

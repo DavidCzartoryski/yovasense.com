@@ -38,7 +38,7 @@ export function Footer() {
     <footer className="ys-footer">
       <div className="ys-wrap ys-foot-grid">
         <div>
-          <p className="ys-foot-line">YovaSense. Autonomous operations for GPU infrastructure.</p>
+          <p className="ys-foot-line">YovaSense. Autonomous operations for AI infrastructure.</p>
           <p className="ys-foot-fine">© {new Date().getFullYear()} YovaSense</p>
         </div>
         <nav aria-label="Footer" className="ys-foot-nav">
